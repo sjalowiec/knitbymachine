@@ -1,0 +1,65 @@
+---
+import Layout from "../layouts/BaseLayout.astro";
+
+// Later, you can fetch wizard data from a JSON file or CMS.
+// For now, we'll hardcode some sample data:
+const wizards = [
+  {
+    name: "Blanket Wizard",
+    slug: "blanket",
+    category: "Pattern",
+    description: "Design custom blankets to fit your machine width and yarn.",
+    image: "/images/wizards/blanket-thumb.webp"
+  },
+  {
+    name: "Gauge Wizard",
+    slug: "gauge",
+    category: "Tool",
+    description: "Find your exact stitch and row gauge — no math required.",
+    image: "/images/wizards/gauge-thumb.webp"
+  },
+  {
+    name: "Practice Wizard",
+    slug: "practice",
+    category: "Practice",
+    description: "Build your confidence with guided skill challenges.",
+    image: "/images/wizards/practice-thumb.webp"
+  },
+];
+---
+
+<Layout title="Knit by Machine Wizards">
+  <section style="padding:40px 20px;">
+    <h1>Explore the Wizards</h1>
+    <p style="max-width:600px;margin:auto;">
+      Choose a wizard below to design patterns, calculate gauges, or practice your skills.
+    </p>
+
+    <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-top:40px;">
+      {wizards.map(w => (
+        <a
+          href={`/wizards/${w.slug}`}
+          style="
+            display:block;
+            width:280px;
+            text-align:center;
+            border:1px solid #ccc;
+            border-radius:10px;
+            padding:20px;
+            text-decoration:none;
+            color:#333;
+            background:#fff;
+            transition:transform .2s, box-shadow .2s;
+          "
+          onmouseover="this.style.boxShadow='0 4px 10px rgba(0,0,0,0.1)';this.style.transform='scale(1.02)'"
+          onmouseout="this.style.boxShadow='none';this.style.transform='none'"
+        >
+          <img src={w.image} alt={w.name} style="width:100%;border-radius:10px;margin-bottom:15px;" />
+          <h3>{w.name}</h3>
+          <p style="font-size:.9em;min-height:48px;">{w.description}</p>
+          <span style="font-size:.8em;color:#52682D;font-weight:600;">{w.category}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>

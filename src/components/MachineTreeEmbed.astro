@@ -1,0 +1,456 @@
+<div id="tree-container"></div>
+
+
+<!-- Crawlable text version for SEO and no-JS users -->
+<noscript>
+  <div style="max-width: 800px; margin: 20px auto; padding: 20px; background: #f9f9f9; border: 1px solid #ddd;">
+    <h2>Knitting Machine Brands</h2>
+    <ul>
+      <li><strong>Japanese Manufacturers</strong>
+        <ul>
+          <li>Brother
+            <ul>
+              <li>KnitKing (US)</li>
+              <li>Defendi Brother (IT)</li>
+              <li>Jones (UK)</li>
+              <li>Erka (FR)</li>
+              <li>Artisan (US)</li>
+              <li>Creative</li>
+              <li>Taitexma</li>
+            </ul>
+          </li>
+          <li>Silver Reed
+            <ul>
+              <li>Silver Reed (UK)</li>
+              <li>Dimac (Bulky8 / SK120)</li>
+              <li>Elna (SW)</li>
+              <li>Necchi / Vigorelli (IT)</li>
+              <li>Norsy (NO)</li>
+              <li>Riccar (RU)</li>
+              <li>Knitmaster / Singer (AU)</li>
+              <li>Empisal Knitmaster (UK)</li>
+              <li>Singer (US)</li>
+              <li>Studio (CA)</li>
+            </ul>
+          </li>
+          <li>Toyota
+            <ul>
+              <li>Elna (SW)</li>
+            </ul>
+          </li>
+          <li>Juki
+            <ul>
+              <li>Erka (FR)</li>
+              <li>Gritzner (DE)</li>
+              <li>Singer / Lemair (AU)</li>
+            </ul>
+          </li>
+          <li>Corona (11mm)
+            <ul>
+              <li>Studio 121 (11mm)</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><strong>European Manufacturers</strong>
+        <ul>
+          <li>Passap
+            <ul>
+              <li>Pfaff (DE-UK)</li>
+            </ul>
+          </li>
+          <li>Bond (UK)
+            <ul>
+              <li>Incredible Sweater Machine (ISM)</li>
+            </ul>
+          </li>
+          <li>Superba
+            <ul>
+              <li>White (US)</li>
+              <li>Singer (EU-UK)</li>
+              <li>Phildar (FR)</li>
+            </ul>
+          </li>
+          <li>Other Vintage
+            <ul>
+              <li>Girotex (FR)</li>
+              <li>Dopleta (CZ)</li>
+              <li>Veritas (DE/DDR)</li>
+              <li>Knittax (DE)</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><strong>Vintage Manufacturers</strong>
+        <ul>
+          <li>Prior Purl (AU)</li>
+          <li>Neva / Severianka (RU)</li>
+          <li>Simac / Sona / Inaisa (IN)</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</noscript>
+
+<style>
+  #tree-container {
+    width: 100%;
+    height: 600px;
+    background: #F7F8F7;
+    opacity: 0;
+    transform: translateX(-40px);
+    animation: fadeSlideIn 1.2s ease forwards;
+  }
+  @keyframes fadeSlideIn {
+    0% { opacity: 0; transform: translateX(-40px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  .link {
+    fill: none;
+    stroke: #B7C4A2;
+    stroke-width: 2px;
+    opacity: 0.7;
+  }
+
+  .node circle {
+    stroke: #A3B78C;
+    stroke-width: 3px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  
+  .node circle.hit-area {
+    stroke: none;
+    stroke-width: 0;
+  }
+  
+  .node:hover circle:not(.hit-area) { 
+    stroke-width: 4px; 
+    opacity: 0.9;
+    animation: pulse 1s ease-in-out infinite;
+  }
+  
+  .node:focus {
+    outline: none;
+  }
+  .node:focus circle:not(.hit-area) {
+    stroke: #52682D;
+    stroke-width: 5px;
+    filter: drop-shadow(0 0 4px rgba(82, 104, 45, 0.6));
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+  }
+
+  .node text {
+    font-size: 18px;
+    font-weight: 500;
+    fill: #2C3A57;
+    text-anchor: start;
+    dominant-baseline: middle;
+    pointer-events: none;
+    transform: translate(15px, 0);
+    max-width: 220px;
+    white-space: normal;
+    line-height: 1.4em;
+  }
+
+  .tooltip {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 14px;
+    color: #2C3A57;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  @media (max-width: 768px) {
+    #tree-container { height: 500px; }
+    .node text {
+      font-size: 13px;
+      max-width: 140px;
+      transform: translate(10px, 0);
+    }
+  }
+</style>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+const data = {
+  name: "Knitting Machines",
+  color: "#52682D",
+  tooltip: "🌍 Global overview of knitting machine manufacturers.",
+  children: [
+    {
+      name: "🇯🇵 Japanese",
+      color: "#7E9C3B",
+      tooltip: "Japanese manufacturers: Brother, Silver Reed, Toyota, Juki, Corona.",
+      children: [
+        { name: "Brother",
+          children: [
+            { name: "KnitKing (US)" }, { name: "Defendi Brother (IT)" },
+            { name: "Jones (UK)" }, { name: "Erka (FR)" },
+            { name: "Artisan (US)" },
+            { name: "Creative" },
+            { name: "Taitexma" }
+          ]},
+        { name: "Silver Reed",
+          children: [
+            { name: "Silver Reed (UK)" },
+            { name: "Dimac (Bulky8 / SK120)" },
+            { name: "Elna (SW)" },
+            { name: "Necchi / Vigorelli (IT)" },
+            { name: "Norsy (NO)" },
+            { name: "Riccar (RU)" },
+            { name: "Knitmaster / Singer (AU)" },
+            { name: "Empisal Knitmaster (UK)" },
+            { name: "Singer (US)" },
+            { name: "Studio (CA)" }
+          ]},
+        { name: "Toyota", children: [{ name: "Elna (SW)" }] },
+        { name: "Juki", 
+          children: [
+            { name: "Erka (FR)" },
+            { name: "Gritzner (DE)" }, 
+            { name: "Singer / Lemair (AU)" }
+          ]},
+        { name: "Corona (11mm)", 
+          children: [{ name: "Studio 121 (11mm)" }] }
+      ]
+    },
+    {
+      name: "🇪🇺 European",
+      color: "#777777",
+      tooltip: "European brands: Passap, Bond, Superba, and others.",
+      children: [
+        { name: "Passap", children: [{ name: "Pfaff (DE-UK)" }] },
+        { name: "Bond (UK)", 
+          children: [{ name: "Incredible Sweater Machine (ISM)" }] },
+        { name: "Superba",
+          children: [
+            { name: "White (US)" }, { name: "Singer (EU-UK)" }, { name: "Phildar (FR)" }
+          ]},
+        { name: "Other Vintage",
+          children: [
+            { name: "Girotex (FR)" }, { name: "Dopleta (CZ)" },
+            { name: "Veritas (DE/DDR)" }, { name: "Knittax (DE)" }
+          ]}
+      ]
+    },
+    {
+      name: "🧶 Vintage",
+      color: "#C47C3F",
+      tooltip: "Older or region-specific machines.",
+      children: [
+        { name: "Prior Purl (AU)" },
+        { name: "Neva / Severianka (RU)" },
+        { name: "Simac / Sona / Inaisa (IN)" }
+      ]
+    }
+  ]
+};
+
+const margin = { top: 40, right: 80, bottom: 40, left: 60 };
+let width, height, svg, treemap, root, i = 0;
+const duration = 600;
+const tooltip = d3.select("body").append("div").attr("class", "tooltip");
+
+/* ---------- Initialize ---------- */
+function drawTree() {
+  d3.select("#tree-container svg").remove();
+  
+  // Adjust margins for mobile
+  const isMobile = window.innerWidth < 768;
+  const adjustedMargin = {
+    top: margin.top,
+    right: isMobile ? 20 : margin.right,
+    bottom: margin.bottom,
+    left: isMobile ? 40 : margin.left
+  };
+  
+  width  = document.getElementById("tree-container").clientWidth  - adjustedMargin.left - adjustedMargin.right;
+  height = document.getElementById("tree-container").clientHeight - adjustedMargin.top  - adjustedMargin.bottom;
+
+  svg = d3.select("#tree-container").append("svg")
+    .attr("viewBox", `0 0 ${width + adjustedMargin.left + adjustedMargin.right} ${height + adjustedMargin.top + adjustedMargin.bottom}`)
+    .append("g")
+    .attr("transform", `translate(${adjustedMargin.left},${adjustedMargin.top})`);
+
+  treemap = d3.tree().size([height, width]);
+  root = d3.hierarchy(data, d => d.children);
+  root.x0 = height / 2;
+  root.y0 = 0;
+  root.children.forEach(collapse);
+  update(root);
+}
+
+/* ---------- Collapse helper ---------- */
+function collapse(d) {
+  if (d.children) {
+    d._children = d.children;
+    d._children.forEach(collapse);
+    d.children = null;
+  }
+}
+
+/* ---------- Update ---------- */
+function update(source) {
+  const treeData = treemap(root);
+  const nodes = treeData.descendants();
+  const links = treeData.links();
+
+  nodes.forEach(d => {
+    const base = width < 768 ? 80 : 200;
+    const offset = Math.min(300, d.data.name.length * 6);
+    d.y = d.depth * (base + offset / 8);
+  });
+
+  const node = svg.selectAll("g.node").data(nodes, d => d.id || (d.id = ++i));
+
+  const nodeEnter = node.enter().append("g")
+    .attr("class", "node")
+    .attr("transform", d => `translate(${source.y0},${source.x0})`)
+    .attr("tabindex", 0)
+    .attr("role", "button")
+    .attr("aria-label", d => d.data.name)
+    .attr("aria-expanded", d => d.children ? "true" : "false")
+    .style("opacity", 0)
+    .on("click", (event, d) => handleClick(d))
+    .on("keydown", (event, d) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        handleClick(d);
+      }
+    })
+    .on("mouseover", (event, d) => {
+      tooltip.transition().duration(200).style("opacity", 1);
+      tooltip.html(d.data.tooltip || "")
+        .style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY - 20) + "px");
+    })
+    .on("mousemove", (event) => {
+      tooltip.style("left", (event.pageX + 10) + "px").style("top", (event.pageY - 20) + "px");
+    })
+    .on("mouseout", () => tooltip.transition().duration(300).style("opacity", 0));
+
+  nodeEnter.append("circle")
+    .attr("class", "hit-area")
+    .attr("r", 22)
+    .style("fill", "transparent")
+    .style("cursor", "pointer");
+
+  nodeEnter.append("circle")
+    .attr("r", 1e-6)
+    .style("fill", d => getColor(d));
+
+  nodeEnter.append("text")
+    .attr("dy", "0.35em")
+    .attr("x", 0)
+    .text(d => d.data.name);
+
+  const nodeUpdate = nodeEnter.merge(node);
+  nodeUpdate.transition().duration(duration)
+    .ease(d3.easeCubicOut)
+    .attr("transform", d => `translate(${d.y},${d.x})`)
+    .style("opacity", 1);
+
+  nodeUpdate
+    .attr("aria-expanded", d => d.children ? "true" : "false");
+
+  nodeUpdate.selectAll("circle:not(.hit-area)")
+    .attr("r", 9)
+    .style("fill", d => getColor(d))
+    .style("stroke", "#A3B78C");
+
+  // EXIT: Remove old nodes
+  const nodeExit = node.exit().transition().duration(duration)
+    .attr("transform", d => `translate(${source.y},${source.x})`)
+    .style("opacity", 0)
+    .remove();
+  nodeExit.selectAll("circle").attr("r", 1e-6);
+
+  // LINKS
+  const link = svg.selectAll("path.link").data(links, d => d.target.id);
+  const diagonal = (s, d) => `M ${s.y},${s.x} L ${d.y},${d.x}`;
+  
+  link.enter().insert("path", "g")
+    .attr("class", "link")
+    .attr("d", d => diagonal(source, source))
+    .transition().duration(duration)
+    .attr("d", d => diagonal(d.source, d.target));
+  
+  link.transition().duration(duration)
+    .attr("d", d => diagonal(d.source, d.target));
+
+  // EXIT: Remove old links
+  link.exit().transition().duration(duration)
+    .attr("d", d => diagonal(source, source))
+    .remove();
+
+  nodes.forEach(d => { d.x0 = d.x; d.y0 = d.y; });
+}
+
+/* ---------- Color inheritance ---------- */
+function getColor(d) {
+  let current = d;
+  while (current) {
+    if (current.data.color) return current.data.color;
+    current = current.parent;
+  }
+  return "#52682D";
+}
+
+/* ---------- Click logic (exclusive main branches) ---------- */
+function handleClick(d) {
+  // If clicking the root node, just toggle it
+  if (d === root) {
+    if (d.children) {
+      d._children = d.children;
+      d.children = null;
+    } else {
+      d.children = d._children;
+      d._children = null;
+    }
+    treemap(root);
+    update(root);
+    return;
+  }
+
+  const isTopLevel = root.children && root.children.includes(d);
+
+  if (isTopLevel) {
+    // Close every other top-level branch before toggling the clicked one
+    root.children.forEach(branch => {
+      if (branch !== d) collapse(branch);
+    });
+  }
+
+  // Toggle this one
+  if (d.children) {
+    d._children = d.children;
+    d.children = null;
+  } else {
+    d.children = d._children;
+    d._children = null;
+  }
+
+  // Force refresh of the hierarchy and redraw
+  treemap(root);
+  update(root);
+}
+
+/* ---------- Init + Resize ---------- */
+drawTree();
+window.addEventListener("resize", drawTree);
+});
+</script>

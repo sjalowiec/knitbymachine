@@ -1,0 +1,241 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/header.astro";
+import Footer from "../components/footer.astro";
+import "../styles/global.css";
+---
+
+<BaseLayout 
+  title="Minimum Ease Comparison Chart | Knit by Machine" 
+  description="Compare recommended ease amounts for blouses, jackets, coats, skirts, and pants to ensure fit and comfort.">
+
+  <Header />
+
+  <main class="page-content">
+    <div class="ease-wrapper">
+
+      <!-- INTRO SECTION -->
+      <div class="ease-intro">
+        <h2>Minimum Ease Comparison Chart</h2>
+        <p class="ease-summary">
+          This chart compares the <strong>minimum recommended ease</strong> for different types of garments.
+          Ease is the extra room added to your body measurements to allow for movement and comfort.
+          The amount of ease you choose depends on garment style, fabric, and your personal fit preference.
+        </p>
+        <p class="ease-note">
+          <strong>NOTE:</strong> Larger figures will be more comfortable with more than the minimum amount of ease.<br />
+          Copyright © 2008 by the Association of Sewing and Design Professionals, Inc.
+          <a href="https://sewingprofessionals.com/" target="_blank">https://sewingprofessionals.com/</a> reproduced with permission.
+        </p>
+      </div>
+
+      <!-- TAB BUTTONS + TOGGLE -->
+      <div class="ease-tabs">
+        <button class="ease-tab active" data-tab="blouse">Blouse / Dress</button>
+        <button class="ease-tab" data-tab="jacket">Jacket</button>
+        <button class="ease-tab" data-tab="coat">Coat</button>
+        <button class="ease-tab" data-tab="skirt">Skirt / Pants</button>
+
+        <div class="ease-toggle">
+          <label class="switch">
+            <input type="checkbox" id="unitToggle" />
+            <span class="slider"></span>
+          </label>
+          <span class="unit-label">in / cm</span>
+        </div>
+      </div>
+
+      <!-- ===== BLOUSE / DRESS ===== -->
+      <div class="ease-tab-content active" id="blouse">
+        <div class="ease-row">
+          <div class="ease-col">
+            <h3>Ease — Blouse / Dress</h3>
+            <table class="ease-table">
+              <thead><tr><th></th><th>Description</th><th>Blouse / Dress</th></tr></thead>
+              <tbody>
+                <tr><td><span class="numb">1</span></td><td>Neck</td><td>.5–1"</td></tr>
+                <tr><td><span class="numb">2</span></td><td>High Bust or Chest</td><td>2.5–4"</td></tr>
+                <tr><td><span class="numb">3</span></td><td>Bust, Fullest Part</td><td>2.5–4"</td></tr>
+                <tr><td><span class="numb">4</span></td><td>Apex to Apex</td><td>0"</td></tr>
+                <tr><td><span class="numb">5</span></td><td>Back Waist Length</td><td>.5"</td></tr>
+                <tr><td><span class="numb">6</span></td><td>Back Blade Width</td><td>.5–1"</td></tr>
+                <tr><td><span class="numb">7</span></td><td>Back Shoulder Point to Shoulder Point</td><td>.25–.5"</td></tr>
+                <tr><td><span class="numb">8</span></td><td>Center Front Bodice Length</td><td>.5"</td></tr>
+                <tr><td><span class="numb">9</span></td><td>Shoulder to Bust</td><td>0"</td></tr>
+                <tr><td><span class="numb">10</span></td><td>Shoulder to Waist</td><td>.25–.5"</td></tr>
+                <tr><td><span class="numb">11</span></td><td>Shoulder Length</td><td>0"</td></tr>
+                <tr><td><span class="numb">12</span></td><td>Sleeve Length</td><td>0"</td></tr>
+                <tr><td><span class="numb">15</span></td><td>Arm Circumference</td><td>2–3"</td></tr>
+                <tr><td><span class="numb">17</span></td><td>Waist</td><td>.5–1"</td></tr>
+                <tr><td><span class="numb">18</span></td><td>High Hip</td><td>1.5–2"</td></tr>
+                <tr><td><span class="numb">19</span></td><td>Hip to Fullest Part</td><td>2–3"</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="ease-col">
+            <img src="https://cdn.prod.website-files.com/68c84aa7b083bfab49868c0f/68e6c2bc911670750fe24080_9f77bbf588e77c795133df1664ae9c86_ease_diagram.png" alt="Blouse/Dress Croquis" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== JACKET ===== -->
+      <div class="ease-tab-content" id="jacket">
+        <div class="ease-row">
+          <div class="ease-col">
+            <h3>Ease — Jacket</h3>
+            <table class="ease-table">
+              <thead><tr><th></th><th>Description</th><th>Jacket</th></tr></thead>
+              <tbody>
+                <tr><td><span class="numb">2</span></td><td>High Bust or Chest</td><td>3"</td></tr>
+                <tr><td><span class="numb">3</span></td><td>Bust, Fullest Part</td><td>3–4"</td></tr>
+                <tr><td><span class="numb">5</span></td><td>Back Waist Length</td><td>.5"</td></tr>
+                <tr><td><span class="numb">6</span></td><td>Back Blade Width</td><td>1"</td></tr>
+                <tr><td><span class="numb">7</span></td><td>Back Shoulder Width</td><td>1–1.5"</td></tr>
+                <tr><td><span class="numb">15</span></td><td>Arm Circumference</td><td>4"</td></tr>
+                <tr><td><span class="numb">17</span></td><td>Waist</td><td>3–6"</td></tr>
+                <tr><td><span class="numb">18</span></td><td>High Hip</td><td>3–6"</td></tr>
+                <tr><td><span class="numb">19</span></td><td>Hip to Fullest Part</td><td>4–8"</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="ease-col">
+            <img src="https://cdn.prod.website-files.com/68c84aa7b083bfab49868c0f/68e6c2bc911670750fe24080_9f77bbf588e77c795133df1664ae9c86_ease_diagram.png" alt="Jacket Croquis" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== COAT ===== -->
+      <div class="ease-tab-content" id="coat">
+        <div class="ease-row">
+          <div class="ease-col">
+            <h3>Ease — Coat</h3>
+            <table class="ease-table">
+              <thead><tr><th></th><th>Description</th><th>Coat</th></tr></thead>
+              <tbody>
+                <tr><td><span class="numb">2</span></td><td>High Bust or Chest</td><td>4"</td></tr>
+                <tr><td><span class="numb">3</span></td><td>Bust, Fullest Part</td><td>4–5"</td></tr>
+                <tr><td><span class="numb">6</span></td><td>Back Blade Width</td><td>1–1.5"</td></tr>
+                <tr><td><span class="numb">7</span></td><td>Back Shoulder Width</td><td>1–2"</td></tr>
+                <tr><td><span class="numb">15</span></td><td>Arm Circumference</td><td>4"</td></tr>
+                <tr><td><span class="numb">17</span></td><td>Waist</td><td>5–12"</td></tr>
+                <tr><td><span class="numb">18</span></td><td>High Hip</td><td>5–12"</td></tr>
+                <tr><td><span class="numb">19</span></td><td>Hip to Fullest Part</td><td>6–12"</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="ease-col">
+            <img src="https://cdn.prod.website-files.com/68c84aa7b083bfab49868c0f/68e6c2bc911670750fe24080_9f77bbf588e77c795133df1664ae9c86_ease_diagram.png" alt="Coat Croquis" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SKIRT / PANTS ===== -->
+      <div class="ease-tab-content" id="skirt">
+        <div class="ease-row">
+          <div class="ease-col">
+            <h3>Ease — Skirt / Pants</h3>
+            <table class="ease-table">
+              <thead><tr><th></th><th>Description</th><th>Pants</th><th>Skirt</th></tr></thead>
+              <tbody>
+                <tr><td><span class="numb">1</span></td><td>Waist</td><td>.5–1"</td><td>.5–1"</td></tr>
+                <tr><td><span class="numb">2</span></td><td>High Hip</td><td>1.5–2"</td><td>1.5–2"</td></tr>
+                <tr><td><span class="numb">3</span></td><td>Hip, Fullest Part</td><td>2–3"</td><td>2–3"</td></tr>
+                <tr><td><span class="numb">4</span></td><td>Crotch Depth</td><td>.5–1"</td><td>–</td></tr>
+                <tr><td><span class="numb">5</span></td><td>Crotch Length</td><td>1–2"</td><td>–</td></tr>
+                <tr><td><span class="numb">6</span></td><td>Thigh Circumference</td><td>2"</td><td>–</td></tr>
+                <tr><td><span class="numb">7</span></td><td>Calf Circumference</td><td>2"</td><td>–</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="ease-col">
+            <img src="https://cdn.prod.website-files.com/68c84aa7b083bfab49868c0f/68e6d3ba66c98b45c01adef1_skirt_pants_diagram.png" alt="Skirt/Pants Croquis" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<!-- ======================================== -->
+<!-- JS FOR TAB SWITCHING + UNIT TOGGLE -->
+<!-- ======================================== -->
+<script is:inline>
+  window.addEventListener("DOMContentLoaded", () => {
+    const tabs = document.querySelectorAll(".ease-tab");
+    const contents = document.querySelectorAll(".ease-tab-content");
+    const toggle = document.getElementById("unitToggle");
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((t) => t.classList.remove("active"));
+        contents.forEach((c) => c.classList.remove("active"));
+        tab.classList.add("active");
+        const target = document.getElementById(tab.dataset.tab);
+        if (target) target.classList.add("active");
+      });
+    });
+
+    if (toggle) {
+      toggle.addEventListener("change", function () {
+        const isCM = this.checked;
+        const cells = document.querySelectorAll(
+          ".ease-table td:last-child, .ease-table td:nth-child(3), .ease-table td:nth-child(4)"
+        );
+        cells.forEach((cell) => {
+          if (isCM) {
+            cell.textContent = cell.textContent.replace(
+              /(\d*\.?\d*)("|”)/g,
+              (_, n) => Math.round(parseFloat(n) * 2.54) + " cm"
+            );
+          } else {
+            location.reload();
+          }
+        });
+      });
+    }
+  });
+</script>
+
+<!-- ======================================== -->
+<!-- STYLES -->
+<!-- ======================================== -->
+<style>
+.ease-wrapper {font-family:inherit;color:#333;padding-top:40px;}
+.ease-intro {margin-bottom:40px;text-align:left;}
+.ease-intro h2 {font-size:1.8em;color:#6E8B3D;font-weight:700;margin-bottom:10px;border-bottom:2px solid #6E8B3D;display:inline-block;padding-bottom:4px;}
+.ease-summary {font-size:1.1em;margin-top:8px;margin-bottom:20px;line-height:1.6;}
+.ease-note {font-size:.95em;background:#f5f5f5;border-left:4px solid #6E8B3D;padding:10px 14px;border-radius:4px;color:#555;}
+.ease-note a {color:#6E8B3D;text-decoration:none;font-weight:600;}
+.ease-note a:hover {text-decoration:underline;}
+
+.ease-tabs {display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;align-items:center;}
+.ease-tab {padding:10px 16px;border:1px solid #ccc;background:#f5f5f5;color:#6E8B3D;font-weight:600;border-radius:6px;cursor:pointer;transition:all .25s ease;}
+.ease-tab.active,.ease-tab:hover {background:#6E8B3D;color:#fff;border-color:#6E8B3D;}
+.ease-toggle {margin-left:auto;display:flex;align-items:center;gap:6px;}
+.switch {position:relative;display:inline-block;width:40px;height:20px;}
+.switch input {opacity:0;width:0;height:0;}
+.slider {position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:.3s;border-radius:20px;}
+.slider:before {position:absolute;content:"";height:14px;width:14px;left:3px;bottom:3px;background-color:white;transition:.3s;border-radius:50%;}
+input:checked + .slider {background-color:#6E8B3D;}
+input:checked + .slider:before {transform:translateX(20px);}
+.unit-label {font-size:14px;color:#555;font-weight:600;}
+
+.ease-tab-content {display:none !important;opacity:0;transform:translateY(10px);transition:opacity .4s ease,transform .4s ease;}
+.ease-tab-content.active {display:block !important;opacity:1;transform:translateY(0);}
+.ease-row {display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;}
+.ease-col {flex:1 1 360px;}
+.ease-col img {width:100%;height:auto;display:block;}
+.ease-table {width:100%;border-collapse:collapse;margin-top:8px;font-size:16px;}
+.ease-table th {background:#6E8B3D;color:#fff;padding:8px;text-align:center;}
+.ease-table td {padding:6px 8px;border-bottom:1px solid #e9e9e9;}
+.ease-table td:first-child {text-align:center;}
+.numb {display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:#6E8B3D;color:#fff;border-radius:50%;font-size:12px;font-weight:700;}
+
+@media(max-width:767px){
+  .ease-row{flex-direction:column-reverse;}
+  .ease-tab{flex:1 1 auto;text-align:center;}
+}
+</style>

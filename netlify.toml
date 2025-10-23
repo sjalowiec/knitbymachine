@@ -1,0 +1,6 @@
+# Knit by Machine - Wizard Rewrites
+[[redirects]]
+  from = "/wizards/*"
+  to = "https://wizards.knitbymachine.com/:splat"
+  status = 200
+  force = true
