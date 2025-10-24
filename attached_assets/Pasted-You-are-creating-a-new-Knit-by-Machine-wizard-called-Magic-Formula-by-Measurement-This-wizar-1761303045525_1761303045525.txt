@@ -1,0 +1,73 @@
+You are creating a new Knit by Machine wizard called **Magic Formula by Measurement**.  
+This wizard should use the same overall layout, structure, and styling as other Knit by Machine wizards (like Magic Formula by Stitches, Gauge Calculator, Stitch Multiples, etc.) using the shared stylesheet:
+https://www.knitbymachine.com/assets/css/custom.css
+
+🎯 PURPOSE
+This version of the Magic Formula helps knitters calculate shaping based on *measurements* (inches or centimeters) instead of direct stitch counts.  
+It uses the same logic as the “by Stitches” version but converts measurement differences into stitches and rows based on the user’s gauge.
+
+🧩 WIZARD DETAILS
+
+💡 TITLE
+Magic Formula by Measurement
+
+🧵 DESCRIPTION (shown below title)
+Shape your knitting using real measurements instead of stitch counts.  
+Enter your starting and ending widths, your row length, and gauge to instantly see your shaping instructions.
+
+📥 INPUT FIELDS
+Each input uses a placeholder as the instruction text:
+1. Starting width → placeholder: "Starting width (in inches or cm)"
+2. Ending width → placeholder: "Ending width (in inches or cm)"
+3. Total length → placeholder: "Total length in rows or inches"
+4. Stitch gauge → placeholder: "Stitches per inch (or per cm)"
+5. Row gauge → placeholder: "Rows per inch (or per cm)"
+6. Dropdown or toggle → "Units:"
+   - Inches
+   - Centimeters
+7. Dropdown or radio buttons → "Shape on:"
+   - One side only
+   - Both sides
+
+⚙️ LOGIC
+1. Convert widths into stitches using stitch gauge:
+   - start_sts = starting_width × stitch_gauge  
+   - end_sts = ending_width × stitch_gauge
+2. Determine total stitch difference = (end_sts - start_sts)
+   - Positive = increases
+   - Negative = decreases
+3. Convert total length (if given in inches/cm) into rows:
+   - total_rows = total_length × row_gauge
+4. Calculate shaping interval:
+   - spacing = total_rows ÷ |stitch_difference|
+   - Round to nearest whole number
+5. Generate instructions:
+   - If shaping both sides → "Increase 1 stitch at each end every X rows, Y times."
+   - If one side → "Decrease 1 stitch at the end of every X rows, Y times."
+6. If spacing is uneven, display note:
+   “Your shaping doesn’t divide evenly — alternate every X and (X+1) rows to distribute evenly.”
+
+📤 OUTPUT
+- Styled results box with summary and instructions.
+- Optional note for uneven division.
+- “Copy Instructions” button.
+
+💅 STYLE
+- Same container and class structure as other KBM wizards.
+- Centered layout, max-width 600px.
+- Use green accent color (#6E8B3D) for headings and buttons.
+- Inputs should use placeholders instead of labels.
+- Mobile-friendly layout with stacked fields.
+
+📜 META
+Meta Title: Magic Formula by Measurement | Knit by Machine  
+Meta Description: Calculate shaping with the Magic Formula using measurements. Enter your starting and ending widths and gauge to create clear knitting instructions.  
+Keywords: magic formula, shaping calculator, knitting measurements, increase stitches, decrease stitches, machine knitting tools
+
+📁 FILE STRUCTURE
+Single HTML file with inline JavaScript and inline CSS block.  
+Link to KBM shared stylesheet.  
+Include comments marking header/footer injection points for global components.
+
+🚀 DEPLOY
+Deploy to Netlify under the slug `/magic-formula-measurement`.
