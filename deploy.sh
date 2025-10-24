@@ -2,21 +2,19 @@
 
 set -e
 
-echo "🔨 Building wizards..."
-npm run build
-
-echo "📦 Staging changes..."
-git add dist/
-
-if git diff --cached --quiet; then
+echo "📦 Checking for changes..."
+if git diff --quiet && git diff --cached --quiet; then
   echo "✅ No changes to deploy"
   exit 0
 fi
 
 echo "💾 Committing changes..."
-git commit -m "Deploy: $(date '+%Y-%m-%d %H:%M:%S')"
+git commit -am "Deploy: $(date '+%Y-%m-%d %H:%M:%S')" || {
+  echo "⚠️  No tracked files to commit. Stage new files with 'git add' first."
+  exit 1
+}
 
 echo "🚀 Pushing to GitHub..."
 git push origin main || git push origin master
 
-echo "✅ Deploy complete! Check Netlify for deployment status."
+echo "✅ Deploy complete! Netlify will build automatically."
