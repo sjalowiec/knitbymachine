@@ -2,7 +2,13 @@
 
 ## Overview
 
-Knit by Machine is a web application for machine knitting enthusiasts. It provides interactive tools and wizards to help users create custom knitting patterns, calculate gauge, and access sizing information for various knitting projects. The site offers pattern generators (boat neck sweaters, blankets), calculation tools (gauge calculator, conversion calculator), practice exercises (neckline shaping), and comprehensive sizing charts for different garment categories.
+Knit by Machine is a web application for machine knitting enthusiasts. It provides interactive tools and wizards to help users create custom knitting patterns, calculate gauge, and access sizing information for various knitting projects. The site offers pattern generators (boat neck sweaters, blankets), calculation tools (gauge calculator, conversion calculator, Magic Formula by Measurement), practice exercises (neckline shaping), and comprehensive sizing charts for different garment categories.
+
+## Recent Changes
+
+### December 2024
+- **Magic Formula by Measurement Wizard**: New calculation tool that helps knitters determine shaping instructions based on real measurements (inches/cm) instead of stitch counts. Features automatic gauge conversion, support for one-side or both-sides shaping, and intelligent handling of uneven division cases.
+- **Deployment Workflow**: Simplified deployment process with `deploy.sh` script that commits source changes and pushes to GitHub, triggering automatic Netlify builds.
 
 ## User Preferences
 
