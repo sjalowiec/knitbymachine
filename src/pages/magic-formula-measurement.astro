@@ -56,6 +56,14 @@ const pageDescription = "Calculate shaping with the Magic Formula using measurem
       font-weight: 600;
       margin: 0 0 0.5rem 0;
       text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    h1 i {
+      font-size: 1.5rem;
     }
 
     .description {
@@ -233,19 +241,30 @@ const pageDescription = "Calculate shaping with the Magic Formula using measurem
 </head>
 <body>
   <div class="wizard-container">
-    <h1>Magic Formula by Measurement</h1>
+    <h1>
+      <i class="fas fa-hat-wizard"></i>
+      Magic Formula by Measurement
+    </h1>
     <p class="description">
       Shape your knitting using real measurements instead of stitch counts.<br>
       Enter your starting and ending widths, your row length, and gauge to instantly see your shaping instructions.
     </p>
 
     <form id="wizard-form">
+      <div class="input-group toggle-group">
+        <label>Units:</label>
+        <div class="button-group">
+          <button type="button" class="toggle-btn active" data-group="units" data-value="inches">Inches</button>
+          <button type="button" class="toggle-btn" data-group="units" data-value="cm">Centimeters</button>
+        </div>
+      </div>
+
       <div class="input-group">
         <input 
           type="number" 
           id="startWidth" 
           step="0.25" 
-          placeholder="Starting width (in inches or cm)"
+          placeholder="Starting width in inches"
           required
         />
       </div>
@@ -255,7 +274,7 @@ const pageDescription = "Calculate shaping with the Magic Formula using measurem
           type="number" 
           id="endWidth" 
           step="0.25" 
-          placeholder="Ending width (in inches or cm)"
+          placeholder="Ending width in inches"
           required
         />
       </div>
@@ -265,7 +284,7 @@ const pageDescription = "Calculate shaping with the Magic Formula using measurem
           type="number" 
           id="totalLength" 
           step="0.25" 
-          placeholder="Total length in rows or inches"
+          placeholder="Total length in inches"
           required
         />
       </div>
@@ -275,7 +294,7 @@ const pageDescription = "Calculate shaping with the Magic Formula using measurem
           type="number" 
           id="stitchGauge" 
           step="0.1" 
-          placeholder="Stitches per inch (or per cm)"
+          placeholder="Stitches per inch"
           required
         />
       </div>
@@ -285,17 +304,9 @@ const pageDescription = "Calculate shaping with the Magic Formula using measurem
           type="number" 
           id="rowGauge" 
           step="0.1" 
-          placeholder="Rows per inch (or per cm)"
+          placeholder="Rows per inch"
           required
         />
-      </div>
-
-      <div class="input-group toggle-group">
-        <label>Units:</label>
-        <div class="button-group">
-          <button type="button" class="toggle-btn active" data-group="units" data-value="inches">Inches</button>
-          <button type="button" class="toggle-btn" data-group="units" data-value="cm">Centimeters</button>
-        </div>
       </div>
 
       <div class="input-group toggle-group">
