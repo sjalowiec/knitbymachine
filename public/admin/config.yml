@@ -1,6 +1,7 @@
 backend:
-  name: git-gateway
-  branch: main  # use your default branch name
+  name: github
+  repo: sjalowiec/knitbymachine.com  
+  branch: main
 
 media_folder: "public/assets/glossary"
 public_folder: "/assets/glossary"

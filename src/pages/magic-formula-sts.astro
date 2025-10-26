@@ -1,0 +1,52 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Header />
+
+<main class="page-content" style="padding:60px 20px; background-color:#f5f7f1; min-height:80vh;">
+  <section class="wizard-section" style="max-width:900px; margin:0 auto; text-align:center;">
+    <h1 style="color:#2C3A57; font-size:2.4rem; font-weight:700; margin-bottom:15px;">
+      Magic Formula Wizard
+    </h1>
+    <p style="font-size:1.2rem; color:#52682D; margin-bottom:30px; line-height:1.6;">
+      Create perfect shaping instructions for your knitting projects.
+      Enter your starting and ending stitch counts and your gauge — the Magic Formula does the math for you.
+    </p>
+
+    <!-- Wizard mount point -->
+    <div id="wizard-container" class="wizard-container"></div>
+  </section>
+</main>
+
+<Footer />
+
+<!-- Load the wizard app -->
+<script type="module" src="https://wizards.knitbymachine.com/magic-formula/index.js"></script>
+
+<style>
+  /* === Wizard container styling === */
+  .wizard-container {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    padding: 40px 25px;
+    margin-top: 30px;
+    text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    .wizard-container {
+      padding: 25px 15px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+</style>

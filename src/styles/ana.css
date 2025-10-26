@@ -1,0 +1,255 @@
+/* =========================================================
+   Ask ’n Answer (Help Hub) Styles — Stable Version
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&display=swap');
+
+/* ===== Container ===== */
+.ana-container {
+  max-width: 700px;
+  margin: 10px auto 60px;
+  font-family: "Open Sans", sans-serif;
+  position: relative;
+  overflow: visible;
+  padding-top: 0;
+}
+
+/* ===== Header Section ===== */
+.ana-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  gap: 16px;
+  margin-top: 80px;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.ana-header-icon {
+  width: 175px;
+  height: auto;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.ana-header-icon:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 8px rgba(110,139,61,0.35));
+}
+
+.ana-header-text h1 {
+  font-family: "Shadows Into Light Two", cursive;
+  font-size: 2.6em;
+  font-weight: 700;
+  color: #52682D;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+}
+
+.ana-subtitle {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1em;
+  color: #738C52;
+  margin-top: 4px;
+  text-align: left;
+}
+
+/* ===== Divider below header ===== */
+.ana-divider {
+  width: 80%;
+  max-width: 700px;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    #C1C9AE 15%,
+    #C1C9AE 85%,
+    transparent 100%
+  );
+  margin: 12px auto 20px;
+  border-radius: 2px;
+}
+
+/* =========================================================
+   Question Bubble (unchanged)
+   ========================================================= */
+.question-bubble {
+  background-color: #F6F8F2;
+  border: 2px solid #6E8B3D;
+  color: #2C3A57;
+  border-radius: 18px;
+  padding: 20px 25px;
+  margin: 25px 0;
+  position: relative;
+  line-height: 1.6;
+  max-width: 85%;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  animation: slideInLeft 0.8s ease-out both;
+}
+
+.question-bubble::before,
+.question-bubble::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background-color: #F6F8F2;
+  border: 2px solid #6E8B3D;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.18));
+}
+
+.question-bubble::before {
+  width: 22px;
+  height: 22px;
+  left: -30px;
+  top: 28px;
+}
+
+.question-bubble::after {
+  width: 14px;
+  height: 14px;
+  left: -50px;
+  top: 50px;
+}
+
+.question-bubble h2 {
+  font-size: 1.3em;
+  margin: 0;
+  color: #2C3A57;
+}
+
+/* =========================================================
+   Answer Bubble (NEW — Triangle Tail, all content inside)
+   ========================================================= */
+.answer-bubble {
+  position: relative;
+  background: #FAF8F3;
+  border: 2px solid #52682D;
+  border-radius: 18px;
+  padding: 20px 25px;
+  color: #2C3A57;
+  line-height: 1.6;
+  max-width: 85%;
+  margin-left: auto;
+  margin-top: 25px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  animation: slideInRight 0.8s ease-out both;
+  animation-delay: 0.3s;
+}
+
+/* Tail border (outer layer) */
+.answer-bubble::before {
+  content: "";
+  position: absolute;
+  top: 40%;
+  right: -22px;
+  transform: translateY(-50%);
+  border-width: 14px 0 14px 22px;
+  border-style: solid;
+  border-color: transparent transparent transparent #52682D;
+}
+
+/* Tail fill (inner layer) */
+.answer-bubble::after {
+  content: "";
+  position: absolute;
+  top: 40%;
+  right: -19px;
+  transform: translateY(-50%);
+  border-width: 12px 0 12px 20px;
+  border-style: solid;
+  border-color: transparent transparent transparent #FAF8F3;
+}
+
+/* =========================================================
+   Video Embed (inside bubble)
+   ========================================================= */
+.ana-video iframe {
+  width: 100%;
+  height: 360px;
+  border-radius: 10px;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+}
+
+/* =========================================================
+   Animations
+   ========================================================= */
+@keyframes slideInLeft {
+  0% { opacity: 0; transform: translateX(-40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  0% { opacity: 0; transform: translateX(40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* =========================================================
+   Responsive Adjustments
+   ========================================================= */
+@media (max-width: 768px) {
+  .ana-page-header {
+    flex-direction: column;
+    text-align: center;
+    margin-top: 120px;
+    gap: 10px;
+  }
+
+  .ana-header-icon {
+    width: 140px;
+  }
+
+  .ana-header-text h1 {
+    font-size: 2.2em;
+    text-align: center;
+  }
+
+  .ana-subtitle {
+    font-size: 0.95em;
+    text-align: center;
+  }
+
+  .ana-divider {
+    width: 90%;
+  }
+
+  .question-bubble,
+  .answer-bubble {
+    max-width: 100%;
+    margin: 30px 0;
+    padding: 18px;
+  }
+
+/* Outer curved tail (border outline) */
+/* Outer curved tail (border outline) */
+.answer-bubble::before {
+  content: "";
+  position: absolute;
+  top: 45%;
+  right: -26px;
+  width: 32px;
+  height: 26px;
+  background-color: #52682D; /* outline color */
+  border-radius: 50% 0 0 50%; /* curve the right edge */
+  transform: rotate(-10deg);
+  box-shadow: 0 3px 4px rgba(0,0,0,0.15);
+  z-index: 0;
+}
+
+/* Inner curved tail (fill color) */
+.answer-bubble::after {
+  content: "";
+  position: absolute;
+  top: 45%;
+  right: -23px;
+  width: 28px;
+  height: 22px;
+  background-color: #FAF8F3; /* bubble fill */
+  border-radius: 50% 0 0 50%;
+  transform: rotate(-10deg);
+  z-index: 1;
+}
+}

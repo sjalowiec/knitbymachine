@@ -1,0 +1,16 @@
+[
+  {
+    "id": "dropped-stitches",
+    "question": "How can I fix dropped stitches on my knitting machine?",
+    "answer": "Use a latch tool to hook the dropped stitch and bring it back up to the needle bed. Secure it in the hook of the needle, then knit a few rows by hand or with the carriage to blend it in.",
+    "video": "https://videos.knitbymachine.com/dropped-stitches.mp4",
+    "tags": ["troubleshooting", "repairs"]
+  },
+  {
+    "id": "tension-mast-assembly",
+    "question": "How do I unfold and assemble a folded tension mast?",
+    "answer": "Lift the tension mast from its folded position, rotate the arms upright until they lock in place, then align the yarn guides at the top. Make sure the spring tension units face forward and are parallel before threading the yarn.",
+    "video": "https://player.vimeo.com/video/1129979374",
+    "tags": ["setup", "assembly"]
+  }
+]
