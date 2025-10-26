@@ -6,50 +6,11 @@
     <title>Knit by Machine CMS</title>
   </head>
   <body>
-    <!-- Load Decap CMS -->
-    <script src="https://unpkg.com/decap-cms@latest/dist/decap-cms.js"></script>
+  <!-- Load Decap CMS -->
+  <script src="https://unpkg.com/decap-cms@latest/dist/decap-cms.js"></script>
+  <script>
+    CMS.init();
+  </script>
+</body>
 
-    <!-- Initialize Decap CMS using GitHub backend -->
-    <script>
-      CMS.init({
-        config: {
-          backend: {
-            name: "github",
-            repo: "sjalowiec/knitbymachine.com", // your GitHub repo
-            branch: "main",
-          },
-          media_folder: "public/assets/glossary",
-          public_folder: "/assets/glossary",
-          collections: [
-            {
-              name: "glossary",
-              label: "Glossary",
-              folder: "src/data/glossary",
-              create: true,
-              slug: "{{slug}}",
-              fields: [
-                { label: "Term", name: "term", widget: "string" },
-                { label: "Short Definition", name: "short", widget: "text" },
-                { label: "Long Description", name: "long", widget: "markdown" },
-                {
-                  label: "Category",
-                  name: "category",
-                  widget: "select",
-                  options: [
-                    "Technique",
-                    "Machine Control",
-                    "Finishing",
-                    "Yarn & Gauge",
-                    "Troubleshooting",
-                  ],
-                },
-                { label: "GIF or Image", name: "media", widget: "image" },
-                { label: "Related Terms", name: "related", widget: "list" },
-              ],
-            },
-          ],
-        },
-      });
-    </script>
-  </body>
 </html>
