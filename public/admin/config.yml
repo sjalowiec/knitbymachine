@@ -1,6 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: sjalowiec/knitbymachine.com
   branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: oauth
 
 media_folder: "public/assets/glossary"
 public_folder: "/assets/glossary"
