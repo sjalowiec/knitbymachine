@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: sjalowiec/knitbymachine.com  
+  repo: sjalowiec/knitbymachine.com
   branch: main
 
 media_folder: "public/assets/glossary"
