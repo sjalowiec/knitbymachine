@@ -4,6 +4,7 @@ backend:
   branch: main
   base_url: https://api.netlify.com
   auth_endpoint: oauth
+  site_id: bc75703a-46c0-407b-889f-763c08952446
 
 media_folder: "public/assets/glossary"
 public_folder: "/assets/glossary"
