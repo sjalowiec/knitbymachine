@@ -1,14 +1,7 @@
 backend:
-  name: github
-  repo: sjalowiec/knitbymachine.com
+  name: git-gateway
   branch: main
-  auth_type: implicit
-  app_id: 0v23lippdQrpzIyPJ6sv
-  base_url: https://api.netlify.com
-  site_id: bc75703a-46c0-407b-889f-763c08952446
-  api_root: https://api.github.com
-  redirect_uri: https://knitbymachine.netlify.app/admin/callback
-  
+
 media_folder: "public/assets/glossary"
 public_folder: "/assets/glossary"
 
