@@ -388,10 +388,13 @@ const pageDescription = "Calculate shaping with the Magic Formula using measurem
   </div>
 
   <script is:inline>
+    const unitToggle = document.getElementById('unitToggle');
+
     // Function to update placeholders based on unit
-    function updatePlaceholders(unit) {
-      const unitLabel = unit === 'inches' ? 'inches' : 'cm';
-      const unitPerLabel = unit === 'inches' ? 'inch' : 'cm';
+    function updatePlaceholders() {
+      const isCm = unitToggle.checked;
+      const unitLabel = isCm ? 'cm' : 'inches';
+      const unitPerLabel = isCm ? 'cm' : 'inch';
       
       document.getElementById('startWidth').placeholder = `Starting width in ${unitLabel}`;
       document.getElementById('endWidth').placeholder = `Ending width in ${unitLabel}`;
@@ -401,33 +404,25 @@ const pageDescription = "Calculate shaping with the Magic Formula using measurem
     }
 
     // Load saved unit preference from localStorage
-    const savedUnit = localStorage.getItem('kbm-unit-preference') || 'inches';
-    
-    // Apply saved preference on page load
-    document.querySelectorAll('[data-group="units"]').forEach(btn => {
-      if (btn.dataset.value === savedUnit) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
-    });
-    updatePlaceholders(savedUnit);
+    const savedUnit = localStorage.getItem('kbm-unit-preference') || 'in';
+    if (savedUnit === 'cm') {
+      unitToggle.checked = true;
+    }
+    updatePlaceholders();
 
-    // Toggle button handling
-    document.querySelectorAll('.toggle-btn').forEach(btn => {
+    // Unit toggle change handler
+    unitToggle.addEventListener('change', function() {
+      updatePlaceholders();
+      localStorage.setItem('kbm-unit-preference', this.checked ? 'cm' : 'in');
+    });
+
+    // Sides button handling
+    document.querySelectorAll('.sides-btn').forEach(btn => {
       btn.addEventListener('click', function() {
-        const group = this.dataset.group;
-        document.querySelectorAll(`[data-group="${group}"]`).forEach(b => {
+        document.querySelectorAll('.sides-btn').forEach(b => {
           b.classList.remove('active');
         });
         this.classList.add('active');
-        
-        // If units toggle, update placeholders and save preference
-        if (group === 'units') {
-          const selectedUnit = this.dataset.value;
-          updatePlaceholders(selectedUnit);
-          localStorage.setItem('kbm-unit-preference', selectedUnit);
-        }
       });
     });
 
@@ -440,8 +435,8 @@ const pageDescription = "Calculate shaping with the Magic Formula using measurem
       const totalLength = parseFloat(document.getElementById('totalLength').value);
       const stitchGauge = parseFloat(document.getElementById('stitchGauge').value);
       const rowGauge = parseFloat(document.getElementById('rowGauge').value);
-      const units = document.querySelector('[data-group="units"].active').dataset.value;
-      const sides = document.querySelector('[data-group="sides"].active').dataset.value;
+      const units = unitToggle.checked ? 'cm' : 'inches';
+      const sides = document.querySelector('.sides-btn.active').dataset.value;
 
       // Calculate stitches from measurements
       const startStitches = Math.round(startWidth * stitchGauge);
