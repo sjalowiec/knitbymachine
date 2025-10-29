@@ -306,11 +306,14 @@ const pageDescription = "Calculate shaping with the Magic Formula using measurem
     </p>
 
     <form id="wizard-form">
-      <div class="input-group toggle-group">
-        <label>Units:</label>
-        <div class="button-group">
-          <button type="button" class="toggle-btn active" data-group="units" data-value="inches">Inches</button>
-          <button type="button" class="toggle-btn" data-group="units" data-value="cm">Centimeters</button>
+      <div class="toggle-group">
+        <div class="unit-toggle-wrapper">
+          <span class="unit-label">in</span>
+          <label class="switch">
+            <input type="checkbox" id="unitToggle">
+            <span class="slider"></span>
+          </label>
+          <span class="unit-label">cm</span>
         </div>
       </div>
 
@@ -364,11 +367,11 @@ const pageDescription = "Calculate shaping with the Magic Formula using measurem
         />
       </div>
 
-      <div class="input-group toggle-group">
-        <label>Shape on:</label>
-        <div class="button-group">
-          <button type="button" class="toggle-btn active" data-group="sides" data-value="both">Both sides</button>
-          <button type="button" class="toggle-btn" data-group="sides" data-value="one">One side only</button>
+      <div class="input-group" style="display: flex; gap: 1rem; align-items: center;">
+        <label style="font-weight: 500; color: var(--text-dark); min-width: 80px;">Shape on:</label>
+        <div class="sides-group">
+          <button type="button" class="sides-btn active" data-group="sides" data-value="both">Both sides</button>
+          <button type="button" class="sides-btn" data-group="sides" data-value="one">One side only</button>
         </div>
       </div>
 
