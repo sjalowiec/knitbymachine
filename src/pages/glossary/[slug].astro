@@ -204,11 +204,21 @@ const embedUrl = toEmbedUrl(term.videoUrl);
     }
 
     .container{max-width:min(1100px,96vw);margin:0 auto;padding:0 20px;}
-    .detail-wrap{padding-top:16px;}
+    .detail-wrap{padding-top:120px;}
 
     .topbar{margin-bottom:1rem;}
-    .crumb{color:var(--kbm-green);text-decoration:none;font-weight:600;}
-    .crumb:hover{text-decoration:underline;}
+    .crumb{
+      display:inline-block;
+      color:var(--kbm-green);
+      text-decoration:none;
+      font-weight:700;
+      font-size:1.05rem;
+      padding:0.5rem 1rem;
+      background:#f0f4ea;
+      border-radius:8px;
+      margin-bottom:0.75rem;
+    }
+    .crumb:hover{background:var(--kbm-green);color:#fff;}
     .term-title{margin:.25rem 0 0;color:var(--kbm-text);font-weight:800;}
     .term-sub{color:var(--kbm-muted);max-width:70ch;margin:.35rem 0 0;}
 

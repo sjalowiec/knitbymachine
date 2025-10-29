@@ -256,10 +256,18 @@ function buildGlossaryUrl(params: { q?: string; letter?: string }): string {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.header-search {
+  flex: 1;
+  max-width: 400px;
+  min-width: 280px;
 }
 .header-search form {
   display: flex;
-  gap: 0.5rem;
+  gap: 0;
+  width: 100%;
 }
 .description {
   margin-bottom: 1.5rem;
