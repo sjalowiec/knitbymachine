@@ -1,0 +1,213 @@
+---
+import Layout from "../layouts/layout.astro";
+import Card from "../components/Card.astro";
+import "../styles/cards.css";
+import groq from "groq";
+import { createClient } from "@sanity/client";
+
+// --- SANITY CLIENT ---
+const sanity = createClient({
+  projectId: "x01v56io",
+  dataset: "production",
+  apiVersion: "2025-01-01",
+  useCdn: true,
+});
+
+// --- QUERY ---
+const query = /* groq */ `
+  *[_type == "term" && status == "published"]{
+    title,
+    "slug": slug.current,
+    excerpt,
+    "definition": pt::text(definition),
+    "image": media.asset->url,
+    imageAlt,
+    relatedLinks[]{
+      label,
+      url,
+      kind
+    },
+    aliases,
+    "related": related[]->{title}
+  } | order(title asc)
+`;
+
+
+let entries = [];
+try {
+  entries = await sanity.fetch(query);
+} catch {
+  entries = [];
+}
+
+// --- PAGE META ---
+const pageTitle = "Glossary";
+const pageDescription = "Plain-language definitions for machine knitting terms.";
+const ALPHA = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
+---
+
+<style>
+/* keep your existing styles + ensure back image fills cleanly */
+.kbm-flip__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #faf8f5;
+  display: block;
+}
+.related-links {
+  text-align: center;
+  margin-top: 0.75rem;
+}
+.related-links a {
+  color: #0070f3;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.related-links a:hover {
+  text-decoration: underline;
+}
+</style>
+
+<Layout>
+  <section style="padding-top: 140px; padding-bottom: 80px;">
+    <header style="text-align:center; margin-bottom:1.25rem;">
+      <h1>{pageTitle}</h1>
+      <p style="color:#555;">{pageDescription}</p>
+    </header>
+
+    {entries.length === 0 ? (
+      <div class="empty">
+        <p>No glossary entries found.</p>
+        <p style="margin-top:.5rem;">Ensure your docs are <strong>Published</strong> in Sanity.</p>
+      </div>
+    ) : (
+      <div class="glossary-layout">
+        <aside class="alpha-rail" id="alpha-rail">
+          {ALPHA.map((L) => entries.some((e) => e.title.charAt(0).toUpperCase() === L)
+            ? <a href={`#${L}`} data-letter={L} class="alpha-btn">{L}</a>
+            : <span class="alpha-btn" aria-disabled="true">{L}</span>
+          )}
+        </aside>
+
+        <div>
+          <div class="search-wrap">
+            <input id="gsearch" class="search-input" type="search" placeholder="Search terms…" />
+          </div>
+
+          <div id="cards" class="cards-grid">
+            {entries.map((e) => {
+              const L = e.title.charAt(0).toUpperCase();
+              const id = e.title.toLowerCase().replace(/\s+/g, "-");
+              return (
+                <Card
+                  class="kbm-card"
+                  id={id}
+                  data-letter={L}
+                  data-term={e.title.toLowerCase()}
+                  data-aka={(e.aliases || []).join("|").toLowerCase()}
+                >
+                  <div id={L} style="position:relative; top:-96px;"></div>
+
+                  <div class="kbm-flip" data-flip>
+                    <div class="kbm-flip__inner">
+                      <!-- FRONT -->
+                      <div class="kbm-flip__face">
+                        <h3 class="kbm-card-title">{e.title}</h3>
+                        {e.aliases?.length ? (
+                          <p style="margin-bottom:.5rem;">Also known as: {e.aliases.join(", ")}</p>
+                        ) : null}
+                        <p>{e.excerpt || e.definition}</p>
+
+                        <div class="actions">
+                          <button class="btn btn--primary" data-action="flip" type="button"
+                            onclick="const f=this.closest('[data-term]').querySelector('[data-flip]'); if(f){f.classList.toggle('is-flipped');}">
+                            Flip for Image
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- BACK -->
+                      <div class="kbm-flip__face kbm-flip__back" style="display:flex;flex-direction:column;align-items:center;justify-content:space-between;">
+                        <div style="flex:1;width:100%;display:flex;align-items:center;justify-content:center;">
+                          {e.image ? (
+                            <img class="kbm-flip__img" src={e.image} alt={e.imageAlt || e.title} loading="lazy" />
+                          ) : (
+                            <p>No image available</p>
+                          )}
+                        </div>
+
+                        <div class="related-links">
+                          {e.relatedLinks && e.relatedLinks.length > 0 ? (
+                            e.relatedLinks.map(link => (
+                              <div>
+                                <a href={link.url} target="_blank" rel="noopener noreferrer">{link.label} →</a>
+                              </div>
+                            ))
+                          ) : (
+                            <a href={`/glossary/${e.slug}`}>View full page →</a>
+                          )}
+                        </div>
+
+                        <div class="actions">
+                          <button class="btn" data-action="flip" type="button"
+                            onclick="const f=this.closest('[data-term]').querySelector('[data-flip]'); if(f){f.classList.toggle('is-flipped');}">
+                            Back
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+
+          <div id="empty" class="empty" style="display:none; margin-top:1rem;">
+            No terms match your search.
+          </div>
+        </div>
+      </div>
+    )}
+  </section>
+</Layout>
+
+<script>
+(function () {
+  const input = document.getElementById('gsearch');
+  const grid = document.getElementById('cards');
+  const cards = grid ? Array.from(grid.querySelectorAll('[data-term]')) : [];
+  const empty = document.getElementById('empty');
+  const rail = document.getElementById('alpha-rail');
+  const alphaBtns = rail ? Array.from(rail.querySelectorAll('[data-letter], .alpha-btn')) : [];
+  const norm = (s) => (s || '').normalize('NFKD').toLowerCase();
+
+  function updateAlphaButtons(visibleCards) {
+    const visibleLetters = new Set(visibleCards.map(c => c.getAttribute('data-letter')));
+    alphaBtns.forEach(btn => {
+      const L = btn.getAttribute('data-letter'); if (!L) return;
+      const active = visibleLetters.has(L);
+      if (active) { btn.setAttribute('aria-disabled','false'); btn.setAttribute('href','#'+L); }
+      else { btn.setAttribute('aria-disabled','true'); btn.removeAttribute('href'); }
+    });
+  }
+
+  function applyFilter() {
+    const q = norm(input?.value);
+    const visible = [];
+    for (const card of cards) {
+      const term = card.getAttribute('data-term') || '';
+      const aka = card.getAttribute('data-aka') || '';
+      const show = !q || term.includes(q) || aka.includes(q);
+      card.style.display = show ? '' : 'none';
+      if (show) visible.push(card);
+    }
+    if (empty) empty.style.display = visible.length ? 'none' : '';
+    updateAlphaButtons(visible);
+  }
+
+  input?.addEventListener('input', applyFilter);
+  applyFilter();
+})();
+</script>

@@ -1,0 +1,110 @@
+---
+import type { GlossaryTerm } from "../types/sanity";
+
+interface Props {
+  term: GlossaryTerm;
+}
+
+const { term } = Astro.props;
+---
+
+{term.relatedLinks && term.relatedLinks.length > 0 && (
+  <section class="related-links">
+    <h2>Related Links</h2>
+    <ul class="links-list">
+      {term.relatedLinks.map((link) => (
+        <li class="link-item">
+          <a 
+            href={link.url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="link-anchor"
+          >
+            {link.label}
+          </a>
+          {link.kind && (
+            <span class="link-kind-badge">{link.kind}</span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<style>
+  .related-links {
+    max-width: 800px;
+    margin: 3rem auto 2rem;
+    padding: 2rem;
+    background: #fafafa;
+    border-radius: 8px;
+  }
+
+  .related-links h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+    color: #222;
+  }
+
+  .links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .link-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  .link-item:last-child {
+    border-bottom: none;
+  }
+
+  .link-anchor {
+    color: #0066cc;
+    text-decoration: none;
+    font-size: 1.05rem;
+    transition: color 0.2s;
+  }
+
+  .link-anchor:hover {
+    color: #0052a3;
+    text-decoration: underline;
+  }
+
+  .link-kind-badge {
+    display: inline-block;
+    margin-left: 0.5rem;
+    padding: 0.2rem 0.6rem;
+    background: #e8f4f8;
+    color: #0066cc;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 768px) {
+    .related-links {
+      margin: 2rem 1rem;
+      padding: 1.5rem;
+    }
+
+    .related-links h2 {
+      font-size: 1.3rem;
+    }
+
+    .link-anchor {
+      font-size: 1rem;
+    }
+
+    .link-kind-badge {
+      display: block;
+      margin: 0.25rem 0 0 0;
+      width: fit-content;
+    }
+  }
+</style>

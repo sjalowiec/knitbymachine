@@ -1,0 +1,106 @@
+---
+import { PortableText } from "astro-portabletext";
+import PortableLink from "./PortableLink.astro";
+
+interface Props {
+  value: any;
+}
+
+const { value } = Astro.props;
+
+const components = {
+  block: {
+    h2: "h2",
+    h3: "h3",
+    normal: "p",
+    blockquote: "blockquote",
+  },
+  list: {
+    bullet: "ul",
+    number: "ol",
+  },
+  listItem: {
+    bullet: "li",
+    number: "li",
+  },
+  marks: {
+    strong: "strong",
+    em: "em",
+    link: PortableLink,
+  },
+};
+---
+
+{value && (
+  <div class="portable-text">
+    <PortableText value={value} components={components} />
+  </div>
+)}
+
+<style is:global>
+  .portable-text .pt-h2,
+  .portable-text h2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin: 0.75rem 0 0.35rem;
+    color: var(--kbm-text);
+  }
+  
+  .portable-text .pt-h3,
+  .portable-text h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin: 0.6rem 0 0.25rem;
+    color: var(--kbm-text);
+  }
+  
+  .portable-text .pt-p,
+  .portable-text p {
+    margin: 0.5rem 0;
+    color: #374151;
+    line-height: 1.65;
+  }
+  
+  .portable-text .pt-strong,
+  .portable-text strong {
+    font-weight: 800;
+  }
+  
+  .portable-text .pt-em,
+  .portable-text em {
+    font-style: italic;
+  }
+  
+  .portable-text .pt-ul,
+  .portable-text ul,
+  .portable-text .pt-ol,
+  .portable-text ol {
+    margin: 0.5rem 0 0.75rem 1.25rem;
+  }
+  
+  .portable-text .pt-li,
+  .portable-text li {
+    margin: 0.25rem 0;
+  }
+  
+  .portable-text .pt-link,
+  .portable-text a {
+    color: var(--kbm-green);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  
+  .portable-text .pt-link:hover,
+  .portable-text a:hover {
+    text-decoration: underline;
+  }
+  
+  .portable-text .pt-quote,
+  .portable-text blockquote {
+    margin: 0.75rem 0;
+    padding: 0.6rem 0.9rem;
+    border-left: 4px solid var(--kbm-green);
+    background: #f6f8f2;
+    border-radius: 8px;
+  }
+</style>

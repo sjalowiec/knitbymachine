@@ -1,0 +1,153 @@
+---
+import { PortableText } from "astro-portabletext";
+import type { GlossaryTerm } from "../types/sanity";
+
+interface Props {
+  term: GlossaryTerm;
+}
+
+const { term } = Astro.props;
+---
+
+<div class="term-body">
+  {Array.isArray(term.definition) && term.definition.length > 0 && (
+    <section class="body-section">
+      <h2>Definition</h2>
+      <div class="portable-content">
+        <PortableText value={term.definition} />
+      </div>
+    </section>
+  )}
+
+  {term.notes && term.notes.length > 0 && (
+    <section class="body-section">
+      <h2>Notes</h2>
+      <div class="portable-content">
+        <PortableText value={term.notes} />
+      </div>
+    </section>
+  )}
+
+  {term.aliases && term.aliases.length > 0 && (
+    <section class="body-section aliases-section">
+      <p class="aliases-label">
+        Also known as: {" "}
+        {term.aliases.map((alias, i) => (
+          <span class="alias-pill">
+            {alias}{i < term.aliases.length - 1 ? ", " : ""}
+          </span>
+        ))}
+      </p>
+    </section>
+  )}
+</div>
+
+<style>
+  .term-body {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .body-section {
+    margin: 2rem 0;
+    padding: 1.5rem 0;
+  }
+
+  .body-section h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+    color: #222;
+  }
+
+  .portable-content {
+    line-height: 1.6;
+    font-size: 1.05rem;
+    color: #333;
+  }
+
+  .portable-content :global(p) {
+    margin: 0 0 1rem;
+    line-height: 1.6;
+  }
+
+  .portable-content :global(ul),
+  .portable-content :global(ol) {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+  }
+
+  .portable-content :global(li) {
+    margin: 0.25rem 0;
+  }
+
+  .portable-content :global(h3) {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  .portable-content :global(h4) {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 1.25rem 0 0.5rem;
+  }
+
+  .portable-content :global(strong) {
+    font-weight: 600;
+  }
+
+  .portable-content :global(em) {
+    font-style: italic;
+  }
+
+  .portable-content :global(code) {
+    background: #f5f5f5;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.9em;
+  }
+
+  .portable-content :global(blockquote) {
+    border-left: 4px solid #ddd;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: #666;
+    font-style: italic;
+  }
+
+  .aliases-section {
+    padding-top: 0.5rem;
+    border-top: 1px solid #eee;
+  }
+
+  .aliases-label {
+    font-size: 1rem;
+    color: #555;
+    margin: 0;
+  }
+
+  .alias-pill {
+    background: #f3f6ef;
+    border: 1px solid #e6e6e6;
+    border-radius: 999px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    .term-body {
+      padding: 0 1rem;
+    }
+
+    .body-section h2 {
+      font-size: 1.5rem;
+    }
+
+    .portable-content {
+      font-size: 1rem;
+    }
+  }
+</style>

@@ -1,0 +1,96 @@
+---
+import type { GlossaryTerm } from "../types/sanity";
+
+interface Props {
+  term: GlossaryTerm;
+}
+
+const { term } = Astro.props;
+---
+
+<section class="member-teaser">
+  <div class="teaser-content">
+    <h2 class="teaser-title">See it in motion</h2>
+    <p class="teaser-text">
+      Members can watch stitch demos and deep dives for <strong>{term.title}</strong>.
+    </p>
+    <a href="/join" class="teaser-button">
+      Join Knit by Machine →
+    </a>
+  </div>
+</section>
+
+<style>
+  .member-teaser {
+    max-width: 800px;
+    margin: 3rem auto 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    padding: 2.5rem;
+    text-align: center;
+    color: white;
+  }
+
+  .teaser-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .teaser-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: white;
+  }
+
+  .teaser-text {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin: 0 0 1.5rem;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .teaser-text strong {
+    font-weight: 600;
+    color: white;
+  }
+
+  .teaser-button {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    background: white;
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .teaser-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    background: #f8f8f8;
+  }
+
+  @media (max-width: 768px) {
+    .member-teaser {
+      margin: 2rem 1rem;
+      padding: 2rem 1.5rem;
+    }
+
+    .teaser-title {
+      font-size: 1.5rem;
+    }
+
+    .teaser-text {
+      font-size: 1rem;
+    }
+
+    .teaser-button {
+      font-size: 0.95rem;
+      padding: 0.75rem 1.5rem;
+    }
+  }
+</style>

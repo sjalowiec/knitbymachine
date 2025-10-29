@@ -1,0 +1,146 @@
+---
+export interface Props {
+  id: string;              // unique id per modal
+  title: string;           // visible heading
+  closeLabel?: string;     // accessible label for the close button
+}
+
+const { id, title, closeLabel = "Close" } = Astro.props;
+---
+
+<dialog id={id} class="kbm-modal" aria-labelledby={`${id}-title`}>
+  <div class="kbm-modal__panel">
+    <header class="kbm-modal__header">
+      <h2 id={`${id}-title`} class="kbm-modal__title">{title}</h2>
+      <button class="kbm-icon-button" data-modal-close={id} aria-label={closeLabel}>×</button>
+    </header>
+
+    <div class="kbm-modal__content">
+      <slot /> <!-- modal body -->
+    </div>
+
+    <footer class="kbm-modal__footer">
+      <slot name="actions">
+        <button class="kbm-button kbm-button--ghost" data-modal-close={id}>Cancel</button>
+      </slot>
+    </footer>
+  </div>
+</dialog>
+
+<style>
+  :root{
+    --kbm-green:#52682D;
+    --kbm-green-light:#6E8B3D;
+    --kbm-coral:#C2614E;
+    --kbm-navy:#2C3A57;
+    --kbm-radius-lg:16px;
+    --kbm-shadow-md:0 8px 20px rgba(0,0,0,.12);
+    --kbm-surface:#fff;
+  }
+
+  /* dialog backdrop */
+  .kbm-modal::backdrop { background: rgba(0,0,0,.35); }
+
+  .kbm-modal {
+    padding: 0;            /* remove default dialog padding */
+    border: 0;
+    background: transparent;
+    width: min(720px, 92vw);
+  }
+
+  .kbm-modal__panel{
+    background: var(--kbm-surface);
+    border-radius: var(--kbm-radius-lg);
+    box-shadow: var(--kbm-shadow-md);
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .kbm-modal__header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+  }
+  .kbm-modal__title{
+    margin:0; color: var(--kbm-navy); font-size:1.25rem; line-height:1.2;
+  }
+
+  .kbm-icon-button{
+    appearance:none; border:0; background:transparent; cursor:pointer;
+    font-size:1.5rem; line-height:1; padding:.25rem .5rem; border-radius:10px;
+  }
+  .kbm-icon-button:hover, .kbm-icon-button:focus{
+    background: rgba(0,0,0,.06);
+    outline: none;
+  }
+
+  .kbm-modal__content{ padding: 1.25rem; color:#333; line-height:1.55; }
+  .kbm-modal__footer{
+    display:flex; gap:.75rem; justify-content:flex-end;
+    padding: 1rem 1.25rem; border-top:1px solid rgba(0,0,0,.06);
+  }
+
+  /* KBM buttons */
+  .kbm-button{
+    display:inline-block; font-weight:600; border-radius:8px;
+    padding:.55rem 1rem; text-decoration:none; border:0; cursor:pointer;
+    background: var(--kbm-green); color:#fff; transition: background-color .2s ease, transform .06s ease;
+  }
+  .kbm-button:hover, .kbm-button:focus{ background: var(--kbm-green-light); }
+  .kbm-button:active{ transform: translateY(1px); }
+
+  .kbm-button--ghost{
+    background: transparent; color: var(--kbm-navy); border:1px solid rgba(0,0,0,.12);
+  }
+  .kbm-button--ghost:hover, .kbm-button--ghost:focus{
+    border-color: rgba(0,0,0,.22);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .kbm-button { transition: none; }
+  }
+</style>
+
+<!-- Lightweight wiring: open/close by data attributes -->
+<script define:vars={{ id }}>
+  // Open with:  any element having [data-modal-open="{id}"]
+  // Close with: any element having [data-modal-close="{id}"]
+  (function(){
+    const dlg = document.getElementById(id);
+    if(!dlg) return;
+
+    function openModal(){
+      // prevent page scroll while open
+      document.documentElement.style.overflow = "hidden";
+      dlg.showModal();
+    }
+    function closeModal(){
+      dlg.close();
+    }
+
+    // Clicks on scrim/backdrop close
+    dlg.addEventListener("click", (e) => {
+      const rect = dlg.querySelector(".kbm-modal__panel").getBoundingClientRect();
+      const inside = e.clientX >= rect.left && e.clientX <= rect.right &&
+                     e.clientY >= rect.top  && e.clientY <= rect.bottom;
+      if (!inside) closeModal();
+    });
+
+    // Restore scroll on close or cancel (Esc)
+    dlg.addEventListener("close", () => { document.documentElement.style.overflow = ""; });
+    dlg.addEventListener("cancel", (e) => { e.preventDefault(); closeModal(); });
+
+    // Delegated open/close triggers
+    document.addEventListener("click", (e) => {
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+
+      const openId = t.getAttribute("data-modal-open");
+      const closeId = t.getAttribute("data-modal-close");
+
+      if (openId === id){ e.preventDefault(); openModal(); }
+      if (closeId === id){ e.preventDefault(); closeModal(); }
+    });
+  })();
+</script>

@@ -1,0 +1,98 @@
+---
+import type { GlossaryTerm } from "../types/sanity";
+
+interface Props {
+  term: GlossaryTerm;
+}
+
+const { term } = Astro.props;
+---
+
+{term.related && term.related.length > 0 && (
+  <section class="related-terms">
+    <h2>Related Terms</h2>
+    <div class="terms-grid">
+      {term.related.map((relatedTerm) => (
+        <a 
+          href={`/glossary/${relatedTerm.slug}`}
+          class="term-card"
+        >
+          <h3 class="term-title">{relatedTerm.title}</h3>
+          <span class="term-arrow">→</span>
+        </a>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  .related-terms {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem 0;
+  }
+
+  .related-terms h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem;
+    color: #222;
+  }
+
+  .terms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .term-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.2s;
+  }
+
+  .term-card:hover {
+    background: #f8f8f8;
+    border-color: #0066cc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .term-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #222;
+  }
+
+  .term-arrow {
+    font-size: 1.25rem;
+    color: #0066cc;
+    transition: transform 0.2s;
+  }
+
+  .term-card:hover .term-arrow {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 768px) {
+    .related-terms {
+      padding: 1.5rem 1rem;
+    }
+
+    .related-terms h2 {
+      font-size: 1.3rem;
+    }
+
+    .terms-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+// src/components/CardGrid.astro
+export interface Item {
+  title: string;
+  href: string;
+  img?: string;
+  alt?: string;
+  excerpt?: string;
+  cta?: string;
+}
+
+export interface Props {
+  items?: Item[];
+}
+
+const { items = [] } = Astro.props;
+import Card from "./Card.astro";
+---
+
+<section class="kbm-card-grid">
+  {items.length > 0 ? (
+    items.map((it) => <Card {...it} />)
+  ) : (
+    <slot />
+  )}
+</section>
+
+<style>
+  .kbm-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem 0;
+    justify-items: center;
+  }
+</style>
