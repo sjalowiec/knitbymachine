@@ -265,6 +265,106 @@
     font-size: .95rem;
   }
 }
+
+/* ===== HAMBURGER MENU ===== */
+.kbm-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  z-index: 1300;
+}
+
+.kbm-hamburger span {
+  width: 28px;
+  height: 3px;
+  background: var(--kbm-green);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.kbm-hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.kbm-hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.kbm-hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(8px, -8px);
+}
+
+@media (max-width:768px) {
+  .kbm-hamburger {
+    display: flex;
+  }
+
+  .kbm-nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--kbm-bg);
+    box-shadow: -4px 0 12px rgba(0, 0, 0, .1);
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    padding-top: 80px;
+  }
+
+  .kbm-nav.mobile-open {
+    right: 0;
+  }
+
+  .kbm-menu {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 20px;
+  }
+
+  .kbm-menu > li > a {
+    padding: 12px 14px;
+    display: block;
+  }
+
+  .kbm-menu .dd-panel {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+    box-shadow: none;
+    border: none;
+    border-left: 3px solid var(--kbm-green-2);
+    margin-left: 14px;
+    margin-top: 6px;
+    padding-left: 12px;
+    background: transparent;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .kbm-menu .dd.open > .dd-panel {
+    max-height: 500px;
+  }
+
+  .login-li {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+  }
+
+  .kbm-login {
+    width: 100%;
+    text-align: center;
+  }
+}
 </style>
 
 <section class="kbm-header-wrap">
@@ -274,6 +374,13 @@
         <div class="kbm-logo-text">KNIT<span class="by">by</span>MACHINE</div>
         <div class="tagline">Tools and inspiration for confident machine knitters</div>
       </a>
+
+      <!-- Hamburger button for mobile -->
+      <button class="kbm-hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
       <nav class="kbm-nav" aria-label="Primary">
         <ul class="kbm-menu">
@@ -348,6 +455,38 @@
       });
       document.addEventListener('click', e => {
         if (!e.target.closest('.kbm-nav')) closeAll();
+      });
+    }
+
+    // Hamburger menu toggle
+    const hamburger = document.querySelector('.kbm-hamburger');
+    const nav = document.querySelector('.kbm-nav');
+    
+    if (hamburger && nav) {
+      hamburger.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('mobile-open');
+        hamburger.classList.toggle('active');
+        hamburger.setAttribute('aria-expanded', isOpen);
+        
+        // Prevent body scroll when menu is open on mobile
+        if (isOpen) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
+      });
+
+      // Close menu when clicking outside on mobile
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768 && 
+            !nav.contains(e.target) && 
+            !hamburger.contains(e.target) && 
+            nav.classList.contains('mobile-open')) {
+          nav.classList.remove('mobile-open');
+          hamburger.classList.remove('active');
+          hamburger.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
       });
     }
   })();
