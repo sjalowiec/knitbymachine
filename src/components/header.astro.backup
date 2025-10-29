@@ -293,12 +293,12 @@
             </ul>
           </li>
           <li class="dd">
-            <a href="#">Help Hub <span class="caret">▾</span></a>
+            <a href="/help-hub">Help Hub <span class="caret">▾</span></a>
             <ul class="dd-panel help-menu">
-              <li><a href="/ask-n-answer">Ask ’n Answer (Tips)</a></li>
-              <li><a href="/sizing-chart">Sizing Charts/References</a></li>
-              <li><a href="/glossary">Glossary</a></li>
-              <li><a href="/machine-history">Machine History</a></li>
+              <li><a href="#">Ask ’n Answer (Tips)</a></li>
+              <li><a href="#">Sizing Charts/References</a></li>
+              <li><a href="#">Glossary</a></li>
+              <li><a href="#">Machine History</a></li>
             </ul>
           </li>
           <li class="login-li"><a class="kbm-login" href="#">Log In</a></li>
