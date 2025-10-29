@@ -137,7 +137,7 @@ function buildGlossaryUrl(params: { q?: string; letter?: string }): string {
 }
 :global(.flip-card-inner) {
   position: relative;
-  min-height: 320px;
+  min-height: 380px;
   border-radius: 16px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   transition: transform 0.6s;
@@ -155,14 +155,17 @@ function buildGlossaryUrl(params: { q?: string; letter?: string }): string {
   inset: 0;
   backface-visibility: hidden;
   border-radius: 16px;
-  overflow: hidden;
 }
 :global(.flip-card-front) {
   transform: rotateY(0deg);
+  overflow: hidden;
 }
 :global(.flip-card-back) {
   transform: rotateY(180deg);
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .card-body {
   display: flex;
@@ -217,6 +220,14 @@ function buildGlossaryUrl(params: { q?: string; letter?: string }): string {
 .card-back-image-placeholder {
   margin-bottom: 0.75rem;
 }
+.card-back-image,
+.card-back-image {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #e5e8e0;
+}
 .card-back-image-placeholder {
   display: flex;
   align-items: center;
@@ -226,29 +237,35 @@ function buildGlossaryUrl(params: { q?: string; letter?: string }): string {
   font-weight: 800;
   font-size: 3rem;
   width: 100%;
-  height: 180px;
+  height: 200px;
   border-radius: 12px;
   border: 1px solid #dcdcdc;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 .card-meta {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   text-align: center;
   width: 100%;
+  padding: 0.5rem;
 }
 .card-meta a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   font-weight: 700;
   color: var(--kbm-green);
   text-decoration: none;
-  font-size: 1rem;
-  padding: 0.25rem 0;
+  font-size: 1.05rem;
+  padding: 0.6rem 1.2rem;
+  background: #f0f4ea;
+  border-radius: 8px;
+  transition: all 0.2s;
 }
 .card-meta a:hover {
-  text-decoration: underline;
+  background: var(--kbm-green);
+  color: white;
+  text-decoration: none;
 }
 
 .header-row {
