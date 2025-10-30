@@ -10,10 +10,10 @@ externalPort = 80
 [workflows]
 
 [[workflows.workflow]]
-name = "Start application"
+name = "start dev server"
 mode = "sequential"
 author = 46936186
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npx astro dev --host 0.0.0.0 --port 5000"
+args = "npm run dev"
