@@ -6,6 +6,14 @@ Knit by Machine is a web application for machine knitting enthusiasts. It provid
 
 ## Recent Changes
 
+### October 2024
+- **Wizards Landing Page System**: Complete restructure of wizard organization with new `/wizards` landing page featuring flip card layout organized by three categories (Pattern Generators, Charting Tools, Shaping Practice). All 8 wizards now have individual pages with consistent Header/Footer components and video tutorial button placeholders.
+- **Individual Wizard Pages**: Created dedicated pages for all 8 wizards:
+  - Pattern Generators: DIY Blanket, Boat Neck Sweater
+  - Charting Tools: Gauge Calculator, Gauge Conversion Calculator, Gauge Difference, Magic Formula by Measurement
+  - Shaping Practice: Neckline Shaping Practice, Neckline and Shoulder Shaping
+- **Mobile-Friendly Flip Cards**: Implemented tap-to-flip on mobile devices and hover-to-flip on desktop, matching glossary interaction pattern with click-outside-to-close functionality.
+
 ### December 2024
 - **Magic Formula by Measurement Wizard**: New calculation tool that helps knitters determine shaping instructions based on real measurements (inches/cm) instead of stitch counts. Features automatic gauge conversion, support for one-side or both-sides shaping, and intelligent handling of uneven division cases.
 - **Deployment Workflow**: Simplified deployment process with `deploy.sh` script that commits source changes and pushes to GitHub, triggering automatic Netlify builds.
