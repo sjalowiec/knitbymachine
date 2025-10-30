@@ -1,0 +1,444 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/header.astro";
+import Footer from "../../components/footer.astro";
+import "../../styles/global.css";
+
+const wizards = {
+  patternGenerators: [
+    {
+      name: "DIY Blanket",
+      slug: "diy-blanket",
+      excerpt: "Create perfect blankets for your machine",
+      description: "Design custom blankets that fit your machine width and yarn. Calculate stitches, rows, and measurements for beautiful results every time.",
+      icon: "fa-solid fa-blanket"
+    },
+    {
+      name: "Boat Neck Sweater",
+      slug: "boat-neck-sweater",
+      excerpt: "Design classic boat neck patterns",
+      description: "Generate custom boat neck sweater patterns with precise measurements. Get clear instructions for shaping and finishing your elegant neckline.",
+      icon: "fa-solid fa-shirt"
+    }
+  ],
+  chartingTools: [
+    {
+      name: "Gauge Calculator",
+      slug: "gauge-calculator",
+      excerpt: "Find your exact gauge",
+      description: "Measure your swatch and calculate your precise stitch and row gauge. No complicated math needed – just enter your measurements.",
+      icon: "fa-solid fa-ruler-combined"
+    },
+    {
+      name: "Gauge Conversion Calculator",
+      slug: "gauge-conversion-calculator",
+      excerpt: "Convert between different gauges",
+      description: "Switch between pattern gauges and your actual gauge. Automatically adjusts stitch and row counts to match your knitting.",
+      icon: "fa-solid fa-arrows-rotate"
+    },
+    {
+      name: "Gauge Difference",
+      slug: "gauge-difference",
+      excerpt: "Compare two gauges",
+      description: "See how gauge changes affect your project size. Compare different yarns or needle sizes before you start knitting.",
+      icon: "fa-solid fa-balance-scale"
+    },
+    {
+      name: "Magic Formula by Measurement",
+      slug: "magic-formula-measurement",
+      excerpt: "Calculate shaping with measurements",
+      description: "Enter your starting and ending measurements to get clear increase or decrease instructions. Perfect for custom fit garments.",
+      icon: "fa-solid fa-wand-magic-sparkles"
+    }
+  ],
+  shapingPractice: [
+    {
+      name: "Neckline Shaping Practice",
+      slug: "neckline-shaping-practice-2",
+      excerpt: "Master neckline shaping",
+      description: "Practice shaping necklines with guided exercises. Build your confidence with clear, step-by-step challenges.",
+      icon: "fa-solid fa-graduation-cap"
+    },
+    {
+      name: "Neckline and Shoulder Shaping",
+      slug: "neckline-and-shoulder-shaping",
+      excerpt: "Shape complete upper garments",
+      description: "Learn to shape both necklines and shoulders together. Get hands-on practice creating professional-looking garment tops.",
+      icon: "fa-solid fa-chalkboard-user"
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="Machine Knitting Wizards | Knit by Machine" 
+  description="Interactive pattern generators, gauge calculators, and practice tools for machine knitters. Create custom patterns and master your craft with step-by-step guidance.">
+
+<Header />
+
+<style>
+/* Container */
+.wizards-container {
+  padding-top: 120px;
+  padding-bottom: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.page-header h1 {
+  color: var(--kbm-green);
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.page-intro {
+  color: #6b7280;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Category Sections */
+.category-section {
+  margin-bottom: 4rem;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--kbm-green);
+}
+
+.category-header i {
+  color: var(--kbm-green);
+  font-size: 1.5rem;
+}
+
+.category-header h2 {
+  color: var(--kbm-green);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Flip Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.flip-card {
+  background: transparent;
+  width: 100%;
+  max-width: 380px;
+  perspective: 1000px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.flip-card-inner {
+  position: relative;
+  min-height: 280px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  background: #fff;
+  border: 1px solid #eef0ea;
+}
+
+.flip-card.flipped .flip-card-inner,
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.flip-card-front {
+  transform: rotateY(0deg);
+  background: white;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #f0f4ea 0%, #ffffff 100%);
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Front of card */
+.card-icon {
+  font-size: 2.5rem;
+  color: var(--kbm-green);
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+}
+
+.card-excerpt {
+  color: #6b7280;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+.card-hint {
+  margin-top: auto;
+  padding-top: 1rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-style: italic;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.card-hint i {
+  color: var(--kbm-green);
+}
+
+/* Back of card */
+.card-back-description {
+  color: #374151;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.launch-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--kbm-green);
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.launch-button:hover {
+  background: #6E8B3D;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(82, 104, 45, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .category-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<div class="wizards-container">
+  <div class="page-header">
+    <h1>Machine Knitting Wizards</h1>
+    <p class="page-intro">
+      Interactive tools to help you create patterns, calculate gauge, and practice your skills.
+      Choose a wizard below to get started with clear, step-by-step guidance.
+    </p>
+  </div>
+
+  <!-- Pattern Generators -->
+  <section class="category-section">
+    <div class="category-header">
+      <i class="fa-solid fa-palette"></i>
+      <h2>Pattern Generators</h2>
+    </div>
+    <div class="card-grid">
+      {wizards.patternGenerators.map((wizard) => (
+        <div class="flip-card" data-wizard-slug={wizard.slug}>
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="card-icon">
+                <i class={wizard.icon}></i>
+              </div>
+              <h3 class="card-title">{wizard.name}</h3>
+              <p class="card-excerpt">{wizard.excerpt}</p>
+              <div class="card-hint">
+                <i class="fa-solid fa-hand-point-right"></i>
+                Hover or tap for details
+              </div>
+            </div>
+            <div class="flip-card-back">
+              <p class="card-back-description">{wizard.description}</p>
+              <a href={`/wizards/${wizard.slug}`} class="launch-button">
+                <i class="fa-solid fa-rocket"></i>
+                Launch Wizard
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Charting Tools -->
+  <section class="category-section">
+    <div class="category-header">
+      <i class="fa-solid fa-calculator"></i>
+      <h2>Charting Tools</h2>
+    </div>
+    <div class="card-grid">
+      {wizards.chartingTools.map((wizard) => (
+        <div class="flip-card" data-wizard-slug={wizard.slug}>
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="card-icon">
+                <i class={wizard.icon}></i>
+              </div>
+              <h3 class="card-title">{wizard.name}</h3>
+              <p class="card-excerpt">{wizard.excerpt}</p>
+              <div class="card-hint">
+                <i class="fa-solid fa-hand-point-right"></i>
+                Hover or tap for details
+              </div>
+            </div>
+            <div class="flip-card-back">
+              <p class="card-back-description">{wizard.description}</p>
+              <a href={`/wizards/${wizard.slug}`} class="launch-button">
+                <i class="fa-solid fa-rocket"></i>
+                Launch Wizard
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Shaping Practice -->
+  <section class="category-section">
+    <div class="category-header">
+      <i class="fa-solid fa-book-open"></i>
+      <h2>Shaping Practice</h2>
+    </div>
+    <div class="card-grid">
+      {wizards.shapingPractice.map((wizard) => (
+        <div class="flip-card" data-wizard-slug={wizard.slug}>
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="card-icon">
+                <i class={wizard.icon}></i>
+              </div>
+              <h3 class="card-title">{wizard.name}</h3>
+              <p class="card-excerpt">{wizard.excerpt}</p>
+              <div class="card-hint">
+                <i class="fa-solid fa-hand-point-right"></i>
+                Hover or tap for details
+              </div>
+            </div>
+            <div class="flip-card-back">
+              <p class="card-back-description">{wizard.description}</p>
+              <a href={`/wizards/${wizard.slug}`} class="launch-button">
+                <i class="fa-solid fa-rocket"></i>
+                Launch Wizard
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll(".flip-card");
+    let currentlyFlippedCard = null;
+
+    cards.forEach((card) => {
+      const front = card.querySelector(".flip-card-front");
+      const launchButton = card.querySelector(".launch-button");
+
+      // Click on front flips the card
+      if (front) {
+        front.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (currentlyFlippedCard && currentlyFlippedCard !== card) {
+            currentlyFlippedCard.classList.remove("flipped");
+          }
+          card.classList.add("flipped");
+          currentlyFlippedCard = card;
+        });
+      }
+
+      // Click on launch button doesn't flip back
+      if (launchButton) {
+        launchButton.addEventListener("click", (e) => {
+          e.stopPropagation();
+        });
+      }
+
+      // Desktop hover behavior
+      if (!window.matchMedia("(max-width: 768px)").matches) {
+        card.addEventListener("mouseenter", () => {
+          if (currentlyFlippedCard && currentlyFlippedCard !== card) {
+            currentlyFlippedCard.classList.remove("flipped");
+          }
+          currentlyFlippedCard = card;
+        });
+        
+        card.addEventListener("mouseleave", () => {
+          currentlyFlippedCard = null;
+        });
+      }
+    });
+
+    // Click outside to close flipped card
+    document.addEventListener("click", (e) => {
+      if (currentlyFlippedCard && !e.target.closest(".flip-card")) {
+        currentlyFlippedCard.classList.remove("flipped");
+        currentlyFlippedCard = null;
+      }
+    });
+  });
+</script>
+
+<Footer />
+
+</BaseLayout>
