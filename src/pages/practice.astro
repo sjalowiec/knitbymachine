@@ -1,0 +1,163 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/header.astro";
+import Footer from "../components/footer.astro";
+import "../styles/global.css";
+
+const tools = [
+  {
+    name: "Neckline Shaping Practice",
+    slug: "neckline-shaping-practice-2",
+    description: "Practice shaping necklines with guided exercises. Build your confidence with clear, step-by-step challenges.",
+    icon: "fa-solid fa-graduation-cap"
+  },
+  {
+    name: "Neckline and Shoulder Shaping",
+    slug: "neckline-and-shoulder-shaping",
+    description: "Learn to shape both necklines and shoulders together. Get hands-on practice creating professional-looking garment tops.",
+    icon: "fa-solid fa-chalkboard-user"
+  }
+];
+---
+
+<BaseLayout 
+  title="Shaping Practice | Knit by Machine" 
+  description="Master neckline and shoulder shaping with guided practice exercises for machine knitters.">
+
+<Header />
+
+<style>
+.practice-container {
+  padding-top: 120px;
+  padding-bottom: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.category-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.page-header h1 {
+  color: var(--kbm-green);
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.page-intro {
+  color: #6b7280;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.tool-card {
+  background: white;
+  border: 1px solid #eef0ea;
+  border-radius: 12px;
+  padding: 2rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.tool-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(82, 104, 45, 0.15);
+  border-color: var(--kbm-green);
+}
+
+.tool-icon {
+  font-size: 3rem;
+  color: var(--kbm-green);
+  margin-bottom: 1.25rem;
+}
+
+.tool-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 1rem 0;
+}
+
+.tool-description {
+  color: #6b7280;
+  font-size: 1rem;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.launch-arrow {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--kbm-green);
+  font-weight: 700;
+}
+
+.tool-card:hover .launch-arrow {
+  gap: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<div class="practice-container">
+  <div class="page-header">
+    <img src="/assets/icons/practice.svg" alt="Practice" class="category-icon" />
+    <h1>Shaping Practice</h1>
+    <p class="page-intro">
+      Master garment shaping with guided exercises. 
+      Practice necklines and shoulders step-by-step to build your skills.
+    </p>
+  </div>
+
+  <div class="tools-grid">
+    {tools.map((tool) => (
+      <a href={`/wizards/${tool.slug}`} class="tool-card">
+        <div class="tool-icon">
+          <i class={tool.icon}></i>
+        </div>
+        <h2 class="tool-name">{tool.name}</h2>
+        <p class="tool-description">{tool.description}</p>
+        <div class="launch-arrow">
+          Launch Tool <i class="fa-solid fa-arrow-right"></i>
+        </div>
+      </a>
+    ))}
+  </div>
+</div>
+
+<Footer />
+
+</BaseLayout>
