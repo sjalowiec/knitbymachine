@@ -5,14 +5,12 @@ const tools = [
   {
     name: "DIY Blanket",
     slug: "diy-blanket",
-    description: "Design custom blankets that fit your machine width and yarn. Calculate stitches, rows, and measurements for beautiful results every time.",
-    icon: "fa-solid fa-blanket"
+    description: "Design custom blankets that fit your machine width and yarn. Calculate stitches, rows, and measurements for beautiful results every time."
   },
   {
     name: "Boat Neck Sweater",
     slug: "boat-neck-sweater",
-    description: "Generate custom boat neck sweater patterns with precise measurements. Get clear instructions for shaping and finishing your elegant neckline.",
-    icon: "fa-solid fa-shirt"
+    description: "Generate custom boat neck sweater patterns with precise measurements. Get clear instructions for shaping and finishing your elegant neckline."
   }
 ];
 ---
@@ -83,12 +81,6 @@ const tools = [
   border-color: var(--kbm-green);
 }
 
-.tool-icon {
-  font-size: 3rem;
-  color: var(--kbm-green);
-  margin-bottom: 1.25rem;
-}
-
 .tool-name {
   font-size: 1.5rem;
   font-weight: 700;
@@ -140,9 +132,6 @@ const tools = [
   <div class="tools-grid">
     {tools.map((tool) => (
       <a href={`/wizards/${tool.slug}`} class="tool-card">
-        <div class="tool-icon">
-          <i class={tool.icon}></i>
-        </div>
         <h2 class="tool-name">{tool.name}</h2>
         <p class="tool-description">{tool.description}</p>
         <div class="launch-arrow">

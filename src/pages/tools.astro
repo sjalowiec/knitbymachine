@@ -5,26 +5,22 @@ const tools = [
   {
     name: "Gauge Calculator",
     slug: "gauge-calculator",
-    description: "Measure your swatch and calculate your precise stitch and row gauge. No complicated math needed – just enter your measurements.",
-    icon: "fa-solid fa-ruler-combined"
+    description: "Measure your swatch and calculate your precise stitch and row gauge. No complicated math needed – just enter your measurements."
   },
   {
     name: "Gauge Conversion Calculator",
     slug: "gauge-conversion-calculator",
-    description: "Switch between pattern gauges and your actual gauge. Automatically adjusts stitch and row counts to match your knitting.",
-    icon: "fa-solid fa-arrows-rotate"
+    description: "Switch between pattern gauges and your actual gauge. Automatically adjusts stitch and row counts to match your knitting."
   },
   {
     name: "Gauge Difference",
     slug: "gauge-difference",
-    description: "See how gauge changes affect your project size. Compare different yarns or needle sizes before you start knitting.",
-    icon: "fa-solid fa-balance-scale"
+    description: "See how gauge changes affect your project size. Compare different yarns or needle sizes before you start knitting."
   },
   {
     name: "Magic Formula by Measurement",
     slug: "magic-formula-measurement",
-    description: "Enter your starting and ending measurements to get clear increase or decrease instructions. Perfect for custom fit garments.",
-    icon: "fa-solid fa-wand-magic-sparkles"
+    description: "Enter your starting and ending measurements to get clear increase or decrease instructions. Perfect for custom fit garments."
   }
 ];
 ---
@@ -95,12 +91,6 @@ const tools = [
   border-color: var(--kbm-green);
 }
 
-.tool-icon {
-  font-size: 3rem;
-  color: var(--kbm-green);
-  margin-bottom: 1.25rem;
-}
-
 .tool-name {
   font-size: 1.5rem;
   font-weight: 700;
@@ -152,9 +142,6 @@ const tools = [
   <div class="tools-grid">
     {tools.map((tool) => (
       <a href={`/wizards/${tool.slug}`} class="tool-card">
-        <div class="tool-icon">
-          <i class={tool.icon}></i>
-        </div>
         <h2 class="tool-name">{tool.name}</h2>
         <p class="tool-description">{tool.description}</p>
         <div class="launch-arrow">

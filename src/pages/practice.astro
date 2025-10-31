@@ -5,14 +5,12 @@ const tools = [
   {
     name: "Neckline Shaping Practice",
     slug: "neckline-shaping-practice-2",
-    description: "Practice shaping necklines with guided exercises. Build your confidence with clear, step-by-step challenges.",
-    icon: "fa-solid fa-graduation-cap"
+    description: "Practice shaping necklines with guided exercises. Build your confidence with clear, step-by-step challenges."
   },
   {
     name: "Neckline and Shoulder Shaping",
     slug: "neckline-and-shoulder-shaping",
-    description: "Learn to shape both necklines and shoulders together. Get hands-on practice creating professional-looking garment tops.",
-    icon: "fa-solid fa-chalkboard-user"
+    description: "Learn to shape both necklines and shoulders together. Get hands-on practice creating professional-looking garment tops."
   }
 ];
 ---
@@ -83,12 +81,6 @@ const tools = [
   border-color: var(--kbm-green);
 }
 
-.tool-icon {
-  font-size: 3rem;
-  color: var(--kbm-green);
-  margin-bottom: 1.25rem;
-}
-
 .tool-name {
   font-size: 1.5rem;
   font-weight: 700;
@@ -140,9 +132,6 @@ const tools = [
   <div class="tools-grid">
     {tools.map((tool) => (
       <a href={`/wizards/${tool.slug}`} class="tool-card">
-        <div class="tool-icon">
-          <i class={tool.icon}></i>
-        </div>
         <h2 class="tool-name">{tool.name}</h2>
         <p class="tool-description">{tool.description}</p>
         <div class="launch-arrow">
