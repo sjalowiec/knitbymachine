@@ -18,6 +18,10 @@ Knit by Machine is a web application for machine knitting enthusiasts. It provid
 - **Magic Formula by Measurement Wizard**: New calculation tool that helps knitters determine shaping instructions based on real measurements (inches/cm) instead of stitch counts. Features automatic gauge conversion, support for one-side or both-sides shaping, and intelligent handling of uneven division cases.
 - **Deployment Workflow**: Simplified deployment process with `deploy.sh` script that commits source changes and pushes to GitHub, triggering automatic Netlify builds.
 
+### October 31, 2025
+- **Netlify Deployment Fix**: Resolved Git merge conflict (125 commits in Replit vs 22 in GitHub) using force push to restore working code to production. Added `@astrojs/netlify` adapter to fix build errors ("NoAdapterInstalled" error). Site now successfully deploys from Replit → GitHub → Netlify → knitbymachine.com.
+- **DIY Blanket Wizard Live**: Fully functional DIY Blanket wizard with 9 standard sizes, custom dimensions, units toggle, yarn calculator, SVG diagram, and PDF download now deployed to production at knitbymachine.com/wizards/diy-blanket.
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
