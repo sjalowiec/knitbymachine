@@ -5,7 +5,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   output: 'static',
   server: {
-    port: 4322,
+    port: 5000,
     host: true
   },
   vite: {
