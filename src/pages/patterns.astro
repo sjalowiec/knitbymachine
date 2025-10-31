@@ -1,8 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/header.astro";
-import Footer from "../components/footer.astro";
-import "../styles/global.css";
 
 const tools = [
   {
@@ -23,8 +20,6 @@ const tools = [
 <BaseLayout 
   title="Pattern Generators | Knit by Machine" 
   description="Create custom knitting patterns for blankets and sweaters with our pattern generator tools.">
-
-<Header />
 
 <style>
 .patterns-container {
@@ -157,7 +152,5 @@ const tools = [
     ))}
   </div>
 </div>
-
-<Footer />
 
 </BaseLayout>
