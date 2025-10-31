@@ -901,42 +901,48 @@ document.addEventListener('DOMContentLoaded', function() {
     calculate();
   });
 
-  startOverBtn.addEventListener('click', () => {
-    units = 'inches';
-    stitchesGauge = rowsGauge = '';
-    selectedSize = '';
-    useCustomSize = false;
-    customLength = customWidth = '';
-    calculateYarn = false;
-    swatchWidth = swatchLength = swatchWeight = '';
-    
-    inputStitches.value = '';
-    inputRows.value = '';
-    inputCustomLength.value = '';
-    inputCustomWidth.value = '';
-    inputSwatchWidth.value = '';
-    inputSwatchLength.value = '';
-    inputSwatchWeight.value = '';
-    useCustomCheckbox.checked = false;
-    calculateYarnCheckbox.checked = false;
-    
-    btnInches.classList.add('active');
-    btnCm.classList.remove('active');
-    standardSizesDiv.style.display = 'grid';
-    customSizeDiv.style.display = 'none';
-    yarnInputsDiv.style.display = 'none';
-    
-    document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
-    
-    actionBar.style.display = 'none';
-    resultsSection.style.display = 'none';
-  });
+  // Action bar event listeners (buttons are inside results section, so check if they exist)
+  if (startOverBtn) {
+    startOverBtn.addEventListener('click', () => {
+      units = 'inches';
+      stitchesGauge = rowsGauge = '';
+      selectedSize = '';
+      useCustomSize = false;
+      customLength = customWidth = '';
+      calculateYarn = false;
+      swatchWidth = swatchLength = swatchWeight = '';
+      
+      inputStitches.value = '';
+      inputRows.value = '';
+      inputCustomLength.value = '';
+      inputCustomWidth.value = '';
+      inputSwatchWidth.value = '';
+      inputSwatchLength.value = '';
+      inputSwatchWeight.value = '';
+      useCustomCheckbox.checked = false;
+      calculateYarnCheckbox.checked = false;
+      
+      btnInches.classList.add('active');
+      btnCm.classList.remove('active');
+      standardSizesDiv.style.display = 'grid';
+      customSizeDiv.style.display = 'none';
+      yarnInputsDiv.style.display = 'none';
+      
+      document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
+      
+      actionBar.style.display = 'none';
+      resultsSection.style.display = 'none';
+    });
+  }
 
-  printBtn.addEventListener('click', () => {
-    window.print();
-  });
+  if (printBtn) {
+    printBtn.addEventListener('click', () => {
+      window.print();
+    });
+  }
 
-  downloadBtn.addEventListener('click', async () => {
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', async () => {
     const sizeSelection = getCurrentSize();
     if (!sizeSelection) return;
 
@@ -963,7 +969,8 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     await html2pdf().set(opt).from(content).save();
-  });
+    });
+  }
 
   // Initialize
   console.log('Initializing wizard, calling populateSizes()...');
