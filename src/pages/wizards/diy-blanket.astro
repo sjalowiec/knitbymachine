@@ -175,32 +175,17 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
   margin-bottom: 1.5rem;
 }
 
-:global(.size-categories) {
-  display: grid;
-  gap: 2rem;
-  margin-bottom: 1.5rem;
-}
-
-:global(.size-category h4) {
-  color: var(--kbm-green);
-  font-size: 0.9rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid #eef0ea;
-}
-
 :global(.size-options) {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 :global(.size-option) {
   padding: 1.25rem;
   min-height: 88px;
+  width: 180px;
   border: 2px solid #e5e7eb;
   border-radius: 10px;
   cursor: pointer;
@@ -246,18 +231,9 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
 }
 
 @media (max-width: 768px) {
-  :global(.size-options) {
-    grid-template-columns: 1fr;
-  }
-  
   :global(.size-option) {
+    width: 100%;
     min-height: 72px;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  :global(.size-options) {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -556,47 +532,28 @@ document.addEventListener('DOMContentLoaded', function() {
   
   console.log('DOM elements loaded, standardSizesDiv:', standardSizesDiv);
 
-  // Populate size categories
+  // Populate size cards
   function populateSizes() {
     console.log('populateSizes() called');
-    const categories = {};
-    Object.entries(blanketSizes).forEach(([key, data]) => {
-      if (!categories[data.category]) {
-        categories[data.category] = [];
-      }
-      categories[data.category].push({ key, ...data });
-    });
-
-    console.log('Categories created:', categories);
     standardSizesDiv.innerHTML = '';
-    Object.entries(categories).forEach(([category, sizes]) => {
-      const categoryDiv = document.createElement('div');
-      categoryDiv.className = 'size-category';
-      
-      const title = document.createElement('h4');
-      title.textContent = category;
-      categoryDiv.appendChild(title);
-
-      const optionsDiv = document.createElement('div');
-      optionsDiv.className = 'size-options';
-      
-      sizes.forEach(size => {
-        const option = document.createElement('div');
-        option.className = 'size-option';
-        option.dataset.sizeKey = size.key;
-        option.innerHTML = `
-          <div class="size-option-name">${size.name}</div>
-          <div class="size-option-dims">${size.length}" × ${size.width}"</div>
-        `;
-        option.onclick = () => selectSize(size.key);
-        optionsDiv.appendChild(option);
-      });
-
-      categoryDiv.appendChild(optionsDiv);
-      standardSizesDiv.appendChild(categoryDiv);
+    
+    const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'size-options';
+    
+    Object.entries(blanketSizes).forEach(([key, data]) => {
+      const option = document.createElement('div');
+      option.className = 'size-option';
+      option.dataset.sizeKey = key;
+      option.innerHTML = `
+        <div class="size-option-name">${data.name}</div>
+        <div class="size-option-dims">${data.length}" × ${data.width}"</div>
+      `;
+      option.onclick = () => selectSize(key);
+      optionsDiv.appendChild(option);
     });
-    console.log('Size cards created and appended. Total categories:', Object.keys(categories).length);
-    console.log('standardSizesDiv innerHTML length:', standardSizesDiv.innerHTML.length);
+
+    standardSizesDiv.appendChild(optionsDiv);
+    console.log('Size cards created. Total cards:', Object.keys(blanketSizes).length);
   }
 
   function selectSize(key) {
