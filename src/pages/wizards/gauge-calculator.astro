@@ -1,15 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/header.astro";
-import Footer from "../../components/footer.astro";
-import "../../styles/global.css";
 ---
 
 <BaseLayout 
   title="Gauge Calculator | Knit by Machine" 
   description="Accurate gauge means accurate fit. Measure your swatch, enter the numbers, and instantly get your stitch and row gauge in inches or centimeters.">
-
-<Header />
 
 <style>
 .wizard-page {
@@ -85,10 +80,7 @@ import "../../styles/global.css";
 
 <div class="wizard-page">
   <div class="page-header">
-    <h1>
-      <i class="fas fa-ruler-combined"></i>
-      Gauge Calculator
-    </h1>
+    <h1>Gauge Calculator</h1>
     <p>
       Accurate gauge means accurate fit. Measure your swatch, enter the numbers, and instantly get your stitch and row gauge in inches or centimeters.
     </p>
@@ -107,5 +99,4 @@ import "../../styles/global.css";
   </div>
 </div>
 
-<Footer />
 </BaseLayout>

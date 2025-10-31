@@ -1,15 +1,11 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/header.astro";
-import Footer from "../../components/footer.astro";
-import "../../styles/global.css";
 
 const pageTitle = "Magic Formula by Measurement | Knit by Machine";
 const pageDescription = "Calculate shaping with the Magic Formula using measurements. Enter your starting and ending widths and gauge to create clear knitting instructions.";
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
-<Header />
 
 <style>
 .wizard-page {
@@ -268,10 +264,7 @@ input:checked + .slider:before {
 
 <div class="wizard-page">
   <div class="page-header">
-    <h1>
-      <i class="fas fa-wand-magic-sparkles"></i>
-      Magic Formula by Measurement
-    </h1>
+    <h1>Magic Formula by Measurement</h1>
     <p>
       Shape your knitting using real measurements instead of stitch counts.
       Enter your starting and ending widths, your row length, and gauge to instantly see your shaping instructions.
@@ -507,5 +500,4 @@ input:checked + .slider:before {
   });
 </script>
 
-<Footer />
 </BaseLayout>

@@ -1,15 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/header.astro";
-import Footer from "../../components/footer.astro";
-import "../../styles/global.css";
 ---
 
 <BaseLayout 
   title="Gauge Conversion Calculator | Knit by Machine" 
   description="Convert any pattern to match your gauge. Enter the pattern's gauge and your own, and this tool instantly recalculates your stitch and row counts.">
-
-<Header />
 
 <style>
 .wizard-page {
@@ -85,10 +80,7 @@ import "../../styles/global.css";
 
 <div class="wizard-page">
   <div class="page-header">
-    <h1>
-      <i class="fas fa-arrows-rotate"></i>
-      Gauge Conversion Calculator
-    </h1>
+    <h1>Gauge Conversion Calculator</h1>
     <p>
       Adjust any pattern to your yarn or tension — no math, no guesswork. Convert any pattern to match your gauge instantly.
     </p>
@@ -107,5 +99,4 @@ import "../../styles/global.css";
   </div>
 </div>
 
-<Footer />
 </BaseLayout>

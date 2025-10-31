@@ -1,15 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/header.astro";
-import Footer from "../../components/footer.astro";
-import "../../styles/global.css";
 ---
 
 <BaseLayout 
   title="What a Difference a Stitch Makes | Knit by Machine" 
   description="Compare two gauges and see how even one stitch can change your project's size. A tiny change in gauge can make a big difference.">
-
-<Header />
 
 <style>
 .wizard-page {
@@ -85,10 +80,7 @@ import "../../styles/global.css";
 
 <div class="wizard-page">
   <div class="page-header">
-    <h1>
-      <i class="fas fa-balance-scale"></i>
-      What a Difference a Stitch Makes
-    </h1>
+    <h1>What a Difference a Stitch Makes</h1>
     <p>
       A tiny change in gauge can make a big difference. See how your project grows (or shrinks) — one stitch at a time.
     </p>
@@ -107,5 +99,4 @@ import "../../styles/global.css";
   </div>
 </div>
 
-<Footer />
 </BaseLayout>
