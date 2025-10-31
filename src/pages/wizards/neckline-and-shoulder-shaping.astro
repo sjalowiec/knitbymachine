@@ -598,8 +598,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     resultsSection.style.display = 'none';
   });
 
-  // Neckline calculation
-  function calculateNeckline(widthSts, depthRows, neckWidthSts) {
+  // Neckline calculation with shoulder shaping
+  function calculateNeckline(widthSts, depthRows, neckWidthSts, shoulderDropRows) {
     let adjustedNeckSts = neckWidthSts;
     if ((widthSts - neckWidthSts) % 2 !== 0) {
       adjustedNeckSts = neckWidthSts + 1;
@@ -618,14 +618,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     const section2Rows = section2Decreases;
     const shapingRows = section1Rows + section2Rows;
     
-    const shoulderDropRows = Math.max(1, Math.round(depthRows * 0.25));
-    const remainingRows = Math.max(0, depthRows - shapingRows - shoulderDropRows);
+    // Use provided shoulder depth (already converted to rows)
+    const actualShoulderRows = shoulderDropRows;
+    const remainingRows = Math.max(0, depthRows - shapingRows - actualShoulderRows);
     
     const turnBlocks = [];
-    if (shoulderDropRows > 0 && shoulderSts > 0) {
-      const perGroup = Math.floor(shoulderSts / shoulderDropRows);
-      const extra = shoulderSts % shoulderDropRows;
-      for (let i = 0; i < shoulderDropRows; i++) {
+    if (actualShoulderRows > 0 && shoulderSts > 0) {
+      const perGroup = Math.floor(shoulderSts / actualShoulderRows);
+      const extra = shoulderSts % actualShoulderRows;
+      for (let i = 0; i < actualShoulderRows; i++) {
         turnBlocks.push(perGroup + (i < extra ? 1 : 0));
       }
     }
@@ -639,7 +640,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       section1Rows,
       section2Rows,
       remainingRows,
-      shoulderDropRows,
+      shoulderDropRows: actualShoulderRows,
       turnBlocks
     };
   }
@@ -665,7 +666,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     const neckWidthSts = Math.round(neck * stsPerUnit);
     const shoulderRows = Math.round(shoulder * rowsPerUnit);
     
-    const result = calculateNeckline(widthSts, depthRows, neckWidthSts);
+    const result = calculateNeckline(widthSts, depthRows, neckWidthSts, shoulderRows);
     
     // Display results
     document.getElementById('cast-on').textContent = `${widthSts} stitches`;
@@ -684,7 +685,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     if (result.section1Decreases > 0) {
       combinedHTML += `<li>Neckline: Dec 1 st every 2 rows, ${result.section1Decreases}× (while also doing shoulder shaping)</li>`;
     }
-    combinedHTML += `<li>Shoulder: ${shoulderRows} short-row groups across ${result.shoulderSts} sts</li>`;
+    combinedHTML += `<li>Shoulder: ${result.turnBlocks.length} short-row groups across ${result.shoulderSts} sts</li>`;
     combinedHTML += '</ul></li>';
     combinedHTML += '<li>Repeat for right side</li>';
     combinedHTML += '</ol>';
@@ -708,14 +709,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     
     // Shoulder details
     let shoulderHTML = '<ol>';
-    shoulderHTML += `<li>Work ${shoulderRows} short-row groups across ${result.shoulderSts} shoulder stitches</li>`;
-    shoulderHTML += '<li>Suggested distribution:<ul style="margin-top: 0.5rem;">';
-    const stsPerGroup = Math.floor(result.shoulderSts / shoulderRows);
-    const extra = result.shoulderSts % shoulderRows;
-    for (let i = 0; i < shoulderRows; i++) {
-      const sts = stsPerGroup + (i < extra ? 1 : 0);
+    shoulderHTML += `<li>Work ${result.turnBlocks.length} short-row groups across ${result.shoulderSts} shoulder stitches</li>`;
+    shoulderHTML += '<li>Distribution:<ul style="margin-top: 0.5rem;">';
+    result.turnBlocks.forEach((sts, i) => {
       shoulderHTML += `<li>Group ${i + 1}: Turn ${sts} stitches from shoulder edge</li>`;
-    }
+    });
     shoulderHTML += '</ul></li>';
     shoulderHTML += `<li>Bind off remaining ${result.shoulderSts} stitches</li>`;
     shoulderHTML += '</ol>';
