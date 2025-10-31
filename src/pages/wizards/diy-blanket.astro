@@ -175,6 +175,18 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
   margin-bottom: 1.5rem;
 }
 
+.yarn-estimate-box {
+  background: linear-gradient(135deg, rgba(82, 104, 45, 0.15) 0%, rgba(82, 104, 45, 0.08) 100%);
+  border: 2px solid var(--kbm-green);
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 1rem;
+  color: #2d3748;
+  font-weight: 600;
+}
+
 :global(.size-options) {
   display: flex;
   flex-wrap: wrap;
@@ -450,6 +462,10 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
             />
           </div>
         </div>
+        
+        <div id="yarn-estimate-display" class="yarn-estimate-box" style="display: none;">
+          <!-- Will be populated by JavaScript -->
+        </div>
       </div>
       </div>
 
@@ -528,6 +544,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const inputSwatchWidth = document.getElementById('swatch-width');
   const inputSwatchLength = document.getElementById('swatch-length');
   const inputSwatchWeight = document.getElementById('swatch-weight');
+  const yarnEstimateDisplay = document.getElementById('yarn-estimate-display');
   const resultsSection = document.getElementById('results');
   const actionBar = document.getElementById('action-bar');
   const startOverBtn = document.getElementById('start-over-btn');
@@ -587,6 +604,7 @@ document.addEventListener('DOMContentLoaded', function() {
       opt.classList.toggle('selected', opt.dataset.sizeKey === key);
     });
     updateYarnCalculatorVisibility();
+    updateYarnEstimate();
     calculate();
   }
 
@@ -612,6 +630,42 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateYarnCalculatorVisibility() {
     const hasSizeSelection = selectedSize || (useCustomSize && customLength && customWidth);
     yarnCalculatorSection.style.display = hasSizeSelection ? 'block' : 'none';
+  }
+
+  // Update real-time yarn estimate display
+  function updateYarnEstimate() {
+    // Only show if we have all required inputs
+    if (!swatchWidth || !swatchLength || !swatchWeight) {
+      yarnEstimateDisplay.style.display = 'none';
+      return;
+    }
+
+    const swatchWidthNum = parseFloat(swatchWidth);
+    const swatchLengthNum = parseFloat(swatchLength);
+    const swatchWeightNum = parseFloat(swatchWeight);
+
+    // Validate inputs
+    if (swatchWidthNum <= 0 || swatchLengthNum <= 0 || swatchWeightNum <= 0 ||
+        isNaN(swatchWidthNum) || isNaN(swatchLengthNum) || isNaN(swatchWeightNum)) {
+      yarnEstimateDisplay.style.display = 'none';
+      return;
+    }
+
+    // Need a size selection to calculate
+    const sizeSelection = getCurrentSize();
+    if (!sizeSelection) {
+      yarnEstimateDisplay.style.display = 'none';
+      return;
+    }
+
+    // Calculate yarn needed
+    const swatchArea = swatchWidthNum * swatchLengthNum;
+    const blanketArea = sizeSelection.dimensions.width * sizeSelection.dimensions.length;
+    const gramsNeeded = Math.round((blanketArea / swatchArea) * swatchWeightNum);
+
+    // Display the result
+    yarnEstimateDisplay.innerHTML = `Estimated Yarn Needed: <span style="color: var(--kbm-green);">${gramsNeeded}g</span> based on your swatch`;
+    yarnEstimateDisplay.style.display = 'block';
   }
 
   // Validation
@@ -926,12 +980,14 @@ document.addEventListener('DOMContentLoaded', function() {
   inputCustomLength.addEventListener('input', (e) => {
     customLength = e.target.value;
     updateYarnCalculatorVisibility();
+    updateYarnEstimate();
     calculate();
   });
 
   inputCustomWidth.addEventListener('input', (e) => {
     customWidth = e.target.value;
     updateYarnCalculatorVisibility();
+    updateYarnEstimate();
     calculate();
   });
 
@@ -943,16 +999,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
   inputSwatchWidth.addEventListener('input', (e) => {
     swatchWidth = e.target.value;
+    updateYarnEstimate();
     calculate();
   });
 
   inputSwatchLength.addEventListener('input', (e) => {
     swatchLength = e.target.value;
+    updateYarnEstimate();
     calculate();
   });
 
   inputSwatchWeight.addEventListener('input', (e) => {
     swatchWeight = e.target.value;
+    updateYarnEstimate();
     calculate();
   });
 
@@ -983,6 +1042,7 @@ document.addEventListener('DOMContentLoaded', function() {
       customSizeDiv.style.display = 'none';
       yarnInputsDiv.style.display = 'none';
       yarnCalculatorSection.style.display = 'none';
+      yarnEstimateDisplay.style.display = 'none';
       
       document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
       
