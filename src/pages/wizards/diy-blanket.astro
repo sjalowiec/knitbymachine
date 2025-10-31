@@ -357,7 +357,6 @@ import "../../styles/global.css";
       Design the perfect blanket — any yarn, any size, any machine. Choose a standard size or set your own with a built-in yarn estimator.
     </p>
     <button class="video-button" onclick="alert('Video tutorial coming soon!')">
-      <i class="fas fa-play-circle"></i>
       Watch Video Tutorial
     </button>
   </div>
@@ -366,18 +365,17 @@ import "../../styles/global.css";
     <!-- Action Bar (shown when user has data) -->
     <div id="action-bar" class="action-bar no-print" style="display: none;">
       <div class="warning-box">
-        <i class="fas fa-exclamation-triangle"></i>
-        <span>IMPORTANT: Your pattern will not be saved on this site. Please be sure to download and save your PDF - once you leave this page, your custom details won't be available again.</span>
+        <span>⚠ IMPORTANT: Your pattern will not be saved on this site. Please be sure to download and save your PDF - once you leave this page, your custom details won't be available again.</span>
       </div>
       <div class="action-buttons">
         <button class="action-btn" id="start-over-btn" data-testid="button-start-over">
-          <i class="fas fa-redo"></i> Start Over
+          Start Over
         </button>
         <button class="action-btn" id="print-btn" data-testid="button-print" style="display: none;">
-          <i class="fas fa-print"></i> Print
+          Print
         </button>
         <button class="action-btn" id="download-btn" data-testid="button-download-pdf" style="display: none;">
-          <i class="fas fa-download"></i> Download PDF
+          Download PDF
         </button>
       </div>
     </div>
@@ -658,15 +656,21 @@ import "../../styles/global.css";
     const validation = validateGauge(input.value, type);
     input.className = validation.class;
     if (validation.message) {
-      const icon = validation.class === 'error' ? 'exclamation-circle' : 'exclamation-triangle';
+      const symbol = validation.class === 'error' ? '⚠' : '⚠';
       msgEl.className = `validation-message ${validation.class}`;
-      msgEl.innerHTML = `<i class="fas fa-${icon}"></i> ${validation.message}`;
+      msgEl.innerHTML = `${symbol} ${validation.message}`;
     } else {
       msgEl.className = 'validation-message';
       msgEl.innerHTML = '';
     }
-    hasGaugeError = !validation.valid;
     return validation.valid;
+  }
+  
+  // Check if BOTH gauge inputs are valid
+  function checkGaugeErrors() {
+    const stitchesValidation = validateGauge(stitchesGauge, 'stitches');
+    const rowsValidation = validateGauge(rowsGauge, 'rows');
+    return !stitchesValidation.valid || !rowsValidation.valid;
   }
 
   // Unit conversion
@@ -851,7 +855,8 @@ import "../../styles/global.css";
       actionBar.style.display = 'flex';
     }
 
-    if (!stitchesPerUnit || !rowsPerUnit || !sizeSelection || hasGaugeError) {
+    // Check if BOTH gauges are valid
+    if (!stitchesPerUnit || !rowsPerUnit || !sizeSelection || checkGaugeErrors()) {
       resultsSection.style.display = 'none';
       printBtn.style.display = 'none';
       downloadBtn.style.display = 'none';
