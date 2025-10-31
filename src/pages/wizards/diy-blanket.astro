@@ -501,6 +501,9 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DIY Blanket Wizard initializing...');
+  
   // Blanket size data
   const blanketSizes = {
     "adult-throw": { name: "Adult Throw", length: 78, width: 48, category: "Throw" },
@@ -550,9 +553,12 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
   const startOverBtn = document.getElementById('start-over-btn');
   const printBtn = document.getElementById('print-btn');
   const downloadBtn = document.getElementById('download-btn');
+  
+  console.log('DOM elements loaded, standardSizesDiv:', standardSizesDiv);
 
   // Populate size categories
   function populateSizes() {
+    console.log('populateSizes() called');
     const categories = {};
     Object.entries(blanketSizes).forEach(([key, data]) => {
       if (!categories[data.category]) {
@@ -561,6 +567,7 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
       categories[data.category].push({ key, ...data });
     });
 
+    console.log('Categories created:', categories);
     standardSizesDiv.innerHTML = '';
     Object.entries(categories).forEach(([category, sizes]) => {
       const categoryDiv = document.createElement('div');
@@ -588,6 +595,8 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
       categoryDiv.appendChild(optionsDiv);
       standardSizesDiv.appendChild(categoryDiv);
     });
+    console.log('Size cards created and appended. Total categories:', Object.keys(categories).length);
+    console.log('standardSizesDiv innerHTML length:', standardSizesDiv.innerHTML.length);
   }
 
   function selectSize(key) {
@@ -993,7 +1002,10 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
   });
 
   // Initialize
+  console.log('Initializing wizard, calling populateSizes()...');
   populateSizes();
+  console.log('Wizard initialized!');
+});
 </script>
 
 </BaseLayout>
