@@ -1,50 +1,36 @@
 ---
 // Reusable Action Bar component for wizards
-// Shows warning message and action buttons (Start Over, Print, Download PDF)
+// Fixed floating buttons in bottom-right corner (Start Over, Print, Download PDF)
 ---
 
 <div id="action-bar" class="wizard-action-bar no-print" style="display: none;">
-  <div class="action-buttons-group">
-    <button class="wizard-action-btn" id="start-over-btn" data-testid="button-start-over">
-      <i class="fas fa-redo"></i> Start Over
-    </button>
-    <button class="wizard-action-btn" id="print-btn" data-testid="button-print" style="display: none;">
-      <i class="fas fa-print"></i> Print
-    </button>
-    <button class="wizard-action-btn" id="download-btn" data-testid="button-download-pdf" style="display: none;">
-      <i class="fas fa-download"></i> Download PDF
-    </button>
-  </div>
+  <button class="wizard-action-btn" id="start-over-btn" data-testid="button-start-over">
+    <i class="fas fa-redo"></i> Start Over
+  </button>
+  <button class="wizard-action-btn" id="print-btn" data-testid="button-print" style="display: none;">
+    <i class="fas fa-print"></i> Print
+  </button>
+  <button class="wizard-action-btn" id="download-pdf" data-testid="button-download-pdf" style="display: none;">
+    <i class="fas fa-download"></i> Download PDF
+  </button>
 </div>
 
 <style>
 .wizard-action-bar {
-  position: sticky;
-  top: 0;
-  background: white;
-  border-top: 2px solid #e5e7eb;
-  border-bottom: 2px solid #e5e7eb;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  padding: 1rem;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
   z-index: 1000;
   display: flex;
-  gap: 1rem;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 1.5rem;
-}
-
-.action-buttons-group {
-  display: flex;
+  flex-direction: column;
   gap: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: center;
+  pointer-events: none;
 }
 
 .wizard-action-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   background: var(--kbm-green);
@@ -57,12 +43,19 @@
   cursor: pointer;
   font-size: 0.95rem;
   white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  pointer-events: auto;
+  min-width: 160px;
 }
 
 .wizard-action-btn:hover {
   background: #6E8B3D;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(82, 104, 45, 0.3);
+  box-shadow: 0 6px 16px rgba(82, 104, 45, 0.35);
+}
+
+.wizard-action-btn:active {
+  transform: translateY(0);
 }
 
 @media print {
@@ -73,17 +66,15 @@
 
 @media (max-width: 768px) {
   .wizard-action-bar {
-    gap: 0.75rem;
-  }
-  
-  .action-buttons-group {
-    width: 100%;
-    justify-content: center;
+    bottom: 15px;
+    right: 15px;
+    gap: 0.6rem;
   }
   
   .wizard-action-btn {
-    flex: 1 1 auto;
-    min-width: 120px;
+    min-width: 140px;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
   }
 }
 </style>
