@@ -1,0 +1,130 @@
+Create a new wizard titled **"Maximum Knitted Width"** for Knit by Machine.
+
+This wizard helps knitters calculate the widest piece they can knit on their machine based on the number of needles available and their stitch gauge.
+
+Use my standard **Knit by Machine Lego-blocks** for Header, WizardCard, SliderInput, and ResultCard. 
+Use vanilla JavaScript only — no frameworks or Bootstrap. 
+Style with my KBM color palette (primary green #52682D, text #333, background #fafafa). 
+Ensure the layout is lightweight, responsive, and visually consistent with other KBM wizards.
+
+---
+
+### STRUCTURE
+
+1. **Header**
+   - Title: “Maximum Knitted Width”
+   - Subtitle: “See how wide you can knit on your machine based on your available needles and stitch gauge.”
+
+2. **WizardCard 1 – Needle Count**
+   - Label: “How many needles do you have?”
+   - Use a horizontal slider with fixed snap points: 100, 110, 150, 200, 272.
+   - Display the numeric value live beside the slider (e.g., “150 needles”).
+   - Use tick marks at each snap position for visual reference.
+
+3. **WizardCard 2 – Stitch Gauge**
+   - Label: “Stitch gauge (stitches per 10 cm / 4″)”
+   - Continuous horizontal slider, range 8–40, step = 0.1.
+   - Display live numeric value beside the slider (e.g., “16 sts / 10 cm”).
+
+4. **ResultCard – Output**
+   - Display the live calculation:
+     “Using {needles} needles at a gauge of {gauge} sts / 10 cm, your maximum knitted width is {width_in}″ ({width_cm} cm).”
+   - Bold the measurement values and round to one decimal.
+   - Below the text, include an SVG-based ruler bar that visually represents the width.
+   - The fill of the ruler bar should animate smoothly as sliders change.
+   - Use KBM green (#52682D) or a subtle gradient for the fill.
+
+---
+
+### CALCULATION
+
+Formula:
+width_cm = (needles / gauge) * 10
+width_in = width_cm / 2.54
+
+php-template
+Copy code
+
+Update the display and ruler in real time when either slider changes.
+
+---
+
+### SVG RULER BAR
+
+Inside the ResultCard, include this SVG (resizable and responsive):
+
+<div id="ruler-wrapper" style="margin-top:20px; width:100%; max-width:400px;">
+  <svg id="ruler-bar" viewBox="0 0 400 30" style="width:100%; height:30px;">
+    <defs>
+      <linearGradient id="rulerGradient" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#52682D" />
+        <stop offset="100%" stop-color="#7B9B4A" />
+      </linearGradient>
+    </defs>
+    <!-- Background track -->
+    <rect x="0" y="12" width="400" height="6" fill="#ddd" rx="3" />
+    <!-- Dynamic fill -->
+    <rect id="ruler-fill" x="0" y="12" width="0" height="6" fill="url(#rulerGradient)" rx="3" />
+    <!-- Tick marks -->
+    <g stroke="#aaa" stroke-width="1">
+      <line x1="50" y1="10" x2="50" y2="20"/>
+      <line x1="100" y1="10" x2="100" y2="20"/>
+      <line x1="150" y1="10" x2="150" y2="20"/>
+      <line x1="200" y1="10" x2="200" y2="20"/>
+      <line x1="250" y1="10" x2="250" y2="20"/>
+      <line x1="300" y1="10" x2="300" y2="20"/>
+      <line x1="350" y1="10" x2="350" y2="20"/>
+    </g>
+  </svg>
+</div>
+
+---
+
+### JAVASCRIPT LOGIC
+
+1. Capture slider values for needle count and gauge.
+2. Apply the formula to calculate width in cm and inches.
+3. Update the result text and ruler fill dynamically.
+
+Sample logic:
+```js
+function calculateWidth(needles, gauge) {
+  const widthCm = (needles / gauge) * 10;
+  const widthIn = widthCm / 2.54;
+  updateDisplay(widthCm, widthIn, needles, gauge);
+  updateRulerBar(widthCm);
+}
+
+function updateDisplay(widthCm, widthIn, needles, gauge) {
+  const resultText = document.getElementById("result-text");
+  resultText.innerHTML = `
+    Using <strong>${needles}</strong> needles at a gauge of <strong>${gauge}</strong> sts / 10 cm,<br>
+    your maximum knitted width is <strong>${widthIn.toFixed(1)}″ (${widthCm.toFixed(1)} cm)</strong>.
+  `;
+}
+
+function updateRulerBar(widthCm) {
+  const fill = document.getElementById("ruler-fill");
+  const maxCm = 100; // adjust scale reference
+  const maxWidth = 400; // matches SVG width
+  const scaledWidth = Math.min((widthCm / maxCm) * maxWidth, maxWidth);
+  fill.setAttribute("width", scaledWidth);
+}
+Attach event listeners to both sliders so any change triggers calculateWidth().
+
+STYLE
+Accent: #52682D
+
+Font: Inter or system sans-serif
+
+Rounded sliders, shadowed cards, light background
+
+Smooth transitions on ruler fill and numeric updates
+
+Responsive: stack sections vertically on small screens
+
+OUTPUT
+Export compiled HTML, CSS, and JS to the /dist folder for Netlify deployment.
+
+yaml
+Copy code
