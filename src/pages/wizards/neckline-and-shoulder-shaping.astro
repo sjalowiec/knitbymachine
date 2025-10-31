@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ActionBar from "../../components/wizards/ActionBar.astro";
 ---
 
 <BaseLayout 
@@ -60,7 +61,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 .wizard-container {
   max-width: 900px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1rem 120px 1rem;
 }
 
 .calculator-card {
@@ -265,48 +266,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   border-left: 3px solid var(--kbm-green);
 }
 
-.action-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e5e7eb;
-}
-
-.action-btn {
-  padding: 0.75rem 1.5rem;
-  border: 2px solid var(--kbm-green);
-  background: white;
-  color: var(--kbm-green);
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 0.95rem;
-}
-
-.action-btn:hover {
-  background: var(--kbm-green);
-  color: white;
-}
-
-.action-btn.primary {
-  background: var(--kbm-green);
-  color: white;
-}
-
-.action-btn.primary:hover {
-  background: #6E8B3D;
-}
-
 @media (max-width: 640px) {
   .input-grid {
     grid-template-columns: 1fr;
-  }
-  
-  .action-buttons {
-    flex-direction: column;
   }
 }
 
@@ -315,7 +277,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     padding-top: 20px;
   }
   
-  .page-header, .video-button, .units-toggle, .action-buttons, .info-box {
+  .page-header, .video-button, .units-toggle, .info-box {
     display: none;
   }
   
@@ -459,18 +421,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           </div>
         </div>
 
-        <div class="action-buttons">
-          <button class="action-btn" onclick="window.print()">
-            <i class="fas fa-print"></i> Print Instructions
-          </button>
-          <button class="action-btn" id="reset-btn">
-            <i class="fas fa-redo"></i> Start Over
-          </button>
-        </div>
       </div>
     </div>
   </div>
 </div>
+
+<ActionBar />
 
 <script>
   // State
@@ -494,7 +450,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   const stitchesMsg = document.getElementById('stitches-message');
   const rowsMsg = document.getElementById('rows-message');
   const resultsSection = document.getElementById('results');
-  const resetBtn = document.getElementById('reset-btn');
+  const actionBar = document.getElementById('action-bar');
+  const startOverBtn = document.getElementById('start-over-btn');
+  const printBtn = document.getElementById('print-btn');
 
   // Validation
   function validateGauge(value, type) {
@@ -587,7 +545,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     calculate();
   });
 
-  resetBtn.addEventListener('click', () => {
+  startOverBtn.addEventListener('click', () => {
     inputStitches.value = '';
     inputRows.value = '';
     inputWidth.value = '';
@@ -595,7 +553,19 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     inputNeck.value = '';
     inputShoulder.value = '';
     stitchesGauge = rowsGauge = pieceWidth = necklineDepth = neckWidth = shoulderDepth = '';
+    units = 'inches';
+    btnInches.classList.add('active');
+    btnCm.classList.remove('active');
+    stitchesMsg.className = 'validation-message';
+    stitchesMsg.innerHTML = '';
+    rowsMsg.className = 'validation-message';
+    rowsMsg.innerHTML = '';
     resultsSection.style.display = 'none';
+    actionBar.style.display = 'none';
+  });
+
+  printBtn.addEventListener('click', () => {
+    window.print();
   });
 
   // Neckline calculation with shoulder shaping
@@ -720,6 +690,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     document.getElementById('shoulder-instructions').innerHTML = shoulderHTML;
     
     resultsSection.style.display = 'block';
+    actionBar.style.display = 'flex';
+    printBtn.style.display = 'inline-flex';
   }
 </script>
 
