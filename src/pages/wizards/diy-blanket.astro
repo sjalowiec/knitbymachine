@@ -177,57 +177,88 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
 
 .size-categories {
   display: grid;
-  gap: 1rem;
+  gap: 2rem;
   margin-bottom: 1.5rem;
 }
 
 .size-category h4 {
   color: var(--kbm-green);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #eef0ea;
 }
 
 .size-options {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
 }
 
 .size-option {
-  padding: 0.5rem;
+  padding: 1.25rem;
+  min-height: 88px;
   border: 2px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   text-align: center;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
   background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .size-option:hover {
   border-color: var(--kbm-green);
-  background: rgba(82, 104, 45, 0.03);
+  background: rgba(82, 104, 45, 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(82, 104, 45, 0.15);
 }
 
 .size-option.selected {
   border-color: var(--kbm-green);
-  background: rgba(82, 104, 45, 0.08);
-  box-shadow: 0 0 0 1px var(--kbm-green);
-  font-weight: 600;
+  background: rgba(82, 104, 45, 0.12);
+  box-shadow: 0 0 0 3px rgba(82, 104, 45, 0.2), 0 4px 12px rgba(82, 104, 45, 0.2);
+  transform: translateY(-2px);
 }
 
 .size-option-name {
-  font-size: 0.85rem;
-  color: #374151;
-  font-weight: 600;
+  font-size: 1rem;
+  color: #1f2937;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.size-option.selected .size-option-name {
+  color: var(--kbm-green);
 }
 
 .size-option-dims {
-  font-size: 0.7rem;
+  font-size: 0.875rem;
   color: #6b7280;
-  margin-top: 0.15rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .size-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .size-option {
+    min-height: 72px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .size-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .checkbox-group {
