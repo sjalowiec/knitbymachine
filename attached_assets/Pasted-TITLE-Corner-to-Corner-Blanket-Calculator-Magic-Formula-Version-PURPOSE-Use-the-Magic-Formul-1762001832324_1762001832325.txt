@@ -1,0 +1,74 @@
+TITLE: Corner-to-Corner Blanket Calculator (Magic Formula Version)
+
+PURPOSE:
+Use the Magic Formula to determine how often to decrease so the knitted piece forms a square
+when worked from full width down to 3 stitches.
+
+------------------------------------------------------------
+STEP 1: USER INPUTS
+------------------------------------------------------------
+Ask for:
+  - Total number of needles (starting stitches)
+  - Stitch gauge (stitches per inch)
+  - Row gauge (rows per inch)
+Set ending stitches = 3
+
+------------------------------------------------------------
+STEP 2: CALCULATE BASIC DIMENSIONS
+------------------------------------------------------------
+widthInches = needles / stitchGauge
+targetRows = widthInches * rowGauge
+
+------------------------------------------------------------
+STEP 3: CALCULATE TOTAL DECREASE ROWS
+------------------------------------------------------------
+Each shaping row removes 2 stitches total (1 each side)
+totalDecreases = (needles - endingStitches) / 2
+
+------------------------------------------------------------
+STEP 4: CALCULATE AVERAGE SPACING BETWEEN DECREASE ROWS
+------------------------------------------------------------
+rowsPerDecrease = targetRows / totalDecreases
+integerSpacing = floor(rowsPerDecrease)
+fractionPart = rowsPerDecrease - integerSpacing
+
+------------------------------------------------------------
+STEP 5: DISTRIBUTE REMAINDER
+------------------------------------------------------------
+fractionPart × totalDecreases = numberOfWiderGaps
+That means:
+  - (totalDecreases - numberOfWiderGaps) decreases 
+    are spaced every integerSpacing rows
+  - numberOfWiderGaps decreases 
+    are spaced every (integerSpacing + 1) rows
+
+------------------------------------------------------------
+STEP 6: BUILD READABLE INSTRUCTION TEXT
+------------------------------------------------------------
+If numberOfWiderGaps = 0:
+   "Decrease 1 stitch every [integerSpacing] rows."
+Else:
+   "Decrease 1 stitch every [integerSpacing] rows [totalDecreases - numberOfWiderGaps] times,
+    then every [integerSpacing + 1] rows [numberOfWiderGaps] times."
+
+------------------------------------------------------------
+STEP 7: DISPLAY RESULTS
+------------------------------------------------------------
+Show:
+  - Base width in inches (rounded to 2 decimals)
+  - Approximate height in inches (same as width)
+  - Total number of rows (rounded)
+  - Total decreases needed
+  - The shaping instruction text (from Step 6)
+
+------------------------------------------------------------
+NOTES FOR KNITTERS
+------------------------------------------------------------
+Add short message:
+  "This calculation uses the Magic Formula to evenly distribute shaping.
+   You may work from full width to 3 stitches, then repeat for the opposite half
+   to complete a square blanket."
+
+------------------------------------------------------------
+END OF LOGIC
+------------------------------------------------------------
