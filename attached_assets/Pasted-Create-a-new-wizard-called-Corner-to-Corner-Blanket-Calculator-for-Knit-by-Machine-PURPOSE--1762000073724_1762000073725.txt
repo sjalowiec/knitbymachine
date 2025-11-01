@@ -1,0 +1,95 @@
+Create a new wizard called "Corner-to-Corner Blanket Calculator" for Knit by Machine.
+
+💡 PURPOSE:
+This wizard helps knitters estimate the finished dimensions of a diagonally knitted (corner-to-corner) blanket or panel based on their gauge and number of cast-on stitches. 
+
+---
+
+📐 FUNCTIONALITY:
+1. Prompt the user for 3 key values:
+   - Cast-on stitches (total width)
+   - Stitch gauge (stitches per 4")
+   - Row gauge (rows per 4")
+
+2. When the user clicks "Calculate":
+   - Validate that all inputs are positive numbers.
+   - Convert stitch and row gauges to stitches and rows per inch.
+   - Perform these calculations:
+     ```
+     stitchesPerInch = stGauge / 4
+     rowsPerInch = rowGauge / 4
+     baseInches = needles / stitchesPerInch
+     totalDecreases = needles / 2
+     totalRows = totalDecreases * 2
+     heightInches = totalRows / rowsPerInch
+     halfBase = baseInches / 2
+     decreaseEdge = Math.sqrt(halfBase ** 2 + heightInches ** 2)
+     ```
+   - Display the following results:
+     - Base (A) in inches
+     - Height (B) in inches
+     - Decrease edge (C) in inches
+     - Knitting instructions:
+       “Start with X stitches. Decrease 1 stitch on each side every other row (each row decreases total stitch count by 2). Continue until no stitches remain.”
+
+3. Show results inside a styled “result” box.
+4. If inputs are invalid, show a red inline message.
+5. Smoothly scroll the result box into view after calculation.
+
+---
+
+🎨 DESIGN:
+Follow the Knit by Machine (KBM) visual system.
+
+Include global placeholders:
+<div id="header"></div> <!-- wizard content --> <div id="footer"></div> ```
+Use the following colors and tokens:
+
+css
+Copy code
+:root {
+  --accent: #96BE11;
+  --light-gray: #f9f9f9;
+  --border-color: #ccc;
+  --text-color: #333;
+}
+Layout Requirements:
+
+Centered content up to 800px wide
+
+Clean white background
+
+Sans-serif font (Arial, Inter, or system default)
+
+Title bar with accent underline
+
+Two-column layout for Stitch and Row Gauge on larger screens
+
+Stack inputs vertically on mobile
+
+“Calculate” button uses brand accent color
+
+Results box has left border accent and light background
+
+Accessibility:
+
+Each input field has a <label for="">
+
+Add aria-live="polite" to results container
+
+Maintain keyboard and screen reader usability
+
+Footnote:
+Under the button, include:
+“Estimate ignores shaping—measure the widest and longest parts of your piece.”
+
+⚙️ TECH SPECS:
+
+Use plain HTML, CSS, and vanilla JS (no React, no frameworks)
+
+Inline <style> and <script> in the HTML file
+
+Responsive design with a small mobile breakpoint (~600px)
+
+File should be ready to deploy to Netlify and embedded in Astro
+

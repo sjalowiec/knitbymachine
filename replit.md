@@ -26,6 +26,8 @@ Knit by Machine is a web application for machine knitting enthusiasts. It provid
 - **Maximum Knitted Width Wizard**: Created new calculator tool to determine maximum width achievable based on needle bed capacity and gauge. Features real-time calculation with unit toggle (inches/cm), gauge-aware formula (4" per gauge in inches mode, 10cm in cm mode), manual text inputs alongside sliders, and animated SVG ruler visualization. Added to /tools page.
 - **Button-Style Unit Toggles**: Standardized all unit toggles across wizards (Maximum Knitted Width, Magic Formula, DIY Blanket) to use consistent button-style interface with green background for active selection, replacing previous pill-style switches.
 - **Project Consolidation**: Merged HeaderUpdate project into main Replit project, combining all wizard functionality with content pages. Added legal pages (privacy-policy.astro, terms-of-use.astro, refund-policy.astro), about.astro, tips.astro, and correct home page (index.astro) from HeaderUpdate. Footer links now functional across entire site.
+- **DIY Blanket Print/PDF Fixes**: Resolved all print and PDF output issues - removed unwanted title, fixed blank PDF generation, eliminated background colors in print mode, ensured SVG diagram displays correctly in both print and PDF formats with proper white backgrounds.
+- **Corner-to-Corner Blanket Calculator**: New diagonal knitting calculator that estimates finished dimensions of triangle/diagonal blankets based on cast-on stitches and gauge. Calculates base, height, and hypotenuse (decrease edge) dimensions. Includes interactive SVG diagram showing triangle with labeled measurements and detailed knitting instructions. Added to /tools page as first calculator in the list.
 
 ## User Preferences
 

@@ -1,0 +1,575 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout 
+  title="Corner-to-Corner Blanket Calculator | Knit by Machine" 
+  description="Estimate the finished dimensions of a diagonally knitted (corner-to-corner) blanket based on your gauge and cast-on stitches.">
+
+<style>
+.wizard-page {
+  padding-top: 120px;
+  padding-bottom: 3rem;
+  min-height: 100vh;
+  background: var(--page-bg);
+}
+
+.page-header {
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+}
+
+.page-header-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .page-header-title {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+.page-header h1 {
+  color: var(--kbm-green);
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.page-header p {
+  color: #6b7280;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.video-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: #e5e7eb;
+  color: #374151;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.2s;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.video-button:hover {
+  background: #d1d5db;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.wizard-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.calculator-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  color: var(--kbm-green);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #eef0ea;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.input-label .label-hint {
+  color: #6b7280;
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--kbm-green);
+  box-shadow: 0 0 0 3px rgba(82, 104, 45, 0.1);
+}
+
+.input-field::placeholder {
+  color: #9ca3af;
+}
+
+.gauge-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .gauge-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.button-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.calculate-btn {
+  flex: 1;
+  background: var(--kbm-green);
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.calculate-btn:hover {
+  background: #3f5123;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(82, 104, 45, 0.25);
+}
+
+.calculate-btn:active {
+  transform: translateY(0);
+}
+
+.reset-btn {
+  padding: 1rem 2rem;
+  background: white;
+  color: #6b7280;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reset-btn:hover {
+  border-color: #d1d5db;
+  background: #f9fafb;
+}
+
+.footnote {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+.error-message {
+  background: #fef2f2;
+  border-left: 4px solid #ef4444;
+  color: #991b1b;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  display: none;
+}
+
+.error-message.show {
+  display: block;
+}
+
+.results-container {
+  background: #f0f4e8;
+  border-left: 4px solid var(--kbm-green);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  display: none;
+}
+
+.results-container.show {
+  display: block;
+}
+
+.results-title {
+  color: var(--kbm-green);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.result-item {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.result-label {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.result-value {
+  color: var(--kbm-green);
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.result-unit {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+.instructions-box {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.instructions-title {
+  color: #374151;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+.instructions-text {
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.diagram-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.diagram-title {
+  color: #374151;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+}
+</style>
+
+<div class="wizard-page">
+  <div class="page-header">
+    <div class="page-header-title">
+      <h1>Corner-to-Corner Blanket Calculator</h1>
+      <button class="video-button" onclick="alert('Video tutorial coming soon!')">
+        <i class="fas fa-play-circle"></i> Watch Tutorial
+      </button>
+    </div>
+    <p>
+      Estimate the finished dimensions of a diagonally knitted blanket or panel based on your gauge and number of cast-on stitches.
+    </p>
+  </div>
+  
+  <div class="wizard-container">
+    <div class="calculator-card">
+      <h2 class="section-title">Calculate Dimensions</h2>
+      
+      <div id="error-message" class="error-message" role="alert" aria-live="polite">
+        Please enter valid positive numbers for all fields.
+      </div>
+      
+      <div class="input-group">
+        <label for="needles" class="input-label">
+          How many needles can you use at the widest point?
+        </label>
+        <input 
+          type="number" 
+          id="needles" 
+          class="input-field" 
+          placeholder="How many needles?"
+          min="1"
+          step="1"
+          data-testid="input-needles"
+        />
+      </div>
+      
+      <div class="gauge-row">
+        <div class="input-group">
+          <label for="stitch-gauge" class="input-label">
+            Stitches per 4" <span class="label-hint">(10cm)</span>
+          </label>
+          <input 
+            type="number" 
+            id="stitch-gauge" 
+            class="input-field" 
+            placeholder="Stitch gauge"
+            min="0.1"
+            step="0.1"
+            data-testid="input-stitch-gauge"
+          />
+        </div>
+        
+        <div class="input-group">
+          <label for="row-gauge" class="input-label">
+            Rows per 4" <span class="label-hint">(10cm)</span>
+          </label>
+          <input 
+            type="number" 
+            id="row-gauge" 
+            class="input-field" 
+            placeholder="Row gauge"
+            min="0.1"
+            step="0.1"
+            data-testid="input-row-gauge"
+          />
+        </div>
+      </div>
+      
+      <div class="button-row">
+        <button class="calculate-btn" id="calculate-btn" data-testid="button-calculate">
+          CALCULATE
+        </button>
+        <button class="reset-btn" id="reset-btn" data-testid="button-reset">
+          Start Over
+        </button>
+      </div>
+      
+      <p class="footnote">
+        Estimate ignores shaping—measure the widest and longest parts of your piece.
+      </p>
+    </div>
+    
+    <div id="results" class="results-container" role="region" aria-live="polite">
+      <h3 class="results-title">Your Corner-to-Corner Blanket</h3>
+      
+      <div class="result-grid">
+        <div class="result-item">
+          <div class="result-label">Base (A)</div>
+          <p class="result-value">
+            <span id="base-value">0</span> <span class="result-unit">inches</span>
+          </p>
+        </div>
+        
+        <div class="result-item">
+          <div class="result-label">Height (B)</div>
+          <p class="result-value">
+            <span id="height-value">0</span> <span class="result-unit">inches</span>
+          </p>
+        </div>
+        
+        <div class="result-item">
+          <div class="result-label">Decrease Edge (C)</div>
+          <p class="result-value">
+            <span id="decrease-value">0</span> <span class="result-unit">inches</span>
+          </p>
+        </div>
+      </div>
+      
+      <div class="instructions-box">
+        <h4 class="instructions-title">Knitting Instructions</h4>
+        <p class="instructions-text" id="instructions-text">
+          <!-- Will be populated by JavaScript -->
+        </p>
+      </div>
+      
+      <div class="diagram-container">
+        <h4 class="diagram-title">Triangle Diagram</h4>
+        <svg id="diagram-svg" viewBox="0 0 400 300" width="400" height="300" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+          <!-- Will be populated by JavaScript -->
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const needlesInput = document.getElementById('needles');
+  const stitchGaugeInput = document.getElementById('stitch-gauge');
+  const rowGaugeInput = document.getElementById('row-gauge');
+  const calculateBtn = document.getElementById('calculate-btn');
+  const resetBtn = document.getElementById('reset-btn');
+  const errorMessage = document.getElementById('error-message');
+  const resultsContainer = document.getElementById('results');
+  const baseValue = document.getElementById('base-value');
+  const heightValue = document.getElementById('height-value');
+  const decreaseValue = document.getElementById('decrease-value');
+  const instructionsText = document.getElementById('instructions-text');
+  const diagramSvg = document.getElementById('diagram-svg');
+  
+  // Calculate function
+  function calculate() {
+    const needles = parseFloat(needlesInput.value);
+    const stGauge = parseFloat(stitchGaugeInput.value);
+    const rowGauge = parseFloat(rowGaugeInput.value);
+    
+    // Validate inputs
+    if (!needles || !stGauge || !rowGauge || needles <= 0 || stGauge <= 0 || rowGauge <= 0) {
+      errorMessage.classList.add('show');
+      resultsContainer.classList.remove('show');
+      return;
+    }
+    
+    // Hide error message
+    errorMessage.classList.remove('show');
+    
+    // Perform calculations
+    const stitchesPerInch = stGauge / 4;
+    const rowsPerInch = rowGauge / 4;
+    const baseInches = needles / stitchesPerInch;
+    const totalDecreases = needles / 2;
+    const totalRows = totalDecreases * 2;
+    const heightInches = totalRows / rowsPerInch;
+    const halfBase = baseInches / 2;
+    const decreaseEdge = Math.sqrt(Math.pow(halfBase, 2) + Math.pow(heightInches, 2));
+    
+    // Update results
+    baseValue.textContent = baseInches.toFixed(1);
+    heightValue.textContent = heightInches.toFixed(1);
+    decreaseValue.textContent = decreaseEdge.toFixed(1);
+    
+    // Update instructions
+    instructionsText.textContent = `Start with ${needles} stitches. Decrease 1 stitch on each side every other row (each row decreases total stitch count by 2). Continue until no stitches remain.`;
+    
+    // Generate diagram
+    generateDiagram(baseInches, heightInches, decreaseEdge);
+    
+    // Show results
+    resultsContainer.classList.add('show');
+    
+    // Smooth scroll to results
+    setTimeout(() => {
+      resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  }
+  
+  // Generate SVG diagram
+  function generateDiagram(base, height, hypotenuse) {
+    const svgWidth = 400;
+    const svgHeight = 300;
+    const margin = 60;
+    
+    // Calculate scale to fit the triangle
+    const scale = Math.min((svgWidth - margin * 2) / base, (svgHeight - margin * 2) / height);
+    
+    // Triangle coordinates - right angle at bottom left
+    // Bottom left corner (origin/right angle)
+    const x1 = margin + 30;
+    const y1 = svgHeight - margin - 30;
+    
+    // Bottom right (end of base)
+    const x2 = x1 + (base * scale);
+    const y2 = y1;
+    
+    // Top left (end of height)
+    const x3 = x1;
+    const y3 = y1 - (height * scale);
+    
+    diagramSvg.innerHTML = `
+      <!-- Triangle -->
+      <polygon points="${x1},${y1} ${x2},${y2} ${x3},${y3}" 
+               fill="none" stroke="#52682d" stroke-width="2"/>
+      
+      <!-- Base line (horizontal bottom) with measurement -->
+      <line x1="${x1}" y1="${y1 + 15}" x2="${x2}" y2="${y2 + 15}" 
+            stroke="black" stroke-width="1"/>
+      <circle cx="${x1}" cy="${y1 + 15}" r="3" fill="black"/>
+      <circle cx="${x2}" cy="${y2 + 15}" r="3" fill="black"/>
+      <text x="${(x1 + x2) / 2}" y="${y1 + 35}" text-anchor="middle" font-size="12" fill="black">
+        A (Base): ${base.toFixed(1)}"
+      </text>
+      
+      <!-- Height line (vertical left side) with measurement -->
+      <line x1="${x1 - 15}" y1="${y1}" x2="${x3 - 15}" y2="${y3}" 
+            stroke="black" stroke-width="1"/>
+      <circle cx="${x1 - 15}" cy="${y1}" r="3" fill="black"/>
+      <circle cx="${x3 - 15}" cy="${y3}" r="3" fill="black"/>
+      <text x="${x1 - 35}" y="${(y1 + y3) / 2}" text-anchor="middle" font-size="12" fill="black"
+            transform="rotate(-90, ${x1 - 35}, ${(y1 + y3) / 2})">
+        B (Height): ${height.toFixed(1)}"
+      </text>
+      
+      <!-- Hypotenuse (decrease edge) label -->
+      <text x="${(x2 + x3) / 2 + 25}" y="${(y2 + y3) / 2 - 10}" text-anchor="middle" font-size="12" fill="#52682d" font-weight="bold">
+        C (Decrease Edge): ${hypotenuse.toFixed(1)}"
+      </text>
+      
+      <!-- Right angle indicator at bottom left corner -->
+      <path d="M ${x1} ${y1 - 12} L ${x1 + 12} ${y1 - 12} L ${x1 + 12} ${y1}" 
+            fill="none" stroke="#52682d" stroke-width="1.5"/>
+    `;
+  }
+  
+  // Reset function
+  function reset() {
+    needlesInput.value = '';
+    stitchGaugeInput.value = '';
+    rowGaugeInput.value = '';
+    errorMessage.classList.remove('show');
+    resultsContainer.classList.remove('show');
+  }
+  
+  // Event listeners
+  calculateBtn.addEventListener('click', calculate);
+  resetBtn.addEventListener('click', reset);
+  
+  // Allow Enter key to calculate
+  [needlesInput, stitchGaugeInput, rowGaugeInput].forEach(input => {
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        calculate();
+      }
+    });
+  });
+});
+</script>
+
+</BaseLayout>
