@@ -96,6 +96,36 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   border-bottom: 2px solid #eef0ea;
 }
 
+.units-toggle {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.unit-btn {
+  padding: 0.6rem 1.5rem;
+  background: white;
+  color: #374151;
+  border: 2px solid #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.unit-btn.active {
+  background: var(--kbm-green);
+  color: white;
+  border-color: var(--kbm-green);
+}
+
+.unit-btn:hover:not(.active) {
+  border-color: #d1d5db;
+  background: #f9fafb;
+}
+
 .input-group {
   margin-bottom: 1.5rem;
 }
@@ -321,6 +351,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   <div class="wizard-container">
     <div class="calculator-card">
       <h2 class="section-title">Calculate Dimensions</h2>
+      
+      <!-- Units Toggle -->
+      <div class="units-toggle">
+        <button class="unit-btn active" id="btn-inches" data-testid="button-inches">Inches</button>
+        <button class="unit-btn" id="btn-cm" data-testid="button-cm">Centimeters</button>
+      </div>
       
       <div id="error-message" class="error-message" role="alert" aria-live="polite">
         Please enter valid positive numbers for all fields.
