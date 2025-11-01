@@ -1,0 +1,190 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { sanity } from '../lib/sanity';
+
+const groqQuery = `*[_type == "tip" && status == "active"] | order(_createdAt desc) {
+  _id,
+  question,
+  "slug": slug.current,
+  answer,
+  category,
+  tags
+}`;
+
+const tips = await sanity.fetch(groqQuery);
+---
+
+<Layout title="Ask 'n Answer | Knit by Machine" description="Quick tips and answers to common machine knitting questions from Knit by Machine">
+  <style>
+    :root {
+      --kbm-green: #52682d;
+      --kbm-green-2: #738c52;
+      --page-bg: #f7f8f7;
+      --bubble-back: #C1C9AE;
+      --bubble-front: #A0A98A;
+      --thought-bubble: #B7C0A4;
+    }
+
+    main {
+      max-width: 1000px;
+      padding: 60px 20px 80px;
+      margin: 0 auto;
+    }
+
+    .ana-page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .ana-header-icon {
+      width: 140px;
+      height: auto;
+      margin-bottom: 0.5rem;
+    }
+
+    .bubble-back { 
+      fill: var(--bubble-back);
+      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.15));
+    }
+    
+    .bubble-front { 
+      fill: var(--bubble-front);
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+    }
+    
+    .thought { 
+      fill: var(--thought-bubble);
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));
+    }
+
+    .ana-header-text h1 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: var(--kbm-green);
+      margin: 0 0 0.5rem 0;
+    }
+
+    .ana-subtitle {
+      font-size: 1.1rem;
+      color: #6b7280;
+      margin: 0;
+    }
+
+    .ana-divider {
+      height: 4px;
+      background: linear-gradient(to right, transparent, var(--kbm-green-2), transparent);
+      margin: 0 auto 3rem;
+      max-width: 600px;
+      border-radius: 2px;
+    }
+
+    .ana-intro {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      font-size: 1.05rem;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .ana-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 2rem;
+    }
+
+    .ana-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .ana-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(82, 104, 45, 0.15);
+      border-color: var(--kbm-green-2);
+    }
+
+    .ana-card h2 {
+      font-size: 1.25rem;
+      color: var(--kbm-green);
+      margin: 0 0 12px 0;
+      line-height: 1.3;
+    }
+
+    .ana-card p {
+      color: #6b7280;
+      font-size: 0.95rem;
+      margin: 0;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .ana-read-more {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--kbm-green);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .ana-card:hover .ana-read-more {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 700px) {
+      .ana-grid {
+        grid-template-columns: 1fr;
+      }
+
+      main {
+        padding: 40px 16px 60px;
+      }
+    }
+  </style>
+
+  <main>
+    <section class="ana-page-header">
+      <svg class="ana-header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 130">
+        <circle class="thought" cx="32" cy="74" r="8"/>
+        <circle class="thought" cx="48" cy="60" r="10"/>
+        <rect class="bubble-back" x="60" y="38" rx="18" ry="18" width="120" height="44" />
+        <path class="bubble-front" d="M90 65h100a8 8 0 0 1 8 8v30a8 8 0 0 1-8 8h-70l-12 12v-12H90a8 8 0 0 1-8-8V73a8 8 0 0 1 8-8z"/>
+      </svg>
+
+      <div class="ana-header-text">
+        <h1>Ask 'n Answer</h1>
+        <p class="ana-subtitle">Quick tips from Knit by Machine</p>
+      </div>
+    </section>
+
+    <div class="ana-divider"></div>
+
+    <div class="ana-intro">
+      <p>Got questions about machine knitting? You're in the right place! Browse our collection of common questions and helpful answers to make your machine knitting journey smoother.</p>
+    </div>
+
+    <div class="ana-grid">
+      {tips.map((tip) => (
+        <a href={`/tips/${tip.slug}`} class="ana-card">
+          <h2>{tip.question}</h2>
+          <p>{tip.answer}</p>
+          <span class="ana-read-more">Read full answer →</span>
+        </a>
+      ))}
+    </div>
+  </main>
+</Layout>
