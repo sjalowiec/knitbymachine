@@ -596,8 +596,6 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DIY Blanket Wizard initializing...');
@@ -652,7 +650,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const actionBar = document.getElementById('action-bar');
   const startOverBtn = document.getElementById('start-over-btn');
   const printBtn = document.getElementById('print-btn');
-  const downloadBtn = document.getElementById('download-pdf');
   
   console.log('DOM elements loaded, standardSizesDiv:', standardSizesDiv);
   
@@ -1029,7 +1026,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!stitchesPerUnit || !rowsPerUnit || !sizeSelection || checkGaugeErrors()) {
       resultsSection.style.display = 'none';
       printBtn.style.display = 'none';
-      downloadBtn.style.display = 'none';
       return;
     }
 
@@ -1039,7 +1035,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (widthSts <= 0 || lengthRows <= 0) {
       resultsSection.style.display = 'none';
       printBtn.style.display = 'none';
-      downloadBtn.style.display = 'none';
       return;
     }
 
@@ -1052,7 +1047,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     resultsSection.style.display = 'block';
     printBtn.style.display = 'inline-flex';
-    downloadBtn.style.display = 'inline-flex';
   }
 
   // Event handlers
@@ -1211,81 +1205,6 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(() => {
         document.title = originalTitle;
       }, 100);
-    });
-  }
-
-  if (downloadBtn) {
-    downloadBtn.addEventListener('click', async () => {
-      const sizeSelection = getCurrentSize();
-      if (!sizeSelection) {
-        alert('Please select a blanket size first.');
-        return;
-      }
-      
-      // Get pattern content and diagram
-      const patternContent = document.getElementById('pattern-content');
-      const diagramContent = document.getElementById('diagram-content');
-      
-      if (!patternContent || !diagramContent || !patternContent.innerHTML.trim()) {
-        alert('Pattern content not ready. Please wait a moment and try again.');
-        return;
-      }
-      
-      // Get today's date
-      const today = new Date();
-      const formattedDate = today.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-      });
-
-      // Clone the content to avoid modifying the original
-      const patternClone = patternContent.cloneNode(true);
-      const diagramClone = diagramContent.cloneNode(true);
-      
-      // Get the SVG and ensure it's properly formatted for PDF
-      const svgElement = diagramClone.querySelector('svg');
-      if (svgElement) {
-        svgElement.setAttribute('style', 'display: block; margin: 0 auto; background: white;');
-      }
-      
-      // Create PDF content
-      const pdfContainer = document.createElement('div');
-      pdfContainer.style.cssText = 'font-family: Poppins, Arial, sans-serif; padding: 20px; background: white; color: black;';
-      
-      pdfContainer.innerHTML = `
-        <div style="text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #52682d;">
-          <h1 style="color: #52682d; margin: 0; font-size: 28px;">${sizeSelection.size} Blanket Pattern</h1>
-          <p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">Created on ${formattedDate}</p>
-        </div>
-        <div style="margin-bottom: 30px; color: black; background: white;">${patternClone.innerHTML}</div>
-        <div style="page-break-before: always; text-align: center; margin-bottom: 20px; padding: 20px; background: white;">
-          <h3 style="color: #52682d; margin-bottom: 1.5rem;">${sizeSelection.size} Blanket</h3>
-          <div style="background: white; padding: 20px;">${diagramClone.innerHTML}</div>
-        </div>
-        <div style="text-align: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 10pt; color: #666;">
-          Knit by Machine • Created on ${formattedDate}
-        </div>
-      `;
-
-      const opt = {
-        margin: 0.5,
-        filename: `${sizeSelection.size.replace(/\s+/g, '_')}_Blanket_Pattern.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { 
-          scale: 2,
-          backgroundColor: '#ffffff',
-          logging: false
-        },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-      };
-
-      try {
-        await html2pdf().set(opt).from(pdfContainer).save();
-      } catch (error) {
-        console.error('PDF generation error:', error);
-        alert('Error generating PDF. Please try again.');
-      }
     });
   }
 
