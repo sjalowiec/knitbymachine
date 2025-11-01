@@ -16,23 +16,62 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
 }
 
 .page-header {
-  text-align: center;
   max-width: 800px;
   margin: 0 auto 2rem;
   padding: 0 1rem;
+}
+
+.page-header-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .page-header-title {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
 }
 
 .page-header h1 {
   color: var(--kbm-green);
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 0.75rem;
+  margin: 0;
 }
 
 .page-header p {
   color: #6b7280;
   font-size: 1.05rem;
   line-height: 1.6;
+  text-align: center;
+}
+
+.video-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: var(--kbm-green);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.video-button:hover {
+  background: #6E8B3D;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(82, 104, 45, 0.3);
 }
 
 .wizard-container {
@@ -247,7 +286,12 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
 
 <div class="wizard-page">
   <div class="page-header">
-    <h1>Maximum Knitted Width</h1>
+    <div class="page-header-title">
+      <h1>Maximum Knitted Width</h1>
+      <button class="video-button" onclick="alert('Video tutorial coming soon!')">
+        <i class="fas fa-play-circle"></i> Watch Tutorial
+      </button>
+    </div>
     <p>Every machine knitter works within the limits of their needle bed. Use this quick calculator to see how wide you can knit at your gauge and plan your blanket or project with confidence.</p>
   </div>
 
