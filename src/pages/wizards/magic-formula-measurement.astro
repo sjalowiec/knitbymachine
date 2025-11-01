@@ -116,59 +116,29 @@ select:focus {
   margin-bottom: 1.5rem;
 }
 
-.unit-toggle-wrapper {
+.units-toggle {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--text-dark);
+  gap: 0.5rem;
+  padding: 4px;
+  background: #f3f4f6;
+  border-radius: 8px;
 }
 
-.unit-label {
-  min-width: 25px;
-  text-align: center;
-}
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 44px;
-  height: 24px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
+.unit-btn {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-weight: 600;
+  border-radius: 6px;
   cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--kbm-green);
-  transition: 0.3s;
-  border-radius: 24px;
+  transition: all 0.2s;
+  font-size: 0.95rem;
 }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: 0.3s;
-  border-radius: 50%;
-}
-
-input:checked + .slider:before {
-  transform: translateX(20px);
+.unit-btn.active {
+  background: var(--kbm-green);
+  color: white;
 }
 
 .sides-group {
@@ -278,13 +248,9 @@ input:checked + .slider:before {
   <div class="wizard-container">
     <form id="wizard-form">
       <div class="toggle-group">
-        <div class="unit-toggle-wrapper">
-          <span class="unit-label">in</span>
-          <label class="switch">
-            <input type="checkbox" id="unitToggle">
-            <span class="slider"></span>
-          </label>
-          <span class="unit-label">cm</span>
+        <div class="units-toggle">
+          <button type="button" class="unit-btn active" id="inches-btn" data-unit="in">Inches</button>
+          <button type="button" class="unit-btn" id="cm-btn" data-unit="cm">Centimeters</button>
         </div>
       </div>
 
@@ -360,12 +326,13 @@ input:checked + .slider:before {
 </div>
 
 <script is:inline>
-  const unitToggle = document.getElementById('unitToggle');
+  const inchesBtn = document.getElementById('inches-btn');
+  const cmBtn = document.getElementById('cm-btn');
+  let useCm = false;
 
   function updatePlaceholders() {
-    const isCm = unitToggle.checked;
-    const unitLabel = isCm ? 'cm' : 'inches';
-    const unitPerLabel = isCm ? 'cm' : 'inch';
+    const unitLabel = useCm ? 'cm' : 'inches';
+    const unitPerLabel = useCm ? 'cm' : 'inch';
     
     document.getElementById('startWidth').placeholder = `Starting width in ${unitLabel}`;
     document.getElementById('endWidth').placeholder = `Ending width in ${unitLabel}`;
@@ -376,13 +343,32 @@ input:checked + .slider:before {
 
   const savedUnit = localStorage.getItem('kbm-unit-preference') || 'in';
   if (savedUnit === 'cm') {
-    unitToggle.checked = true;
+    useCm = true;
+    inchesBtn.classList.remove('active');
+    cmBtn.classList.add('active');
+  } else {
+    useCm = false;
+    inchesBtn.classList.add('active');
+    cmBtn.classList.remove('active');
   }
   updatePlaceholders();
 
-  unitToggle.addEventListener('change', function() {
+  inchesBtn.addEventListener('click', function() {
+    if (!useCm) return;
+    useCm = false;
+    inchesBtn.classList.add('active');
+    cmBtn.classList.remove('active');
+    localStorage.setItem('kbm-unit-preference', 'in');
     updatePlaceholders();
-    localStorage.setItem('kbm-unit-preference', this.checked ? 'cm' : 'in');
+  });
+
+  cmBtn.addEventListener('click', function() {
+    if (useCm) return;
+    useCm = true;
+    cmBtn.classList.add('active');
+    inchesBtn.classList.remove('active');
+    localStorage.setItem('kbm-unit-preference', 'cm');
+    updatePlaceholders();
   });
 
   document.querySelectorAll('.sides-btn').forEach(btn => {
