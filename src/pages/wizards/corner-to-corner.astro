@@ -442,9 +442,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         </div>
         
         <div class="result-item">
-          <div class="result-label">Total Length</div>
+          <div class="result-label">Total Rows</div>
           <p class="result-value">
-            <span id="decrease-value">0</span> <span class="result-unit">inches</span>
+            <span id="decrease-value">0</span> <span class="result-unit-rows">rows</span>
           </p>
         </div>
       </div>
@@ -481,11 +481,58 @@ document.addEventListener('DOMContentLoaded', function() {
   const instructionsText = document.getElementById('instructions-text');
   const diagramSvg = document.getElementById('diagram-svg');
   
+  // Unit toggle
+  const btnInches = document.getElementById('btn-inches');
+  const btnCm = document.getElementById('btn-cm');
+  let currentUnit = localStorage.getItem('c2c-unit') || 'inches';
+  
+  // Initialize unit toggle
+  function updateUnitToggle() {
+    if (currentUnit === 'inches') {
+      btnInches.classList.add('active');
+      btnCm.classList.remove('active');
+    } else {
+      btnCm.classList.add('active');
+      btnInches.classList.remove('active');
+    }
+    updateLabels();
+  }
+  
+  function updateLabels() {
+    const gaugeRef = currentUnit === 'inches' ? '4"' : '10cm';
+    const gaugeLabels = document.querySelectorAll('.label-hint');
+    gaugeLabels.forEach(label => {
+      label.textContent = currentUnit === 'inches' ? '(10cm)' : '(4")';
+    });
+    
+    // Update result units
+    const resultUnits = document.querySelectorAll('.result-unit');
+    resultUnits.forEach(unit => {
+      unit.textContent = currentUnit === 'inches' ? 'inches' : 'cm';
+    });
+  }
+  
+  btnInches.addEventListener('click', function() {
+    currentUnit = 'inches';
+    localStorage.setItem('c2c-unit', currentUnit);
+    updateUnitToggle();
+  });
+  
+  btnCm.addEventListener('click', function() {
+    currentUnit = 'cm';
+    localStorage.setItem('c2c-unit', currentUnit);
+    updateUnitToggle();
+  });
+  
+  // Initialize on load
+  updateUnitToggle();
+  
   // Calculate function
   function calculate() {
     const maxNeedles = parseFloat(needlesInput.value);
     const stGauge = parseFloat(stitchGaugeInput.value);
     const rowGauge = parseFloat(rowGaugeInput.value);
+    const isInches = currentUnit === 'inches';
     
     // Validate inputs
     if (!maxNeedles || !stGauge || !rowGauge || maxNeedles <= 0 || stGauge <= 0 || rowGauge <= 0) {
@@ -497,80 +544,80 @@ document.addEventListener('DOMContentLoaded', function() {
     // Hide error message
     errorMessage.classList.remove('show');
     
-    // Corner-to-corner square: starts at 3 stitches, increases to max, decreases back to 3
+    // Constants
     const startStitches = 3;
+    const gaugeRef = isInches ? 4 : 10; // 4" or 10cm
+    
+    // STEP 1: Calculate dimensions for square
+    // Width (diagonal) = max needles / stitch gauge
+    const widthInUnits = maxNeedles / (stGauge / gaugeRef);
+    
+    // For a square corner-to-corner: height = width
+    const heightInUnits = widthInUnits;
+    
+    // STEP 2: Calculate target rows for the ENTIRE square
+    // Total rows = width * row gauge (since height = width for square)
+    const targetRows = widthInUnits * (rowGauge / gaugeRef);
+    
+    // Each half (increase + decrease) gets half the rows
+    const rowsPerPhase = targetRows / 2;
+    
+    // STEP 3: Apply Magic Formula to INCREASE phase (3 → max)
     const stitchesToIncrease = maxNeedles - startStitches;
+    const totalIncreases = stitchesToIncrease / 2; // Each increase row adds 2 stitches
+    
+    let increaseRowsPerChange = rowsPerPhase / totalIncreases;
+    let increaseIntSpacing = Math.floor(increaseRowsPerChange);
+    let increaseFraction = increaseRowsPerChange - increaseIntSpacing;
+    let increaseWiderGaps = Math.round(increaseFraction * totalIncreases);
+    let increaseNormalGaps = totalIncreases - increaseWiderGaps;
+    
+    // STEP 4: Apply Magic Formula to DECREASE phase (max → 3)
     const stitchesToDecrease = maxNeedles - startStitches;
+    const totalDecreases = stitchesToDecrease / 2; // Each decrease row removes 2 stitches
     
-    // Each increase/decrease row changes by 2 stitches (one on each side)
-    const increaseRows = stitchesToIncrease / 2;
-    const decreaseRows = stitchesToDecrease / 2;
-    const totalRows = increaseRows + decreaseRows;
-    
-    // Calculate dimensions
-    const stitchesPerInch = stGauge / 4;
-    const rowsPerInch = rowGauge / 4;
-    const diagonalInches = maxNeedles / stitchesPerInch;
-    const totalLengthInches = totalRows / rowsPerInch;
-    
-    // Magic Formula for increase phase (3 stitches → max stitches)
-    const increaseStitches = stitchesToIncrease;
-    let increaseInterval = 2; // Default every other row
-    let increaseExtra = 0;
-    
-    if (increaseRows > 0 && increaseStitches > 0) {
-      increaseInterval = Math.floor(increaseRows / (increaseStitches / 2));
-      increaseExtra = increaseRows % (increaseStitches / 2);
-    }
-    
-    // Magic Formula for decrease phase (max stitches → 3 stitches)
-    const decreaseStitches = stitchesToDecrease;
-    let decreaseInterval = 2; // Default every other row
-    let decreaseExtra = 0;
-    
-    if (decreaseRows > 0 && decreaseStitches > 0) {
-      decreaseInterval = Math.floor(decreaseRows / (decreaseStitches / 2));
-      decreaseExtra = decreaseRows % (decreaseStitches / 2);
-    }
+    let decreaseRowsPerChange = rowsPerPhase / totalDecreases;
+    let decreaseIntSpacing = Math.floor(decreaseRowsPerChange);
+    let decreaseFraction = decreaseRowsPerChange - decreaseIntSpacing;
+    let decreaseWiderGaps = Math.round(decreaseFraction * totalDecreases);
+    let decreaseNormalGaps = totalDecreases - decreaseWiderGaps;
     
     // Update results display
-    baseValue.textContent = diagonalInches.toFixed(1);
-    heightValue.textContent = diagonalInches.toFixed(1);
-    decreaseValue.textContent = totalLengthInches.toFixed(1);
+    baseValue.textContent = widthInUnits.toFixed(1);
+    heightValue.textContent = heightInUnits.toFixed(1);
+    decreaseValue.textContent = Math.round(targetRows);
     
     // Generate detailed instructions
     let instructions = `Cast on ${startStitches} stitches.\n\n`;
     
-    // Increase phase
-    instructions += `INCREASE PHASE:\n`;
-    instructions += `Increase 1 stitch on each side (2 stitches total per increase row) `;
-    if (increaseInterval === 2 && increaseExtra === 0) {
-      instructions += `every other row `;
+    // INCREASE phase instructions
+    instructions += `INCREASE PHASE (${startStitches} → ${maxNeedles} stitches):\n`;
+    if (increaseWiderGaps === 0) {
+      instructions += `Increase 1 stitch on each side every ${increaseIntSpacing} rows, ${totalIncreases} times.`;
+    } else if (increaseNormalGaps === 0) {
+      instructions += `Increase 1 stitch on each side every ${increaseIntSpacing + 1} rows, ${totalIncreases} times.`;
     } else {
-      instructions += `every ${increaseInterval} rows `;
-      if (increaseExtra > 0) {
-        instructions += `(with ${increaseExtra} extra rows at interval ${increaseInterval + 1}) `;
-      }
+      instructions += `Increase 1 stitch on each side every ${increaseIntSpacing} rows ${increaseNormalGaps} times, `;
+      instructions += `then every ${increaseIntSpacing + 1} rows ${increaseWiderGaps} times.`;
     }
-    instructions += `until you have ${maxNeedles} stitches.\n\n`;
+    instructions += `\n\n`;
     
-    // Decrease phase
-    instructions += `DECREASE PHASE:\n`;
-    instructions += `Decrease 1 stitch on each side (2 stitches total per decrease row) `;
-    if (decreaseInterval === 2 && decreaseExtra === 0) {
-      instructions += `every other row `;
+    // DECREASE phase instructions
+    instructions += `DECREASE PHASE (${maxNeedles} → ${startStitches} stitches):\n`;
+    if (decreaseWiderGaps === 0) {
+      instructions += `Decrease 1 stitch on each side every ${decreaseIntSpacing} rows, ${totalDecreases} times.`;
+    } else if (decreaseNormalGaps === 0) {
+      instructions += `Decrease 1 stitch on each side every ${decreaseIntSpacing + 1} rows, ${totalDecreases} times.`;
     } else {
-      instructions += `every ${decreaseInterval} rows `;
-      if (decreaseExtra > 0) {
-        instructions += `(with ${decreaseExtra} extra rows at interval ${decreaseInterval + 1}) `;
-      }
+      instructions += `Decrease 1 stitch on each side every ${decreaseIntSpacing} rows ${decreaseNormalGaps} times, `;
+      instructions += `then every ${decreaseIntSpacing + 1} rows ${decreaseWiderGaps} times.`;
     }
-    instructions += `until ${startStitches} stitches remain. Bind off.`;
+    instructions += `\n\nBind off remaining ${startStitches} stitches.`;
     
     instructionsText.textContent = instructions;
     
     // Generate diagram
-    generateDiagram(diagonalInches, totalLengthInches);
+    generateDiagram(widthInUnits, heightInUnits);
     
     // Show results
     resultsContainer.classList.add('show');
@@ -582,14 +629,18 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Generate SVG diagram - diamond/square shape for corner-to-corner
-  function generateDiagram(diagonal, totalLength) {
+  function generateDiagram(width, height) {
     const svgWidth = 400;
     const svgHeight = 300;
     const margin = 40;
+    const unitLabel = currentUnit === 'inches' ? '"' : 'cm';
     
-    // Calculate scale to fit the diamond
-    const scale = Math.min((svgWidth - margin * 2) / diagonal, (svgHeight - margin * 2) / diagonal);
-    const size = diagonal * scale;
+    // Since it's a square, width = height
+    const squareSize = Math.max(width, height);
+    
+    // Calculate scale to fit the diamond (rotated square)
+    const scale = Math.min((svgWidth - margin * 2) / squareSize, (svgHeight - margin * 2) / squareSize);
+    const size = squareSize * scale;
     
     // Diamond coordinates (rotated square)
     const centerX = svgWidth / 2;
@@ -603,27 +654,35 @@ document.addEventListener('DOMContentLoaded', function() {
     const left = { x: centerX - halfSize, y: centerY };
     
     diagramSvg.innerHTML = `
-      <!-- Diamond shape -->
+      <!-- Diamond shape (square rotated 45°) -->
       <polygon points="${top.x},${top.y} ${right.x},${right.y} ${bottom.x},${bottom.y} ${left.x},${left.y}" 
                fill="none" stroke="#52682d" stroke-width="2"/>
       
-      <!-- Diagonal measurement (horizontal across) -->
+      <!-- Width measurement (horizontal across) -->
       <line x1="${left.x - 15}" y1="${centerY}" x2="${right.x + 15}" y2="${centerY}" 
             stroke="black" stroke-width="1"/>
       <circle cx="${left.x - 15}" cy="${centerY}" r="3" fill="black"/>
       <circle cx="${right.x + 15}" cy="${centerY}" r="3" fill="black"/>
       <text x="${centerX}" y="${centerY + 25}" text-anchor="middle" font-size="12" fill="black">
-        Diagonal: ${diagonal.toFixed(1)}"
+        Width: ${squareSize.toFixed(1)}${unitLabel}
       </text>
       
-      <!-- Total length measurement (vertical) -->
+      <!-- Height measurement (vertical) - rotated 90° for clarity -->
       <line x1="${centerX + halfSize + 30}" y1="${top.y}" x2="${centerX + halfSize + 30}" y2="${bottom.y}" 
             stroke="black" stroke-width="1"/>
       <circle cx="${centerX + halfSize + 30}" cy="${top.y}" r="3" fill="black"/>
       <circle cx="${centerX + halfSize + 30}" cy="${bottom.y}" r="3" fill="black"/>
       <text x="${centerX + halfSize + 50}" y="${centerY}" text-anchor="middle" font-size="12" fill="black"
             transform="rotate(-90, ${centerX + halfSize + 50}, ${centerY})">
-        Total Length: ${totalLength.toFixed(1)}"
+        Height: ${squareSize.toFixed(1)}${unitLabel}
+      </text>
+      
+      <!-- Diagonal measurement (from top-left to bottom-right) - rotated 90° -->
+      <line x1="${left.x}" y1="${left.y}" x2="${top.x}" y2="${top.y}" stroke="none"/>
+      <text x="${(left.x + top.x) / 2 - 30}" y="${(left.y + top.y) / 2}" 
+            text-anchor="middle" font-size="11" fill="#52682d" font-weight="bold"
+            transform="rotate(-45, ${(left.x + top.x) / 2 - 30}, ${(left.y + top.y) / 2})">
+        Diagonal: ${(squareSize * 1.414).toFixed(1)}${unitLabel}
       </text>
       
       <!-- Corner labels -->
