@@ -613,100 +613,67 @@ document.addEventListener('DOMContentLoaded', function() {
     errorMessage.classList.remove('show');
     
     // Constants
-    const startStitches = 3;
+    const endStitches = 3;
     const gaugeRef = isInches ? 4 : 10; // 4" or 10cm
     
     // STEP 1: Calculate dimensions for square
-    // Diagonal (max width when knitting) = max needles / stitch gauge
-    const diagonalInUnits = maxNeedles / (stGauge / gaugeRef);
+    // Width (side) = max needles / stitch gauge
+    const width = maxNeedles / (stGauge / gaugeRef);
     
-    // Side of square = diagonal / sqrt(2)
-    const sideInUnits = diagonalInUnits / Math.sqrt(2);
+    // Diagonal = width * sqrt(2) -- diagonal is LONGER than side
+    const diagonal = width * Math.sqrt(2);
     
-    // STEP 2: Calculate target rows for the ENTIRE square
-    // Total rows = diagonal * row gauge
-    const targetRows = diagonalInUnits * (rowGauge / gaugeRef);
+    // STEP 2: Calculate total rows based on WIDTH
+    const totalRows = width * (rowGauge / gaugeRef);
     
-    // Each half (increase + decrease) gets half the rows
-    const rowsPerPhase = targetRows / 2;
-    
-    // STEP 3: Apply Magic Formula to INCREASE phase (3 → max)
-    const stitchesToIncrease = maxNeedles - startStitches;
-    const totalIncreases = stitchesToIncrease / 2; // Each increase row adds 2 stitches
-    
-    let increaseRowsPerChange = rowsPerPhase / totalIncreases;
-    let increaseIntSpacing = Math.floor(increaseRowsPerChange);
-    let increaseFraction = increaseRowsPerChange - increaseIntSpacing;
-    let increaseWiderGaps = Math.round(increaseFraction * totalIncreases);
-    let increaseNormalGaps = totalIncreases - increaseWiderGaps;
-    
-    // STEP 4: Apply Magic Formula to DECREASE phase (max → 3)
-    const stitchesToDecrease = maxNeedles - startStitches;
-    const totalDecreases = stitchesToDecrease / 2; // Each decrease row removes 2 stitches
-    
-    let decreaseRowsPerChange = rowsPerPhase / totalDecreases;
-    let decreaseIntSpacing = Math.floor(decreaseRowsPerChange);
-    let decreaseFraction = decreaseRowsPerChange - decreaseIntSpacing;
-    let decreaseWiderGaps = Math.round(decreaseFraction * totalDecreases);
-    let decreaseNormalGaps = totalDecreases - decreaseWiderGaps;
+    // STEP 3: Apply Magic Formula to DECREASE phase (max → 3)
+    const totalDecreases = Math.ceil((maxNeedles - endStitches) / 2);
+    const rowsPerDecrease = totalRows / totalDecreases;
+    const decreaseInteger = Math.floor(rowsPerDecrease);
+    const decreaseWider = Math.round((rowsPerDecrease - decreaseInteger) * totalDecreases);
+    const decreaseNormal = totalDecreases - decreaseWider;
     
     // Update results display (no decimals for cm, 1 decimal for inches)
     if (isInches) {
-      baseValue.textContent = sideInUnits.toFixed(1);
-      heightValue.textContent = diagonalInUnits.toFixed(1);
+      baseValue.textContent = width.toFixed(1);
+      heightValue.textContent = diagonal.toFixed(1);
     } else {
-      baseValue.textContent = Math.round(sideInUnits);
-      heightValue.textContent = Math.round(diagonalInUnits);
+      baseValue.textContent = Math.round(width);
+      heightValue.textContent = Math.round(diagonal);
     }
-    decreaseValue.textContent = Math.round(targetRows);
-    
-    // Round all repeat counts
-    const totalIncreasesRounded = Math.round(totalIncreases);
-    const increaseNormalGapsRounded = Math.round(increaseNormalGaps);
-    const increaseWiderGapsRounded = Math.round(increaseWiderGaps);
-    const totalDecreasesRounded = Math.round(totalDecreases);
-    const decreaseNormalGapsRounded = Math.round(decreaseNormalGaps);
-    const decreaseWiderGapsRounded = Math.round(decreaseWiderGaps);
+    decreaseValue.textContent = Math.round(totalRows);
     
     // Generate detailed instructions with proper formatting
-    let instructions = `Cast on ${startStitches} stitches.\n\n`;
+    let instructions = `Cast on ${endStitches} stitches.\n\n`;
     
-    // INCREASE phase instructions
-    instructions += `INCREASE PHASE (${startStitches} → ${maxNeedles} stitches):\n`;
-    if (increaseWiderGapsRounded === 0) {
-      instructions += `• Increase 1 stitch on each side every ${increaseIntSpacing} rows\n`;
-      instructions += `• Repeat ${totalIncreasesRounded} times\n`;
-    } else if (increaseNormalGapsRounded === 0) {
-      instructions += `• Increase 1 stitch on each side every ${increaseIntSpacing + 1} rows\n`;
-      instructions += `• Repeat ${totalIncreasesRounded} times\n`;
+    // INCREASE phase instructions (mirror of decrease)
+    instructions += `INCREASE PHASE (${endStitches} → ${maxNeedles} stitches):\n`;
+    if (decreaseWider === 0) {
+      instructions += `• Increase 1 st on each side every ${decreaseInteger} row(s) ${totalDecreases} times\n`;
+    } else if (decreaseNormal === 0) {
+      instructions += `• Increase 1 st on each side every ${decreaseInteger + 1} row(s) ${totalDecreases} times\n`;
     } else {
-      instructions += `• Increase 1 stitch on each side every ${increaseIntSpacing} rows\n`;
-      instructions += `• Repeat ${increaseNormalGapsRounded} times\n`;
-      instructions += `• Then increase every ${increaseIntSpacing + 1} rows\n`;
-      instructions += `• Repeat ${increaseWiderGapsRounded} times\n`;
+      instructions += `• Increase 1 st on each side every ${decreaseInteger} row(s) ${decreaseNormal} times,\n`;
+      instructions += `  then every ${decreaseInteger + 1} row(s) ${decreaseWider} times\n`;
     }
     instructions += `\n`;
     
     // DECREASE phase instructions
-    instructions += `DECREASE PHASE (${maxNeedles} → ${startStitches} stitches):\n`;
-    if (decreaseWiderGapsRounded === 0) {
-      instructions += `• Decrease 1 stitch on each side every ${decreaseIntSpacing} rows\n`;
-      instructions += `• Repeat ${totalDecreasesRounded} times\n`;
-    } else if (decreaseNormalGapsRounded === 0) {
-      instructions += `• Decrease 1 stitch on each side every ${decreaseIntSpacing + 1} rows\n`;
-      instructions += `• Repeat ${totalDecreasesRounded} times\n`;
+    instructions += `DECREASE PHASE (${maxNeedles} → ${endStitches} stitches):\n`;
+    if (decreaseWider === 0) {
+      instructions += `• Decrease 1 st on each side every ${decreaseInteger} row(s) ${totalDecreases} times\n`;
+    } else if (decreaseNormal === 0) {
+      instructions += `• Decrease 1 st on each side every ${decreaseInteger + 1} row(s) ${totalDecreases} times\n`;
     } else {
-      instructions += `• Decrease 1 stitch on each side every ${decreaseIntSpacing} rows\n`;
-      instructions += `• Repeat ${decreaseNormalGapsRounded} times\n`;
-      instructions += `• Then decrease every ${decreaseIntSpacing + 1} rows\n`;
-      instructions += `• Repeat ${decreaseWiderGapsRounded} times\n`;
+      instructions += `• Decrease 1 st on each side every ${decreaseInteger} row(s) ${decreaseNormal} times,\n`;
+      instructions += `  then every ${decreaseInteger + 1} row(s) ${decreaseWider} times\n`;
     }
-    instructions += `\nBind off remaining ${startStitches} stitches.`;
+    instructions += `\nBind off remaining ${endStitches} stitches.`;
     
     instructionsText.textContent = instructions;
     
     // Generate diagram
-    generateDiagram(sideInUnits, diagonalInUnits);
+    generateDiagram(width, diagonal);
     
     // Show results
     resultsContainer.classList.add('show');
