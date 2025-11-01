@@ -5,16 +5,47 @@ import Layout from "../layouts/layout.astro";
 <Layout>
   <div class="ana-container">
     <div class="page-header">
-      <img src="/assets/icons/asknanswer-icon.svg" alt="Ask 'n Answer" class="ana-icon" />
-      <h1>Ask 'n Answer</h1>
-      <p class="subtitle">Get answers to your machine knitting questions</p>
+      <div class="header-content">
+        <div class="header-left">
+          <div class="header-speech-bubble">
+            <span class="header-title">Ask 'n Answer</span>
+            <div class="header-speech-tail"></div>
+          </div>
+        </div>
+        <div class="header-right">
+          <h2 class="header-tagline">Practical help<br>for every<br>machine knitter</h2>
+        </div>
+      </div>
+      <div class="header-divider"></div>
     </div>
 
     <!-- Question Bubble (Thought Bubble - Left) -->
     <div class="question-bubble fade-in">
-      <div class="bubble-content">
-        <h3>Why won't my carriage slide?</h3>
-      </div>
+      <svg class="thought-cloud" viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 80 60 
+                 Q 80 42, 100 42
+                 Q 110 38, 120 38
+                 Q 135 38, 145 42
+                 Q 165 42, 175 46
+                 Q 195 46, 205 50
+                 Q 230 50, 245 54
+                 Q 270 54, 285 58
+                 Q 310 58, 320 68
+                 Q 320 78, 310 88
+                 Q 300 98, 285 98
+                 Q 270 102, 245 102
+                 Q 230 106, 205 106
+                 Q 195 110, 175 110
+                 Q 165 114, 145 114
+                 Q 135 118, 120 118
+                 Q 110 118, 100 114
+                 Q 80 114, 80 96
+                 Z" 
+                 fill="var(--bubble-gray)" 
+                 stroke="#999" 
+                 stroke-width="1.5"/>
+        <text x="200" y="73" text-anchor="middle" font-family="Poppins" font-size="18" font-weight="600" fill="var(--text-dark)">Why won't my carriage slide?</text>
+      </svg>
       <div class="thought-tail">
         <div class="circle circle-1"></div>
         <div class="circle circle-2"></div>
@@ -107,27 +138,78 @@ import Layout from "../layouts/layout.astro";
   }
 
   .page-header {
-    text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 60px;
   }
 
-  .ana-icon {
-    width: 80px;
-    height: 80px;
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
     margin-bottom: 20px;
   }
 
-  .page-header h1 {
-    color: var(--kbm-green);
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    font-family: 'Poppins', sans-serif;
+  .header-left {
+    flex: 0 0 auto;
   }
 
-  .subtitle {
-    color: var(--text-light);
-    font-size: 1.1rem;
+  .header-speech-bubble {
+    position: relative;
+    background: #f5f5f5;
+    border: 2px solid #999;
+    border-radius: 30px;
+    padding: 20px 35px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .header-speech-tail {
+    position: absolute;
+    bottom: -12px;
+    left: 40px;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid #f5f5f5;
+  }
+
+  .header-speech-tail::before {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: -17px;
+    width: 0;
+    height: 0;
+    border-left: 17px solid transparent;
+    border-right: 17px solid transparent;
+    border-top: 17px solid #999;
+  }
+
+  .header-title {
+    font-family: 'Shadows Into Light Two', cursive;
+    font-size: 2.2rem;
+    color: #6E8B3D;
+    white-space: nowrap;
+  }
+
+  .header-right {
+    flex: 1;
+    text-align: right;
+  }
+
+  .header-tagline {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #6E8B3D;
+    line-height: 1.3;
     margin: 0;
+  }
+
+  .header-divider {
+    width: 100%;
+    height: 3px;
+    background: var(--kbm-green);
   }
 
   /* Fade-in animation */
@@ -155,20 +237,10 @@ import Layout from "../layouts/layout.astro";
     opacity: 0;
   }
 
-  .question-bubble .bubble-content {
-    background: var(--bubble-gray);
-    color: var(--text-dark);
-    padding: 20px 25px;
-    border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'Poppins', sans-serif;
-  }
-
-  .question-bubble h3 {
-    margin: 0;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--text-dark);
+  .thought-cloud {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
   }
 
   /* Thought bubble tail (3 circles) */
@@ -183,6 +255,7 @@ import Layout from "../layouts/layout.astro";
 
   .circle {
     background: var(--bubble-gray);
+    border: 1.5px solid #999;
     border-radius: 50%;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
@@ -213,7 +286,8 @@ import Layout from "../layouts/layout.astro";
   }
 
   .answer-bubble .bubble-content {
-    background: var(--kbm-green);
+    background: linear-gradient(135deg, #6E8B3D, #8FBF54);
+    border: 2px solid #52682d;
     color: white;
     padding: 20px 25px;
     border-radius: 20px;
@@ -244,13 +318,25 @@ import Layout from "../layouts/layout.astro";
   /* Speech bubble tail (triangle) */
   .speech-tail {
     position: absolute;
-    bottom: 15px;
-    right: -10px;
+    bottom: 20px;
+    right: -20px;
     width: 0;
     height: 0;
-    border-left: 15px solid var(--kbm-green);
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
+    border-left: 25px solid #8FBF54;
+    border-top: 18px solid transparent;
+    border-bottom: 18px solid transparent;
+  }
+
+  .speech-tail::before {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: 2px;
+    width: 0;
+    height: 0;
+    border-left: 27px solid #52682d;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
   }
 
   /* Member Section */
