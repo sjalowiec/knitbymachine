@@ -400,7 +400,8 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
       </button>
     </div>
     <p>
-      Knit a diagonal blanket from corner to corner — fast, fun, and machine-friendly.
+      This small blanket is perfect for preemies and infants — quick to knit and endlessly adaptable.
+      Knit multiples and join them for a larger blanket or play with color for a custom look.
     </p>
   </div>
   
@@ -502,8 +503,7 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
       </div>
       
       <div class="diagram-container">
-        <h4 class="diagram-title">Square Diagram</h4>
-        <svg id="diagram-svg" viewBox="0 0 400 300" width="400" height="300" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+        <svg id="diagram-svg" viewBox="0 0 600 450" width="600" height="450" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
           <!-- Will be populated by JavaScript -->
         </svg>
       </div>
@@ -773,15 +773,34 @@ document.addEventListener('DOMContentLoaded', function() {
   // Download PDF function
   function handleDownloadPdf() {
     const element = resultsContainer;
+    
+    // Show print footer before PDF generation
+    const printFooter = document.getElementById('print-footer');
+    if (printFooter) {
+      printFooter.style.display = 'block';
+    }
+    
     const opt = {
       margin: 0.5,
       filename: 'corner-to-corner-pattern.pdf',
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+      html2canvas: { 
+        scale: 2, 
+        useCORS: true, 
+        backgroundColor: '#ffffff',
+        logging: false,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight
+      },
       jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     };
     
-    html2pdf().set(opt).from(element).save();
+    html2pdf().set(opt).from(element).save().then(() => {
+      // Hide print footer after PDF generation
+      if (printFooter) {
+        printFooter.style.display = 'none';
+      }
+    });
   }
   
   // Event listeners
