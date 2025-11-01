@@ -1,0 +1,42 @@
+You are building an Astro component page for Knit by Machine called "Ask ’n Answer".
+
+**Goal:** Create a clean, modern Ask ’n Answer (AnA) page layout. The question appears first in a left-aligned *thought bubble*, the answer appears next in a right-aligned *speech bubble*, and a gated (member-only) section appears below with a video embed and extra details.
+
+**Page structure:**
+1. Use my global header/footer injection setup (load from /header.html and /footer.html).
+2. Use a centered main container (`.ana-container`) with a max width of 900px and padding.
+3. Layout order:
+   - `<div class="question-bubble">` for the question
+   - `<div class="answer-bubble">` for the answer
+   - `<section class="member-section locked">` for members only
+
+**Design details:**
+- Left bubble = *thought bubble style*, soft gray background (`#f5f5f5`), rounded with 3 small circles "tail" leading upward toward the right.
+- Right bubble = *speech bubble style*, Knit by Machine green (`#52682D`), white text, right aligned with a triangular tail.
+- Smooth fade-in animation for both bubbles using keyframes or a fade-in utility class.
+- Use Poppins or Inter font.
+- Add subtle drop shadow and 20px padding inside each bubble.
+- Spacing: 30px between the two bubbles, 50px before member section.
+
+**Member section:**
+- Container class: `.member-section`
+- Default: blurred overlay or semi-transparent box with text “Member-only content — log in to access.”
+- Once unlocked (simulate with `.unlocked` class), display:
+  - Responsive video iframe placeholder (YouTube or Loom embed)
+  - Additional text block with details or related links.
+- Background color: `#f5f5f5` with rounded corners and 25px padding.
+
+**Mobile behavior:**
+- Stack bubbles vertically with centered alignment below 768px.
+- Reduce padding and font size slightly for readability.
+
+**Example content:**
+Question: “Why won’t my carriage slide?”
+Answer: “Check your yarn tension and ensure no needles are slightly forward. Dust or old oil can also cause drag.”
+Video: YouTube embed placeholder.
+Details: “Watch this short demo to see how carriage maintenance prevents sticking.”
+
+**Deliverable:**
+- Create a single file named `ana-page.astro`.
+- Include scoped CSS at the bottom.
+- The result should be visually clean, modern, and match Knit by Machine’s style aesthetic.
