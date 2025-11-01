@@ -143,6 +143,13 @@ footer .legal-links a:hover::after {
     display: inline-block;
   }
 }
+
+/* Hide footer when printing */
+@media print {
+  footer {
+    display: none !important;
+  }
+}
 </style>
 
 <footer aria-label="Site footer">
