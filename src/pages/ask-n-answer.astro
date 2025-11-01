@@ -3,15 +3,532 @@ import Layout from "../layouts/layout.astro";
 ---
 
 <Layout>
-  <div style="padding: 120px 20px 60px; max-width: 800px; margin: 0 auto; text-align: center;">
-    <h1 style="color: var(--kbm-green); font-size: 2.5rem; margin-bottom: 20px;">
-      Ask 'n Answer (Tips)
-    </h1>
-    <p style="font-size: 1.2rem; color: #666; margin-bottom: 30px;">
-      This page is coming soon! We're building a community space where machine knitters can share tips, ask questions, and learn from each other.
-    </p>
-    <a href="/" style="display: inline-block; background: var(--kbm-green); color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 700;">
-      Return Home
-    </a>
+  <div class="ana-container">
+    <div class="page-header">
+      <img src="/assets/icons/asknanswer-icon.svg" alt="Ask 'n Answer" class="ana-icon" />
+      <h1>Ask 'n Answer</h1>
+      <p class="subtitle">Get answers to your machine knitting questions</p>
+    </div>
+
+    <!-- Question Bubble (Thought Bubble - Left) -->
+    <div class="question-bubble fade-in">
+      <div class="bubble-content">
+        <h3>Why won't my carriage slide?</h3>
+      </div>
+      <div class="thought-tail">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+      </div>
+    </div>
+
+    <!-- Answer Bubble (Speech Bubble - Right) -->
+    <div class="answer-bubble fade-in">
+      <div class="bubble-content">
+        <p>Check your yarn tension and ensure no needles are slightly forward. Dust or old oil can also cause drag.</p>
+        <p>Try these quick fixes:</p>
+        <ul>
+          <li>Clean the needle bed with a soft brush</li>
+          <li>Check that all needles are fully seated</li>
+          <li>Apply fresh sewing machine oil to the carriage rails</li>
+          <li>Verify your yarn tension isn't too tight</li>
+        </ul>
+      </div>
+      <div class="speech-tail"></div>
+    </div>
+
+    <!-- Member Section -->
+    <section class="member-section locked" id="member-section" role="region" aria-label="Member-only content">
+      <div class="member-overlay" id="member-overlay">
+        <div class="lock-icon" id="lock-icon">
+          <i class="fas fa-lock"></i>
+        </div>
+        <p class="lock-message" id="lock-message">Member-only content — log in to access</p>
+        <button 
+          class="toggle-btn" 
+          id="toggle-btn" 
+          data-testid="button-toggle-member" 
+          aria-pressed="false"
+          aria-label="Toggle member content visibility"
+        >
+          <i class="fas fa-unlock"></i> <span id="btn-text">Unlock Demo</span>
+        </button>
+      </div>
+
+      <div class="member-content">
+        <h3>Video Tutorial</h3>
+        <div class="video-container">
+          <iframe
+            width="100%"
+            height="400"
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="Carriage Maintenance Demo"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+
+        <div class="member-details">
+          <h4>Additional Details</h4>
+          <p>Watch this short demo to see how carriage maintenance prevents sticking.</p>
+          <p>In this video, you'll learn:</p>
+          <ul>
+            <li>How to properly clean and lubricate your carriage</li>
+            <li>Common needle issues that cause drag</li>
+            <li>Preventive maintenance tips to keep your machine running smoothly</li>
+          </ul>
+          <div class="related-links">
+            <h5>Related Resources:</h5>
+            <ul>
+              <li><a href="#">Maintenance Schedule Guide</a></li>
+              <li><a href="#">Recommended Cleaning Supplies</a></li>
+              <li><a href="#">Troubleshooting Common Issues</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
+</Layout>
+
+<style>
+  :root {
+    --kbm-green: #52682d;
+    --bubble-gray: #f5f5f5;
+    --text-dark: #333;
+    --text-light: #666;
+  }
+
+  .ana-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 120px 20px 60px;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .ana-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+  }
+
+  .page-header h1 {
+    color: var(--kbm-green);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  /* Question Bubble (Thought Bubble - Left) */
+  .question-bubble {
+    position: relative;
+    max-width: 70%;
+    margin-bottom: 30px;
+    animation-delay: 0.2s;
+    opacity: 0;
+  }
+
+  .question-bubble .bubble-content {
+    background: var(--bubble-gray);
+    color: var(--text-dark);
+    padding: 20px 25px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .question-bubble h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  /* Thought bubble tail (3 circles) */
+  .thought-tail {
+    position: absolute;
+    bottom: -25px;
+    left: 30px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+  }
+
+  .circle {
+    background: var(--bubble-gray);
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .circle-1 {
+    width: 18px;
+    height: 18px;
+  }
+
+  .circle-2 {
+    width: 12px;
+    height: 12px;
+  }
+
+  .circle-3 {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Answer Bubble (Speech Bubble - Right) */
+  .answer-bubble {
+    position: relative;
+    max-width: 75%;
+    margin-left: auto;
+    margin-bottom: 50px;
+    animation-delay: 0.4s;
+    opacity: 0;
+  }
+
+  .answer-bubble .bubble-content {
+    background: var(--kbm-green);
+    color: white;
+    padding: 20px 25px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(82, 104, 45, 0.3);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .answer-bubble p {
+    margin: 0 0 15px 0;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+
+  .answer-bubble p:last-child {
+    margin-bottom: 0;
+  }
+
+  .answer-bubble ul {
+    margin: 10px 0 0 0;
+    padding-left: 25px;
+  }
+
+  .answer-bubble li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  /* Speech bubble tail (triangle) */
+  .speech-tail {
+    position: absolute;
+    bottom: 15px;
+    right: -10px;
+    width: 0;
+    height: 0;
+    border-left: 15px solid var(--kbm-green);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+  }
+
+  /* Member Section */
+  .member-section {
+    position: relative;
+    background: var(--bubble-gray);
+    border-radius: 12px;
+    padding: 25px;
+    margin-top: 50px;
+    min-height: 300px;
+  }
+
+  .member-section.locked .member-content {
+    filter: blur(8px);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .member-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+  }
+
+  .member-section:not(.locked) .member-overlay {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .lock-icon {
+    font-size: 3rem;
+    color: var(--kbm-green);
+    margin-bottom: 15px;
+  }
+
+  .lock-message {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .toggle-btn {
+    background: var(--kbm-green);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .toggle-btn:hover {
+    background: #3f5122;
+    transform: translateY(-2px);
+  }
+
+  .toggle-btn:focus {
+    outline: 3px solid #3f5122;
+    outline-offset: 2px;
+  }
+
+  .toggle-btn i {
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+  }
+
+  .member-section:not(.locked) .toggle-btn {
+    background: #d32f2f;
+  }
+
+  .member-section:not(.locked) .toggle-btn:hover {
+    background: #b71c1c;
+  }
+
+  .member-content {
+    transition: filter 0.3s ease;
+  }
+
+  .member-content h3 {
+    color: var(--kbm-green);
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .member-content h4 {
+    color: var(--kbm-green);
+    font-size: 1.4rem;
+    margin: 30px 0 15px 0;
+  }
+
+  .member-content h5 {
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    margin: 20px 0 10px 0;
+  }
+
+  .video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 25px;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
+
+  .member-details {
+    color: var(--text-dark);
+    line-height: 1.6;
+  }
+
+  .member-details p {
+    margin-bottom: 15px;
+  }
+
+  .member-details ul {
+    margin: 10px 0;
+    padding-left: 25px;
+  }
+
+  .member-details li {
+    margin-bottom: 8px;
+  }
+
+  .related-links {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+
+  .related-links a {
+    color: var(--kbm-green);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .related-links a:hover {
+    text-decoration: underline;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .ana-container {
+      padding: 100px 15px 40px;
+    }
+
+    .page-header h1 {
+      font-size: 2rem;
+    }
+
+    .ana-icon {
+      width: 60px;
+      height: 60px;
+    }
+
+    .question-bubble,
+    .answer-bubble {
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .question-bubble .bubble-content,
+    .answer-bubble .bubble-content {
+      padding: 15px 20px;
+    }
+
+    .question-bubble h3 {
+      font-size: 1.1rem;
+    }
+
+    .answer-bubble p,
+    .answer-bubble li {
+      font-size: 0.95rem;
+    }
+
+    .thought-tail {
+      left: 20px;
+    }
+
+    .speech-tail {
+      right: -8px;
+    }
+
+    .member-section {
+      padding: 20px;
+    }
+
+    .member-content h3 {
+      font-size: 1.5rem;
+    }
+
+    .lock-icon {
+      font-size: 2.5rem;
+    }
+
+    .lock-message {
+      font-size: 1rem;
+      text-align: center;
+      padding: 0 20px;
+    }
+  }
+</style>
+
+<script>
+  // Toggle member section lock/unlock with proper state management
+  const toggleBtn = document.getElementById('toggle-btn');
+  const memberSection = document.getElementById('member-section');
+  const lockIcon = document.getElementById('lock-icon');
+  const lockMessage = document.getElementById('lock-message');
+  const btnText = document.getElementById('btn-text');
+  const btnIcon = toggleBtn?.querySelector('i');
+
+  function updateMemberState(isLocked) {
+    if (isLocked) {
+      memberSection?.classList.add('locked');
+      toggleBtn?.setAttribute('aria-pressed', 'false');
+      if (lockIcon) {
+        lockIcon.innerHTML = '<i class="fas fa-lock"></i>';
+      }
+      if (lockMessage) {
+        lockMessage.textContent = 'Member-only content — log in to access';
+      }
+      if (btnIcon) {
+        btnIcon.className = 'fas fa-unlock';
+      }
+      if (btnText) {
+        btnText.textContent = 'Unlock Demo';
+      }
+    } else {
+      memberSection?.classList.remove('locked');
+      toggleBtn?.setAttribute('aria-pressed', 'true');
+      if (lockIcon) {
+        lockIcon.innerHTML = '<i class="fas fa-lock-open"></i>';
+      }
+      if (lockMessage) {
+        lockMessage.textContent = 'Content unlocked! Click to lock again.';
+      }
+      if (btnIcon) {
+        btnIcon.className = 'fas fa-lock';
+      }
+      if (btnText) {
+        btnText.textContent = 'Lock Demo';
+      }
+    }
+  }
+
+  if (toggleBtn && memberSection) {
+    // Click handler (works for both mouse and keyboard activation)
+    toggleBtn.addEventListener('click', () => {
+      const isCurrentlyLocked = memberSection.classList.contains('locked');
+      updateMemberState(!isCurrentlyLocked);
+    });
+  }
+</script>
 </Layout>
