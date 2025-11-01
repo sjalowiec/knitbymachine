@@ -338,6 +338,15 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
 }
 
 @media print {
+  * {
+    background: white !important;
+    background-color: white !important;
+  }
+  
+  body {
+    background: white !important;
+  }
+  
   .no-print {
     display: none !important;
   }
@@ -345,6 +354,7 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
   .wizard-page {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
+    background: white !important;
   }
   
   .page-header, .video-button {
@@ -371,25 +381,22 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
     border-top: none;
     padding-top: 0;
     margin-top: 0;
+    background: white !important;
   }
   
   /* Optimize pattern display for printing */
-  .calculator-card {
-    box-shadow: none;
+  .calculator-card,
+  .pattern-card,
+  .wizard-container {
+    box-shadow: none !important;
     padding: 1rem;
     background: white !important;
-  }
-  
-  /* Remove all background colors for clean printing */
-  .highlight-box,
-  .pattern-card,
-  div[style*="background"] {
-    background: white !important;
-    background-color: white !important;
+    border: none !important;
   }
   
   /* Keep borders but remove colored backgrounds */
   .highlight-box {
+    background: white !important;
     border-left: 2px solid #333 !important;
     padding: 0.5rem !important;
   }
@@ -399,6 +406,7 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
   .diagram-container svg {
     display: block !important;
     page-break-inside: avoid;
+    background: white !important;
   }
   
   /* Show and style print footer */
@@ -411,6 +419,7 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
     margin-top: 2rem;
     padding-top: 1rem;
     border-top: 1px solid #ddd;
+    background: white !important;
   }
 }
 </style>
@@ -563,7 +572,6 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
         
         <div class="results-section">
           <div class="pattern-card">
-            <h3>Blanket Knitting Pattern</h3>
             <div id="pattern-content">
               <!-- Will be populated by JavaScript -->
             </div>
@@ -1208,43 +1216,70 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (downloadBtn) {
     downloadBtn.addEventListener('click', async () => {
-    const sizeSelection = getCurrentSize();
-    if (!sizeSelection) return;
-    
-    // Get today's date
-    const today = new Date();
-    const formattedDate = today.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
+      const sizeSelection = getCurrentSize();
+      if (!sizeSelection) {
+        alert('Please select a blanket size first.');
+        return;
+      }
+      
+      // Get pattern content and diagram
+      const patternContent = document.getElementById('pattern-content');
+      const diagramContent = document.getElementById('diagram-content');
+      
+      if (!patternContent || !diagramContent || !patternContent.innerHTML.trim()) {
+        alert('Pattern content not ready. Please wait a moment and try again.');
+        return;
+      }
+      
+      // Get today's date
+      const today = new Date();
+      const formattedDate = today.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
 
-    const content = `
-      <div style="font-family: 'Poppins', Arial, sans-serif; padding: 20px;">
+      // Clone the content to avoid modifying the original
+      const patternClone = patternContent.cloneNode(true);
+      const diagramClone = diagramContent.cloneNode(true);
+      
+      // Create PDF content
+      const pdfContainer = document.createElement('div');
+      pdfContainer.style.cssText = 'font-family: Poppins, Arial, sans-serif; padding: 20px; background: white; color: black;';
+      
+      pdfContainer.innerHTML = `
         <div style="text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #52682d;">
           <h1 style="color: #52682d; margin: 0; font-size: 28px;">${sizeSelection.size} Blanket Pattern</h1>
           <p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">Created on ${formattedDate}</p>
         </div>
-        <div style="margin-bottom: 30px;">${document.getElementById('pattern-content').innerHTML}</div>
-        <div style="text-align: center;">
-          <h3 style="color: #52682d;">${sizeSelection.size} Blanket</h3>
-          ${document.getElementById('diagram-content').innerHTML}
+        <div style="margin-bottom: 30px; color: black;">${patternClone.innerHTML}</div>
+        <div style="text-align: center; margin-bottom: 20px;">
+          <h3 style="color: #52682d; margin-bottom: 1rem;">${sizeSelection.size} Blanket</h3>
+          ${diagramClone.innerHTML}
         </div>
         <div style="text-align: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 10pt; color: #666;">
           Knit by Machine • Created on ${formattedDate}
         </div>
-      </div>
-    `;
+      `;
 
-    const opt = {
-      margin: 0.5,
-      filename: `${sizeSelection.size.replace(/\s+/g, '_')}_Blanket_Pattern.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
+      const opt = {
+        margin: 0.5,
+        filename: `${sizeSelection.size.replace(/\s+/g, '_')}_Blanket_Pattern.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+          scale: 2,
+          backgroundColor: '#ffffff',
+          logging: false
+        },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
 
-    await html2pdf().set(opt).from(content).save();
+      try {
+        await html2pdf().set(opt).from(pdfContainer).save();
+      } catch (error) {
+        console.error('PDF generation error:', error);
+        alert('Error generating PDF. Please try again.');
+      }
     });
   }
 
