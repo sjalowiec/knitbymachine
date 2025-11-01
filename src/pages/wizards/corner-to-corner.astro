@@ -273,9 +273,7 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
 }
 
 .result-item {
-  background: white;
   padding: 1rem;
-  border-radius: 8px;
   text-align: center;
 }
 
@@ -466,10 +464,6 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
           CALCULATE
         </button>
       </div>
-      
-      <p class="footnote">
-        Estimate ignores shaping—measure the widest and longest parts of your piece.
-      </p>
     </div>
     
     <ActionBar />
@@ -582,12 +576,20 @@ document.addEventListener('DOMContentLoaded', function() {
     currentUnit = 'inches';
     localStorage.setItem('c2c-unit', currentUnit);
     updateUnitToggle();
+    // Recalculate if we have results showing
+    if (resultsContainer.classList.contains('show')) {
+      calculate();
+    }
   });
   
   btnCm.addEventListener('click', function() {
     currentUnit = 'cm';
     localStorage.setItem('c2c-unit', currentUnit);
     updateUnitToggle();
+    // Recalculate if we have results showing
+    if (resultsContainer.classList.contains('show')) {
+      calculate();
+    }
   });
   
   // Initialize on load
