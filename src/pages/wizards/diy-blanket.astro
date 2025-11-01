@@ -345,6 +345,34 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
   .page-header, .video-button {
     display: none;
   }
+  
+  /* Hide all input sections when printing */
+  .units-toggle,
+  .section-title,
+  .input-grid,
+  .input-group,
+  .checkbox-group,
+  #standard-sizes,
+  #custom-size,
+  #yarn-calculator-section,
+  .validation-message,
+  .info-box,
+  .yarn-estimate-box {
+    display: none !important;
+  }
+  
+  /* Show only the results section */
+  .results-section {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+  }
+  
+  /* Optimize pattern display for printing */
+  .calculator-card {
+    box-shadow: none;
+    padding: 1rem;
+  }
 }
 </style>
 
@@ -891,7 +919,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
       <div class="highlight-box">
         <strong style="color: #52682d;">${sizeSelection.size} Blanket</strong><br>
-        <small style="color: #666;">Finished size: ${sizeSelection.dimensions.width}${unitLabel} × ${sizeSelection.dimensions.length}${unitLabel}</small>
+        <small style="color: #666;">Finished size: ${sizeSelection.dimensions.width}${unitLabel} × ${sizeSelection.dimensions.length}${unitLabel}</small><br>
+        <small style="color: #666;">Gauge: ${stitchesGauge} stitches and ${rowsGauge} rows = ${unitSize}</small>
       </div>
 
       <div style="margin-bottom: 20px;">
