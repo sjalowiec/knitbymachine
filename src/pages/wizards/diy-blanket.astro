@@ -602,9 +602,22 @@ document.addEventListener('DOMContentLoaded', function() {
       const option = document.createElement('div');
       option.className = 'size-option';
       option.dataset.sizeKey = key;
+      
+      // Convert dimensions based on current unit system
+      let displayWidth, displayLength, unitLabel;
+      if (units === 'cm') {
+        displayWidth = Math.round(data.width * 2.54 * 10) / 10;
+        displayLength = Math.round(data.length * 2.54 * 10) / 10;
+        unitLabel = 'cm';
+      } else {
+        displayWidth = data.width;
+        displayLength = data.length;
+        unitLabel = '"';
+      }
+      
       option.innerHTML = `
         <div class="size-option-name">${data.name}</div>
-        <div class="size-option-dims">${data.width}" × ${data.length}"</div>
+        <div class="size-option-dims">${displayWidth}${unitLabel} × ${displayLength}${unitLabel}</div>
       `;
       option.onclick = () => selectSize(key);
       optionsDiv.appendChild(option);
@@ -612,6 +625,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     standardSizesDiv.appendChild(optionsDiv);
     console.log('Size cards created. Total cards:', Object.keys(blanketSizes).length);
+    
+    // Restore disabled/enabled state based on gauge
+    updateSizeCardsState();
+    
+    // Restore selected state if a size was previously selected
+    if (selectedSize) {
+      document.querySelectorAll('.size-option').forEach(opt => {
+        opt.classList.toggle('selected', opt.dataset.sizeKey === selectedSize);
+      });
+    }
   }
 
   function selectSize(key) {
@@ -959,6 +982,7 @@ document.addEventListener('DOMContentLoaded', function() {
     inputStitches.placeholder = 'stitches per 4"';
     inputRows.placeholder = 'rows per 4"';
     updatePlaceholders();
+    populateSizes();
     calculate();
   });
 
@@ -969,6 +993,7 @@ document.addEventListener('DOMContentLoaded', function() {
     inputStitches.placeholder = 'stitches per 10cm';
     inputRows.placeholder = 'rows per 10cm';
     updatePlaceholders();
+    populateSizes();
     calculate();
   });
 
