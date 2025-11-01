@@ -928,9 +928,9 @@ document.addEventListener('DOMContentLoaded', function() {
       : '';
 
     return `
-      <svg viewBox="0 0 ${svgWidth} ${svgHeight}" style="width: 100%; max-width: 500px; height: auto;">
+      <svg viewBox="0 0 ${svgWidth} ${svgHeight}" width="${svgWidth}" height="${svgHeight}" xmlns="http://www.w3.org/2000/svg" style="width: 100%; max-width: 500px; height: auto; background: white;">
         <rect x="${rectX}" y="${rectY}" width="${rectWidth}" height="${rectHeight}"
-              fill="none" stroke="black" stroke-width="2"/>
+              fill="white" stroke="black" stroke-width="2"/>
 
         <line x1="${rectX}" y1="${rectY + rectHeight + 25}" x2="${rectX + rectWidth}" y2="${rectY + rectHeight + 25}"
               stroke="black" stroke-width="1"/>
@@ -1243,6 +1243,12 @@ document.addEventListener('DOMContentLoaded', function() {
       const patternClone = patternContent.cloneNode(true);
       const diagramClone = diagramContent.cloneNode(true);
       
+      // Get the SVG and ensure it's properly formatted for PDF
+      const svgElement = diagramClone.querySelector('svg');
+      if (svgElement) {
+        svgElement.setAttribute('style', 'display: block; margin: 0 auto; background: white;');
+      }
+      
       // Create PDF content
       const pdfContainer = document.createElement('div');
       pdfContainer.style.cssText = 'font-family: Poppins, Arial, sans-serif; padding: 20px; background: white; color: black;';
@@ -1252,10 +1258,10 @@ document.addEventListener('DOMContentLoaded', function() {
           <h1 style="color: #52682d; margin: 0; font-size: 28px;">${sizeSelection.size} Blanket Pattern</h1>
           <p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">Created on ${formattedDate}</p>
         </div>
-        <div style="margin-bottom: 30px; color: black;">${patternClone.innerHTML}</div>
-        <div style="text-align: center; margin-bottom: 20px;">
-          <h3 style="color: #52682d; margin-bottom: 1rem;">${sizeSelection.size} Blanket</h3>
-          ${diagramClone.innerHTML}
+        <div style="margin-bottom: 30px; color: black; background: white;">${patternClone.innerHTML}</div>
+        <div style="page-break-before: always; text-align: center; margin-bottom: 20px; padding: 20px; background: white;">
+          <h3 style="color: #52682d; margin-bottom: 1.5rem;">${sizeSelection.size} Blanket</h3>
+          <div style="background: white; padding: 20px;">${diagramClone.innerHTML}</div>
         </div>
         <div style="text-align: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 10pt; color: #666;">
           Knit by Machine • Created on ${formattedDate}
