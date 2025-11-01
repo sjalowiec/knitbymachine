@@ -248,11 +248,9 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
 }
 
 .results-container {
-  background: #f0f4e8;
-  border-left: 4px solid var(--kbm-green);
-  padding: 1.5rem;
-  border-radius: 8px;
   margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid #eef0ea;
   display: none;
 }
 
@@ -481,7 +479,7 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
       
       <div class="result-grid">
         <div class="result-item">
-          <div class="result-label">Width & Height</div>
+          <div class="result-label">Side</div>
           <p class="result-value">
             <span id="base-value">0</span> <span class="result-unit">inches</span>
           </p>
@@ -617,15 +615,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const gaugeRef = isInches ? 4 : 10; // 4" or 10cm
     
     // STEP 1: Calculate dimensions for square
-    // Width (diagonal) = max needles / stitch gauge
-    const widthInUnits = maxNeedles / (stGauge / gaugeRef);
+    // Diagonal (max width when knitting) = max needles / stitch gauge
+    const diagonalInUnits = maxNeedles / (stGauge / gaugeRef);
     
-    // For a square corner-to-corner: height = width
-    const heightInUnits = widthInUnits;
+    // Side of square = diagonal / sqrt(2)
+    const sideInUnits = diagonalInUnits / Math.sqrt(2);
     
     // STEP 2: Calculate target rows for the ENTIRE square
-    // Total rows = width * row gauge (since height = width for square)
-    const targetRows = widthInUnits * (rowGauge / gaugeRef);
+    // Total rows = diagonal * row gauge
+    const targetRows = diagonalInUnits * (rowGauge / gaugeRef);
     
     // Each half (increase + decrease) gets half the rows
     const rowsPerPhase = targetRows / 2;
@@ -652,11 +650,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update results display (no decimals for cm, 1 decimal for inches)
     if (isInches) {
-      baseValue.textContent = widthInUnits.toFixed(1);
-      heightValue.textContent = heightInUnits.toFixed(1);
+      baseValue.textContent = sideInUnits.toFixed(1);
+      heightValue.textContent = diagonalInUnits.toFixed(1);
     } else {
-      baseValue.textContent = Math.round(widthInUnits);
-      heightValue.textContent = Math.round(heightInUnits);
+      baseValue.textContent = Math.round(sideInUnits);
+      heightValue.textContent = Math.round(diagonalInUnits);
     }
     decreaseValue.textContent = Math.round(targetRows);
     
@@ -706,7 +704,7 @@ document.addEventListener('DOMContentLoaded', function() {
     instructionsText.textContent = instructions;
     
     // Generate diagram
-    generateDiagram(widthInUnits, heightInUnits);
+    generateDiagram(sideInUnits, diagonalInUnits);
     
     // Show results
     resultsContainer.classList.add('show');
@@ -723,22 +721,20 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Generate SVG diagram - diamond/square shape for corner-to-corner
-  function generateDiagram(width, height) {
+  function generateDiagram(sideLength, diagonalLength) {
     const svgWidth = 400;
     const svgHeight = 300;
     const margin = 40;
     const unitLabel = currentUnit === 'inches' ? '"' : 'cm';
     
-    // Since it's a square, width = height
-    const squareSize = Math.max(width, height);
-    
     // Format measurements (no decimals for cm, 1 decimal for inches)
-    const displaySize = currentUnit === 'inches' ? squareSize.toFixed(1) : Math.round(squareSize);
-    const displayDiagonal = currentUnit === 'inches' ? (squareSize * 1.414).toFixed(1) : Math.round(squareSize * 1.414);
+    const displaySide = currentUnit === 'inches' ? sideLength.toFixed(1) : Math.round(sideLength);
+    const displayDiagonal = currentUnit === 'inches' ? diagonalLength.toFixed(1) : Math.round(diagonalLength);
     
     // Calculate scale to fit the diamond (rotated square)
-    const scale = Math.min((svgWidth - margin * 2) / squareSize, (svgHeight - margin * 2) / squareSize);
-    const size = squareSize * scale;
+    // The diagonal is the max width, so scale based on that
+    const scale = Math.min((svgWidth - margin * 2) / diagonalLength, (svgHeight - margin * 2) / diagonalLength);
+    const size = diagonalLength * scale;
     
     // Diamond coordinates (rotated square)
     const centerX = svgWidth / 2;
@@ -756,31 +752,21 @@ document.addEventListener('DOMContentLoaded', function() {
       <polygon points="${top.x},${top.y} ${right.x},${right.y} ${bottom.x},${bottom.y} ${left.x},${left.y}" 
                fill="none" stroke="#52682d" stroke-width="2"/>
       
-      <!-- Width measurement (horizontal across) -->
+      <!-- Diagonal measurement (horizontal across - max width) -->
       <line x1="${left.x - 15}" y1="${centerY}" x2="${right.x + 15}" y2="${centerY}" 
             stroke="black" stroke-width="1"/>
       <circle cx="${left.x - 15}" cy="${centerY}" r="3" fill="black"/>
       <circle cx="${right.x + 15}" cy="${centerY}" r="3" fill="black"/>
       <text x="${centerX}" y="${centerY + 25}" text-anchor="middle" font-size="12" fill="black">
-        Width: ${displaySize}${unitLabel}
+        Diagonal: ${displayDiagonal}${unitLabel}
       </text>
       
-      <!-- Height measurement (vertical) - rotated 90° for clarity -->
-      <line x1="${centerX + halfSize + 30}" y1="${top.y}" x2="${centerX + halfSize + 30}" y2="${bottom.y}" 
-            stroke="black" stroke-width="1"/>
-      <circle cx="${centerX + halfSize + 30}" cy="${top.y}" r="3" fill="black"/>
-      <circle cx="${centerX + halfSize + 30}" cy="${bottom.y}" r="3" fill="black"/>
-      <text x="${centerX + halfSize + 50}" y="${centerY}" text-anchor="middle" font-size="12" fill="black"
-            transform="rotate(-90, ${centerX + halfSize + 50}, ${centerY})">
-        Height: ${displaySize}${unitLabel}
-      </text>
-      
-      <!-- Diagonal measurement (from top-left to bottom-right) - rotated 45° -->
+      <!-- Side measurement (edge of square) - rotated 45° along left edge -->
       <line x1="${left.x}" y1="${left.y}" x2="${top.x}" y2="${top.y}" stroke="none"/>
       <text x="${(left.x + top.x) / 2 - 30}" y="${(left.y + top.y) / 2}" 
             text-anchor="middle" font-size="11" fill="#52682d" font-weight="bold"
             transform="rotate(-45, ${(left.x + top.x) / 2 - 30}, ${(left.y + top.y) / 2})">
-        Diagonal: ${displayDiagonal}${unitLabel}
+        Side: ${displaySide}${unitLabel}
       </text>
       
       <!-- Corner labels -->
