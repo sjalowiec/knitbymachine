@@ -24,6 +24,10 @@ localPort = 33831
 externalPort = 3003
 
 [[ports]]
+localPort = 34649
+externalPort = 3002
+
+[[ports]]
 localPort = 37951
 externalPort = 4200
 
@@ -32,16 +36,12 @@ localPort = 38081
 externalPort = 6000
 
 [[ports]]
-localPort = 39347
+localPort = 41315
 externalPort = 5173
 
 [[ports]]
 localPort = 42839
 externalPort = 3001
-
-[[ports]]
-localPort = 43699
-externalPort = 3002
 
 [workflows]
 

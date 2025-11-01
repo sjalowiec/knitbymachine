@@ -333,13 +333,18 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
   height: auto;
 }
 
+.print-footer {
+  display: none;
+}
+
 @media print {
   .no-print {
     display: none !important;
   }
   
   .wizard-page {
-    padding-top: 0;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
   
   .page-header, .video-button {
@@ -372,6 +377,40 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
   .calculator-card {
     box-shadow: none;
     padding: 1rem;
+    background: white !important;
+  }
+  
+  /* Remove all background colors for clean printing */
+  .highlight-box,
+  .pattern-card,
+  div[style*="background"] {
+    background: white !important;
+    background-color: white !important;
+  }
+  
+  /* Keep borders but remove colored backgrounds */
+  .highlight-box {
+    border-left: 2px solid #333 !important;
+    padding: 0.5rem !important;
+  }
+  
+  /* Ensure diagram is visible */
+  .diagram-container,
+  .diagram-container svg {
+    display: block !important;
+    page-break-inside: avoid;
+  }
+  
+  /* Show and style print footer */
+  .print-footer {
+    display: block !important;
+    text-align: center;
+    font-family: "Poppins", Arial, sans-serif;
+    font-size: 10pt;
+    color: #666;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
   }
 }
 </style>
@@ -537,6 +576,11 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
             <div id="diagram-content">
               <!-- Will be populated by JavaScript -->
             </div>
+          </div>
+          
+          <!-- Print footer -->
+          <div id="print-footer" class="print-footer" style="display: none;">
+            <!-- Will be populated by JavaScript when printing -->
           </div>
         </div>
       </div>
@@ -1129,7 +1173,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (printBtn) {
     printBtn.addEventListener('click', () => {
+      const sizeSelection = getCurrentSize();
+      const originalTitle = document.title;
+      
+      // Set pattern name in title
+      if (sizeSelection) {
+        document.title = `${sizeSelection.size} Blanket Pattern`;
+      }
+      
+      // Set print date
+      const today = new Date();
+      const formattedDate = today.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+      document.body.setAttribute('data-print-date', formattedDate);
+      
+      // Update print footer
+      const printFooter = document.getElementById('print-footer');
+      if (printFooter) {
+        printFooter.textContent = `Knit by Machine • Created on ${formattedDate}`;
+      }
+      
+      // Open print dialog
       window.print();
+      
+      // Restore original title after print
+      setTimeout(() => {
+        document.title = originalTitle;
+      }, 100);
     });
   }
 
@@ -1137,23 +1210,34 @@ document.addEventListener('DOMContentLoaded', function() {
     downloadBtn.addEventListener('click', async () => {
     const sizeSelection = getCurrentSize();
     if (!sizeSelection) return;
+    
+    // Get today's date
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
 
     const content = `
-      <div style="font-family: Arial, sans-serif; padding: 20px;">
+      <div style="font-family: 'Poppins', Arial, sans-serif; padding: 20px;">
         <div style="text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #52682d;">
-          <h1 style="color: #52682d; margin: 0; font-size: 28px;">DIY Blanket Pattern</h1>
-          <p style="color: #666; margin: 5px 0 0 0; font-size: 16px;">Custom ${sizeSelection.size} Blanket Pattern</p>
+          <h1 style="color: #52682d; margin: 0; font-size: 28px;">${sizeSelection.size} Blanket Pattern</h1>
+          <p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">Created on ${formattedDate}</p>
         </div>
         <div style="margin-bottom: 30px;">${document.getElementById('pattern-content').innerHTML}</div>
         <div style="text-align: center;">
           <h3 style="color: #52682d;">${sizeSelection.size} Blanket</h3>
           ${document.getElementById('diagram-content').innerHTML}
         </div>
+        <div style="text-align: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 10pt; color: #666;">
+          Knit by Machine • Created on ${formattedDate}
+        </div>
       </div>
     `;
 
     const opt = {
-      margin: 1,
+      margin: 0.5,
       filename: `${sizeSelection.size.replace(/\s+/g, '_')}_Blanket_Pattern.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2 },
