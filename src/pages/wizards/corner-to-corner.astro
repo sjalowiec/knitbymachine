@@ -658,15 +658,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     instructions += `\n`;
     
-    // DECREASE phase instructions
+    // DECREASE phase instructions (REVERSED order - mirror of increase)
     instructions += `DECREASE PHASE (${maxNeedles} → ${endStitches} stitches):\n`;
+    instructions += `Work the second (decrease) half as the mirror image of the first, reversing the shaping order.\n\n`;
     if (decreaseWider === 0) {
       instructions += `• Decrease 1 st on each side every ${decreaseInteger} row(s) ${totalDecreases} times\n`;
     } else if (decreaseNormal === 0) {
       instructions += `• Decrease 1 st on each side every ${decreaseInteger + 1} row(s) ${totalDecreases} times\n`;
     } else {
-      instructions += `• Decrease 1 st on each side every ${decreaseInteger} row(s) ${decreaseNormal} times,\n`;
-      instructions += `  then every ${decreaseInteger + 1} row(s) ${decreaseWider} times\n`;
+      // REVERSED: Show wider spacing FIRST, then normal spacing
+      instructions += `• Decrease 1 st on each side every ${decreaseInteger + 1} row(s) ${decreaseWider} times,\n`;
+      instructions += `  then every ${decreaseInteger} row(s) ${decreaseNormal} times\n`;
     }
     instructions += `\nBind off remaining ${endStitches} stitches.`;
     
