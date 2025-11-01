@@ -56,22 +56,22 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
   align-items: center;
   gap: 0.4rem;
   padding: 0.5rem 1rem;
-  background: var(--kbm-green);
-  color: white;
+  background: #e5e7eb;
+  color: #374151;
   text-decoration: none;
   font-weight: 600;
   border-radius: 6px;
   transition: all 0.2s;
-  border: none;
+  border: 1px solid #d1d5db;
   cursor: pointer;
   font-size: 0.9rem;
   white-space: nowrap;
 }
 
 .video-button:hover {
-  background: #6E8B3D;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(82, 104, 45, 0.3);
+  background: #d1d5db;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .wizard-container {
@@ -402,8 +402,8 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
       
       <p style="margin-bottom: 1rem; color: #6b7280; font-size: 0.95rem;">
         <strong>Note:</strong> If your blanket size requires more needles than your machine has, you have a few options:<br>
-        Choose another size | 
-        <a href="#" onclick="document.getElementById('use-custom').click(); return false;" style="color: var(--kbm-green); text-decoration: none; font-weight: 600;">Use a custom size <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem;"></i></a> | 
+        <strong>Choose another size</strong> | 
+        <a href="#" onclick="document.getElementById('use-custom').click(); return false;" style="color: var(--kbm-green); text-decoration: none; font-weight: 600;">Enter a custom size <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem;"></i></a> | 
         <a href="/wizards/maximum-knitted-width" style="color: var(--kbm-green); text-decoration: none; font-weight: 600;">Check your maximum width <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem;"></i></a>
       </p>
       
@@ -503,7 +503,9 @@ import ActionBar from "../../components/wizards/ActionBar.astro";
           </div>
 
           <div class="diagram-container">
-            <h3 style="color: var(--kbm-green); margin-bottom: 1rem;">Diagram</h3>
+            <h3 id="diagram-title" style="color: var(--kbm-green); margin-bottom: 1rem; text-align: center;">
+              <!-- Will be populated by JavaScript -->
+            </h3>
             <div id="diagram-content">
               <!-- Will be populated by JavaScript -->
             </div>
@@ -844,9 +846,6 @@ document.addEventListener('DOMContentLoaded', function() {
           ${lengthRows} rows (${blanketLength}${unitLabel})
         </text>
 
-        <text x="${rectX + rectWidth/2}" y="${rectY + rectHeight/2 - 5}" text-anchor="middle" font-size="14" fill="#52682d" font-weight="bold">
-          ${sizeSelection.size} Blanket
-        </text>
         ${yarnText}
       </svg>
     `;
@@ -944,6 +943,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Display results
     document.getElementById('pattern-content').innerHTML = generateInstructions(sizeSelection, widthSts, lengthRows, yarnData);
+    document.getElementById('diagram-title').textContent = `${sizeSelection.size} Blanket`;
     document.getElementById('diagram-content').innerHTML = generateDiagram(sizeSelection, widthSts, lengthRows, yarnData);
 
     resultsSection.style.display = 'block';
@@ -1092,7 +1092,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div style="margin-bottom: 30px;">${document.getElementById('pattern-content').innerHTML}</div>
         <div style="text-align: center;">
-          <h3 style="color: #52682d;">Diagram</h3>
+          <h3 style="color: #52682d;">${sizeSelection.size} Blanket</h3>
           ${document.getElementById('diagram-content').innerHTML}
         </div>
       </div>
