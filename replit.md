@@ -22,6 +22,11 @@ Knit by Machine is a web application for machine knitting enthusiasts. It provid
 - **Netlify Deployment Fix**: Resolved Git merge conflict (125 commits in Replit vs 22 in GitHub) using force push to restore working code to production. Added `@astrojs/netlify` adapter to fix build errors ("NoAdapterInstalled" error). Site now successfully deploys from Replit → GitHub → Netlify → knitbymachine.com.
 - **DIY Blanket Wizard Live**: Fully functional DIY Blanket wizard with 9 standard sizes, custom dimensions, units toggle, yarn calculator, SVG diagram, and PDF download now deployed to production at knitbymachine.com/wizards/diy-blanket.
 
+### November 1, 2025
+- **Maximum Knitted Width Wizard**: Created new calculator tool to determine maximum width achievable based on needle bed capacity and gauge. Features real-time calculation with unit toggle (inches/cm), gauge-aware formula (4" per gauge in inches mode, 10cm in cm mode), manual text inputs alongside sliders, and animated SVG ruler visualization. Added to /tools page.
+- **Button-Style Unit Toggles**: Standardized all unit toggles across wizards (Maximum Knitted Width, Magic Formula, DIY Blanket) to use consistent button-style interface with green background for active selection, replacing previous pill-style switches.
+- **Project Consolidation**: Merged HeaderUpdate project into main Replit project, combining all wizard functionality with content pages. Added legal pages (privacy-policy.astro, terms-of-use.astro, refund-policy.astro), about.astro, tips.astro, and correct home page (index.astro) from HeaderUpdate. Footer links now functional across entire site.
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
