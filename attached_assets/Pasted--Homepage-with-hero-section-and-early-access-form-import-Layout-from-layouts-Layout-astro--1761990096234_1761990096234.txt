@@ -297,7 +297,7 @@ import Layout from '../layouts/Layout.astro';
       const formFields = this.querySelectorAll('input, button._submit');
       
       formFields.forEach(field => field.style.display = 'none');
-      this.querySelector('h2').style.display = 'none');
+      this.querySelector('h2').style.display = 'none';
       this.querySelectorAll('label').forEach(label => label.style.display = 'none');
       
       thankYou.classList.add('show');
