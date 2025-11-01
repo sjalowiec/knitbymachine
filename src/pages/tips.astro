@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { sanity } from '../lib/sanity';
 
 const groqQuery = `*[_type == "tip" && status == "active"] | order(_createdAt desc) {
@@ -14,7 +14,7 @@ const groqQuery = `*[_type == "tip" && status == "active"] | order(_createdAt de
 const tips = await sanity.fetch(groqQuery);
 ---
 
-<Layout title="Ask 'n Answer | Knit by Machine" description="Quick tips and answers to common machine knitting questions from Knit by Machine">
+<BaseLayout title="Ask 'n Answer | Knit by Machine" description="Quick tips and answers to common machine knitting questions from Knit by Machine">
   <style>
     :root {
       --kbm-green: #52682d;
@@ -187,4 +187,4 @@ const tips = await sanity.fetch(groqQuery);
       ))}
     </div>
   </main>
-</Layout>
+</BaseLayout>

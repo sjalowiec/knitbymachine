@@ -1,0 +1,107 @@
+2:50:18 AM: build-image version: 2cae3ca905d202880257fd373e72986bf1b632fd (noble)
+2:50:18 AM: buildbot version: 0d1bfc5e5e409698057f2f06d53a52fa43dbfeba
+2:50:18 AM: Fetching cached dependencies
+2:50:18 AM: Starting to download cache of 290.9MB (Last modified: 2025-11-01 00:50:18 +0000 UTC)
+2:50:19 AM: Finished downloading cache in 766ms
+2:50:19 AM: Starting to extract cache
+2:50:22 AM: Finished extracting cache in 3.537s
+2:50:22 AM: Finished fetching cache in 4.365s
+2:50:22 AM: Starting to prepare the repo for build
+2:50:22 AM: Preparing Git Reference refs/heads/main
+2:50:24 AM: Starting to install dependencies
+2:50:24 AM: Started restoring cached python cache
+2:50:24 AM: Finished restoring cached python cache
+2:50:24 AM: Started restoring cached ruby cache
+2:50:24 AM: Finished restoring cached ruby cache
+2:50:25 AM: Started restoring cached go cache
+2:50:25 AM: Finished restoring cached go cache
+2:50:25 AM: Started restoring cached Node.js version
+2:50:26 AM: Finished restoring cached Node.js version
+2:50:27 AM: v22.21.1 is already installed.
+2:50:27 AM: Now using node v22.21.1 (npm v10.9.4)
+2:50:27 AM: Enabling Node.js Corepack
+2:50:27 AM: Started restoring cached build plugins
+2:50:27 AM: Finished restoring cached build plugins
+2:50:27 AM: Started restoring cached corepack dependencies
+2:50:27 AM: Finished restoring cached corepack dependencies
+2:50:27 AM: No npm workspaces detected
+2:50:27 AM: Started restoring cached node modules
+2:50:27 AM: Finished restoring cached node modules
+2:50:27 AM: Installing npm packages using npm version 10.9.4
+2:50:29 AM: up to date in 1s
+2:50:29 AM: npm packages installed
+2:50:29 AM: Successfully installed dependencies
+2:50:29 AM: Starting build script
+2:50:30 AM: Detected 1 framework(s)
+2:50:30 AM: "astro" at version "5.14.7"
+2:50:30 AM: Section completed: initializing
+2:50:31 AM: ​
+2:50:31 AM: Netlify Build                                                 
+2:50:31 AM: ────────────────────────────────────────────────────────────────
+2:50:31 AM: ​
+2:50:31 AM: ❯ Version
+2:50:31 AM:   @netlify/build 35.2.11
+2:50:31 AM: ​
+2:50:31 AM: ❯ Flags
+2:50:31 AM:   accountId: 68c6b7a4e040822e80335f8f
+2:50:31 AM:   baseRelDir: true
+2:50:31 AM:   buildId: 6905d7d9c9056a000849f2b2
+2:50:31 AM:   deployId: 6905d7d9c9056a000849f2b4
+2:50:31 AM: ​
+2:50:31 AM: ❯ Current directory
+2:50:31 AM:   /opt/build/repo
+2:50:31 AM: ​
+2:50:31 AM: ❯ Config file
+2:50:31 AM:   /opt/build/repo/netlify.toml
+2:50:31 AM: ​
+2:50:31 AM: ❯ Context
+2:50:31 AM:   production
+2:50:31 AM: ​
+2:50:31 AM: build.command from netlify.toml                               
+2:50:31 AM: ────────────────────────────────────────────────────────────────
+2:50:31 AM: ​
+2:50:31 AM: $ npm run build
+2:50:31 AM: > knitbymachine-site@0.0.1 build
+2:50:31 AM: > astro build
+2:50:32 AM: 09:50:32 [@astrojs/netlify] Enabling sessions with Netlify Blobs
+2:50:32 AM: 09:50:32 [content] Syncing content
+2:50:32 AM: 09:50:32 [content] Synced content
+2:50:32 AM: 09:50:32 [types] Generated 27ms
+2:50:32 AM: 09:50:32 [build] output: "static"
+2:50:32 AM: 09:50:32 [build] mode: "server"
+2:50:32 AM: 09:50:32 [build] directory: /opt/build/repo/dist/
+2:50:32 AM: 09:50:32 [build] adapter: @astrojs/netlify
+2:50:32 AM: 09:50:32 [build] Collecting build info...
+2:50:32 AM: 09:50:32 [build] ✓ Completed in 50ms.
+2:50:32 AM: 09:50:32 [build] Building server entrypoints...
+2:50:33 AM: 09:50:33 [ERROR] [vite] ✗ Build failed in 726ms
+2:50:33 AM: Could not resolve "../layouts/Layout.astro" from "src/pages/tips.astro"
+2:50:33 AM: file: /opt/build/repo/src/pages/tips.astro
+2:50:33 AM:   Stack trace:
+2:50:33 AM:     at getRollupError (file:///opt/build/repo/node_modules/rollup/dist/es/shared/parseAst.js:401:41)
+2:50:33 AM:     at ModuleLoader.handleInvalidResolvedId (file:///opt/build/repo/node_modules/rollup/dist/es/shared/node-entry.js:21565:24)
+2:50:33 AM: ​
+2:50:33 AM: "build.command" failed                                        
+2:50:33 AM: ────────────────────────────────────────────────────────────────
+2:50:33 AM: ​
+2:50:33 AM:   Error message
+2:50:33 AM:   Command failed with exit code 1: npm run build (https://ntl.fyi/exit-code-1)
+2:50:33 AM: ​
+2:50:33 AM:   Error location
+2:50:33 AM:   In build.command from netlify.toml:
+2:50:33 AM:   npm run build
+2:50:33 AM: ​
+2:50:33 AM:   Resolved config
+2:50:33 AM:   build:
+2:50:33 AM:     command: npm run build
+2:50:33 AM:     commandOrigin: config
+2:50:33 AM:     environment:
+2:50:33 AM:       - GITHUB_CLIENT_ID
+2:50:33 AM:       - GITHUB_CLIENT_SECRET
+2:50:33 AM:       - NODE_VERSION
+2:50:33 AM:     publish: /opt/build/repo/dist
+2:50:33 AM:     publishOrigin: config
+2:50:33 AM: Build failed due to a user error: Build script returned non-zero exit code: 2
+2:50:34 AM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+2:50:34 AM: Failing build: Failed to build site
+2:50:34 AM: Finished processing build request in 16.057s
