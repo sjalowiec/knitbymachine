@@ -1,0 +1,20 @@
+{
+  "title": "Gauge Swatch",
+  "slug": "gauge-swatch",
+  "excerpt": "GS",
+  "definition": "A small knitted sample used to measure stitch and row count per inch to ensure your finished project matches the pattern specifications",
+  "example": "Before starting your sweater, knit a 4x4 inch gauge swatch in stockinette stitch to confirm you're getting 20 stitches and 28 rows per 4 inches",
+  "category": "",
+  "letter": "G",
+  "image": "gauge-swatch.jpg",
+  "imageAlt": "Gauge Swatch",
+  "gifFilename": "gauge-swatch-demo.gif",
+  "active": true,
+  "anaId": "",
+  "workshopId": "",
+  "promoText": "Master your gauge and never worry about sizing again!",
+  "tags": [],
+  "isDraft": true,
+  "publishedDate": "2025-11-04",
+  "pendingPublish": true
+}
