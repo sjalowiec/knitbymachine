@@ -7,12 +7,13 @@
   "category": "",
   "letter": "T",
   "image": "test-seo.webp",
-  "imageAlt": "Close-up showing test SEO pattern details",
+  "imageAlt": "Updated alt text for SEO",
   "gifFilename": "",
   "schemaMarkup": {
     "@context": "https://schema.org",
     "@type": "DefinedTerm",
-    "name": "Test SEO Term qJc93o"
+    "name": "Test SEO Term qJc93o",
+    "description": "Updated description"
   },
   "active": true,
   "anaId": "",
