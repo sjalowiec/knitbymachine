@@ -1,0 +1,71 @@
+╔════════════════════════════════════════════════════════════╗
+║  KNIT BY MACHINE - QUICK REFERENCE GUIDE                   ║
+╚════════════════════════════════════════════════════════════╝
+
+✅ EVERYTHING IS IN ONE WORKSPACE NOW!
+   No more copying files between folders!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 COMMON EDITING TASKS:
+
+┌─ EDIT SITE HEADER (Logo, Navigation) ─────────────────────┐
+│  File: src/components/header.astro                         │
+│  Changes appear on ALL pages automatically                 │
+└────────────────────────────────────────────────────────────┘
+
+┌─ EDIT SITE FOOTER (Links, Copyright) ──────────────────────┐
+│  File: src/components/footer.astro                         │
+│  Changes appear on ALL pages automatically                 │
+└────────────────────────────────────────────────────────────┘
+
+┌─ EDIT ANA CATALOG PAGE (List View) ───────────────────────┐
+│  File: src/pages/ana-catalog.astro                         │
+│  URL: https://knitbymachine.com/ana-catalog                │
+└────────────────────────────────────────────────────────────┘
+
+┌─ EDIT INDIVIDUAL ANA PAGES (Detail View) ─────────────────┐
+│  File: src/pages/ana/[slug].astro                          │
+│  URLs: /ana/dropped, /ana/carriage-jamming, etc.           │
+└────────────────────────────────────────────────────────────┘
+
+┌─ CREATE/EDIT ANA CONTENT (Use Admin Dashboard) ───────────┐
+│  Page: /ana (on your Replit URL)                           │
+│  Or edit directly: client/src/pages/ana-form.tsx           │
+└────────────────────────────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 HOW CHANGES GO LIVE:
+
+  1. Edit file in Replit
+  2. Save (Ctrl+S or Cmd+S)  
+  3. Replit auto-commits to GitHub
+  4. Netlify auto-builds
+  5. Live on knitbymachine.com in 2-3 minutes!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📂 DIRECTORY STRUCTURE:
+
+Admin Dashboard (React):
+  client/src/pages/    → Admin forms
+  server/              → Backend API
+  
+Astro Website (Public):
+  src/pages/           → Public pages
+  src/components/      → Header, footer
+  src/layouts/         → Page layouts
+  
+Both projects share the same GitHub repo!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 TIPS:
+
+• Header/footer changes affect ALL pages
+• .astro files = Astro website pages
+• .tsx files = React admin dashboard
+• All changes auto-save to GitHub
+• No manual git commands needed!
+

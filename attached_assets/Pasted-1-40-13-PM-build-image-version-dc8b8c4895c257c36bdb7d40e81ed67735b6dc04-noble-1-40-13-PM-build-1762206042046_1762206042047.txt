@@ -1,0 +1,136 @@
+1:40:13 PM: build-image version: dc8b8c4895c257c36bdb7d40e81ed67735b6dc04 (noble)
+1:40:13 PM: buildbot version: dc8b8c4895c257c36bdb7d40e81ed67735b6dc04
+1:40:13 PM: Fetching cached dependencies
+1:40:13 PM: Starting to download cache of 250.1MB (Last modified: 2025-11-03 20:52:19 +0000 UTC)
+1:40:13 PM: Finished downloading cache in 443ms
+1:40:13 PM: Starting to extract cache
+1:40:16 PM: Finished extracting cache in 3.104s
+1:40:16 PM: Finished fetching cache in 3.605s
+1:40:16 PM: Starting to prepare the repo for build
+1:40:17 PM: Preparing Git Reference refs/heads/main
+1:40:18 PM: Starting to install dependencies
+1:40:18 PM: Started restoring cached python cache
+1:40:18 PM: Finished restoring cached python cache
+1:40:18 PM: Started restoring cached ruby cache
+1:40:19 PM: Finished restoring cached ruby cache
+1:40:19 PM: Started restoring cached go cache
+1:40:19 PM: Finished restoring cached go cache
+1:40:20 PM: v22.21.1 is already installed.
+1:40:20 PM: Now using node v22.21.1 (npm v10.9.4)
+1:40:20 PM: Enabling Node.js Corepack
+1:40:20 PM: Started restoring cached build plugins
+1:40:20 PM: Finished restoring cached build plugins
+1:40:20 PM: Started restoring cached corepack dependencies
+1:40:20 PM: Finished restoring cached corepack dependencies
+1:40:21 PM: No npm workspaces detected
+1:40:21 PM: Started restoring cached node modules
+1:40:21 PM: Finished restoring cached node modules
+1:40:21 PM: Installing npm packages using npm version 10.9.4
+1:40:21 PM: up to date in 703ms
+1:40:21 PM: npm packages installed
+1:40:22 PM: Successfully installed dependencies
+1:40:22 PM: Starting build script
+1:40:22 PM: Detected 1 framework(s)
+1:40:22 PM: "astro" at version "5.14.7"
+1:40:22 PM: Section completed: initializing
+1:40:24 PM: ​
+1:40:24 PM: Netlify Build                                                 
+1:40:24 PM: ────────────────────────────────────────────────────────────────
+1:40:24 PM: ​
+1:40:24 PM: ❯ Version
+1:40:24 PM:   @netlify/build 35.3.0
+1:40:24 PM: ​
+1:40:24 PM: ❯ Flags
+1:40:24 PM:   accountId: 68c6b7a4e040822e80335f8f
+1:40:24 PM:   baseRelDir: true
+1:40:24 PM:   buildId: 6909213ae0ede10008dd9d8a
+1:40:24 PM:   deployId: 6909213ae0ede10008dd9d8c
+1:40:24 PM: ​
+1:40:24 PM: ❯ Current directory
+1:40:24 PM:   /opt/build/repo
+1:40:24 PM: ​
+1:40:24 PM: ❯ Config file
+1:40:24 PM:   /opt/build/repo/netlify.toml
+1:40:24 PM: ​
+1:40:24 PM: ❯ Context
+1:40:24 PM:   production
+1:40:24 PM: ​
+1:40:24 PM: build.command from netlify.toml                               
+1:40:24 PM: ────────────────────────────────────────────────────────────────
+1:40:24 PM: ​
+1:40:24 PM: $ npm run build
+1:40:24 PM: > knitbymachine-site@0.0.1 build
+1:40:24 PM: > astro build
+1:40:25 PM: 21:40:25 [@astrojs/netlify] Enabling sessions with Netlify Blobs
+1:40:26 PM: Auto-generating collections for folders in "src/content/" that are not defined as collections.
+1:40:26 PM: This is deprecated, so you should define these collections yourself in "src/content.config.ts".
+1:40:26 PM: The following collections have been auto-generated: blog, workshops
+1:40:26 PM: 21:40:26 [content] Syncing content
+1:40:26 PM: 21:40:26 [WARN] [glob-loader] No files found matching "**/*.md,!**/_*/**/*.md,!**/_*.md" in directory "src/content/workshops"
+1:40:26 PM: 21:40:26 [WARN] [glob-loader] No files found matching "**/*.md,!**/_*/**/*.md,!**/_*.md" in directory "src/content/blog"
+1:40:26 PM: 21:40:26 [content] Synced content
+1:40:26 PM: 21:40:26 [types] Generated 336ms
+1:40:26 PM: 21:40:26 [build] output: "static"
+1:40:26 PM: 21:40:26 [build] mode: "server"
+1:40:26 PM: 21:40:26 [build] directory: /opt/build/repo/dist/
+1:40:26 PM: 21:40:26 [build] adapter: @astrojs/netlify
+1:40:26 PM: 21:40:26 [build] Collecting build info...
+1:40:26 PM: 21:40:26 [build] ✓ Completed in 358ms.
+1:40:26 PM: 21:40:26 [build] Building server entrypoints...
+1:40:27 PM: 21:40:27 [WARN] [vite] "matchHostname", "matchPathname", "matchPort" and "matchProtocol" are imported from external module "@astrojs/internal-helpers/remote" but never used in "node_modules/astro/dist/assets/utils/remotePattern.js", "node_modules/astro/dist/assets/services/service.js" and "node_modules/astro/dist/assets/endpoint/generic.js".
+1:40:27 PM: 21:40:27 [vite] ✓ built in 1.29s
+1:40:27 PM: 21:40:27 [build] ✓ Completed in 1.32s.
+1:40:27 PM:  building client (vite) 
+1:40:27 PM: 21:40:27 [vite] transforming...
+1:40:27 PM: 21:40:27 [vite] ✓ 15 modules transformed.
+1:40:27 PM: 21:40:27 [vite] rendering chunks...
+1:40:27 PM: 21:40:27 [vite] computing gzip size...
+1:40:27 PM: 21:40:27 [vite] dist/_astro/neckline-shaping-practice-2.astro_astro_type_script_index_0_lang.CvpGtPmr.js     4.41 kB │ gzip: 1.61 kB
+1:40:27 PM: 21:40:27 [vite] dist/_astro/corner-to-corner.astro_astro_type_script_index_0_lang.CX1Zm3sL.js                4.91 kB │ gzip: 1.77 kB
+1:40:27 PM: 21:40:27 [vite] dist/_astro/neckline-and-shoulder-shaping.astro_astro_type_script_index_0_lang.1Nq1P01V.js   5.30 kB │ gzip: 1.89 kB
+1:40:27 PM: 21:40:27 [vite] dist/_astro/diy-blanket.astro_astro_type_script_index_0_lang.BsZzxM-4.js                    11.54 kB │ gzip: 3.83 kB
+1:40:27 PM: 21:40:27 [vite] ✓ built in 135ms
+1:40:27 PM:  prerendering static routes 
+1:40:27 PM: 21:40:27 ▶ src/pages/about.astro
+1:40:27 PM: 21:40:27   └─ /about/index.html (+8ms)
+1:40:27 PM: 21:40:27 ▶ src/pages/ana/[slug].astro
+1:40:27 PM: 21:40:27 [ERROR] [build] Failed to call getStaticPaths for src/pages/ana/[slug].astro
+1:40:27 PM: [GetStaticPathsRequired] `getStaticPaths()` function is required for dynamic routes. Make sure that you `export` a `getStaticPaths` function from your dynamic route.
+1:40:27 PM:   Hint:
+1:40:27 PM:     See https://docs.astro.build/en/guides/routing/#dynamic-routes for more information on dynamic routes.
+1:40:27 PM:     	If you meant for this route to be server-rendered, set `export const prerender = false;` in the page.
+1:40:27 PM:   Error reference:
+1:40:27 PM:     https://docs.astro.build/en/reference/errors/get-static-paths-required/
+1:40:27 PM:   Location:
+1:40:27 PM:     src/pages/ana/[slug].astro:0:0
+1:40:27 PM:   Stack trace:
+1:40:27 PM:     at validateDynamicRouteModule (file:///opt/build/repo/node_modules/astro/dist/core/routing/validation.js:19:11)
+1:40:27 PM:     at getPathsForRoute (file:///opt/build/repo/node_modules/astro/dist/core/build/generate.js:212:31)
+1:40:27 PM:     at async generatePages (file:///opt/build/repo/node_modules/astro/dist/core/build/generate.js:92:9)
+1:40:27 PM:     at async AstroBuilder.build (file:///opt/build/repo/node_modules/astro/dist/core/build/index.js:154:5)
+1:40:27 PM:     at async build (file:///opt/build/repo/node_modules/astro/dist/core/build/index.js:45:3)
+1:40:27 PM: ​
+1:40:27 PM: "build.command" failed                                        
+1:40:27 PM: ────────────────────────────────────────────────────────────────
+1:40:27 PM: ​
+1:40:27 PM:   Error message
+1:40:27 PM:   Command failed with exit code 1: npm run build (https://ntl.fyi/exit-code-1)
+1:40:27 PM: ​
+1:40:27 PM:   Error location
+1:40:27 PM:   In build.command from netlify.toml:
+1:40:27 PM:   npm run build
+1:40:27 PM: ​
+1:40:27 PM:   Resolved config
+1:40:27 PM:   build:
+1:40:27 PM:     command: npm run build
+1:40:27 PM:     commandOrigin: config
+1:40:27 PM:     environment:
+1:40:27 PM:       - GITHUB_CLIENT_ID
+1:40:27 PM:       - GITHUB_CLIENT_SECRET
+1:40:27 PM:       - NODE_VERSION
+1:40:27 PM:     publish: /opt/build/repo/dist
+1:40:27 PM:     publishOrigin: config
+1:40:28 PM: Build failed due to a user error: Build script returned non-zero exit code: 2
+1:40:28 PM: Failing build: Failed to build site
+1:40:28 PM: Finished processing build request in 15.35s
+1:40:28 PM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)

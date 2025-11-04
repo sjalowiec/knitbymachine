@@ -1,0 +1,110 @@
+1:12:39 PM: build-image version: dc8b8c4895c257c36bdb7d40e81ed67735b6dc04 (noble)
+1:12:39 PM: buildbot version: dc8b8c4895c257c36bdb7d40e81ed67735b6dc04
+1:12:39 PM: Fetching cached dependencies
+1:12:39 PM: Starting to download cache of 250.1MB (Last modified: 2025-11-03 20:52:19 +0000 UTC)
+1:12:40 PM: Finished downloading cache in 679ms
+1:12:40 PM: Starting to extract cache
+1:12:42 PM: Finished extracting cache in 2.472s
+1:12:42 PM: Finished fetching cache in 3.223s
+1:12:42 PM: Starting to prepare the repo for build
+1:12:42 PM: Preparing Git Reference refs/heads/main
+1:12:44 PM: Starting to install dependencies
+1:12:44 PM: Started restoring cached python cache
+1:12:44 PM: Finished restoring cached python cache
+1:12:44 PM: Started restoring cached ruby cache
+1:12:44 PM: Finished restoring cached ruby cache
+1:12:45 PM: Started restoring cached go cache
+1:12:45 PM: Finished restoring cached go cache
+1:12:46 PM: v22.21.1 is already installed.
+1:12:46 PM: Now using node v22.21.1 (npm v10.9.4)
+1:12:46 PM: Enabling Node.js Corepack
+1:12:46 PM: Started restoring cached build plugins
+1:12:46 PM: Finished restoring cached build plugins
+1:12:46 PM: Started restoring cached corepack dependencies
+1:12:46 PM: Finished restoring cached corepack dependencies
+1:12:46 PM: No npm workspaces detected
+1:12:46 PM: Started restoring cached node modules
+1:12:46 PM: Finished restoring cached node modules
+1:12:46 PM: Installing npm packages using npm version 10.9.4
+1:12:47 PM: up to date in 705ms
+1:12:47 PM: npm packages installed
+1:12:47 PM: Successfully installed dependencies
+1:12:47 PM: Starting build script
+1:12:48 PM: Detected 1 framework(s)
+1:12:48 PM: "astro" at version "5.14.7"
+1:12:48 PM: Section completed: initializing
+1:12:49 PM: ​
+1:12:49 PM: Netlify Build                                                 
+1:12:49 PM: ────────────────────────────────────────────────────────────────
+1:12:49 PM: ​
+1:12:49 PM: ❯ Version
+1:12:49 PM:   @netlify/build 35.3.0
+1:12:49 PM: ​
+1:12:49 PM: ❯ Flags
+1:12:49 PM:   accountId: 68c6b7a4e040822e80335f8f
+1:12:49 PM:   baseRelDir: true
+1:12:49 PM:   buildId: 69091ac66b104f0008ffbe4a
+1:12:49 PM:   deployId: 69091ac66b104f0008ffbe4c
+1:12:49 PM: ​
+1:12:49 PM: ❯ Current directory
+1:12:49 PM:   /opt/build/repo
+1:12:49 PM: ​
+1:12:49 PM: ❯ Config file
+1:12:49 PM:   /opt/build/repo/netlify.toml
+1:12:49 PM: ​
+1:12:49 PM: ❯ Context
+1:12:49 PM:   production
+1:12:49 PM: ​
+1:12:49 PM: build.command from netlify.toml                               
+1:12:49 PM: ────────────────────────────────────────────────────────────────
+1:12:49 PM: ​
+1:12:49 PM: $ npm run build
+1:12:49 PM: > knitbymachine-site@0.0.1 build
+1:12:49 PM: > astro build
+1:12:51 PM: 21:12:51 [@astrojs/netlify] Enabling sessions with Netlify Blobs
+1:12:51 PM: Auto-generating collections for folders in "src/content/" that are not defined as collections.
+1:12:51 PM: This is deprecated, so you should define these collections yourself in "src/content.config.ts".
+1:12:51 PM: The following collections have been auto-generated: blog, workshops
+1:12:51 PM: 21:12:51 [content] Syncing content
+1:12:51 PM: 21:12:51 [WARN] [glob-loader] No files found matching "**/*.md,!**/_*/**/*.md,!**/_*.md" in directory "src/content/blog"
+1:12:51 PM: 21:12:51 [WARN] [glob-loader] No files found matching "**/*.md,!**/_*/**/*.md,!**/_*.md" in directory "src/content/workshops"
+1:12:51 PM: 21:12:51 [content] Synced content
+1:12:51 PM: 21:12:51 [types] Generated 258ms
+1:12:51 PM: 21:12:51 [build] output: "static"
+1:12:51 PM: 21:12:51 [build] mode: "server"
+1:12:51 PM: 21:12:51 [build] directory: /opt/build/repo/dist/
+1:12:51 PM: 21:12:51 [build] adapter: @astrojs/netlify
+1:12:51 PM: 21:12:51 [build] Collecting build info...
+1:12:51 PM: 21:12:51 [build] ✓ Completed in 281ms.
+1:12:51 PM: 21:12:51 [build] Building server entrypoints...
+1:12:52 PM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+1:12:52 PM: 21:12:52 [ERROR] [vite] ✗ Build failed in 625ms
+1:12:52 PM: Could not resolve "../../layouts/layout.astro" from "src/pages/ask-n-answer.astro"
+1:12:52 PM: file: /opt/build/repo/src/pages/ask-n-answer.astro
+1:12:52 PM:   Stack trace:
+1:12:52 PM:     at getRollupError (file:///opt/build/repo/node_modules/rollup/dist/es/shared/parseAst.js:401:41)
+1:12:52 PM:     at ModuleLoader.handleInvalidResolvedId (file:///opt/build/repo/node_modules/rollup/dist/es/shared/node-entry.js:21565:24)
+1:12:52 PM: ​
+1:12:52 PM: "build.command" failed                                        
+1:12:52 PM: ────────────────────────────────────────────────────────────────
+1:12:52 PM: ​
+1:12:52 PM:   Error message
+1:12:52 PM:   Command failed with exit code 1: npm run build (https://ntl.fyi/exit-code-1)
+1:12:52 PM: ​
+1:12:52 PM:   Error location
+1:12:52 PM:   In build.command from netlify.toml:
+1:12:52 PM:   npm run build
+1:12:52 PM: ​
+1:12:52 PM:   Resolved config
+1:12:52 PM:   build:
+1:12:52 PM:     command: npm run build
+1:12:52 PM:     commandOrigin: config
+1:12:52 PM:     environment:
+1:12:52 PM:       - GITHUB_CLIENT_ID
+1:12:52 PM:       - GITHUB_CLIENT_SECRET
+1:12:52 PM:       - NODE_VERSION
+1:12:52 PM:     publish: /opt/build/repo/dist
+1:12:52 PM:     publishOrigin: config
+1:12:52 PM: Build failed due to a user error: Build script returned non-zero exit code: 2
+1:12:52 PM: Failing build: Failed to build site
+1:12:53 PM: Finished processing build request in 13.647s

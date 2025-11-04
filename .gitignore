@@ -1,0 +1,29 @@
+# Admin Dashboard (stays in Replit only)
+client/
+server/
+shared/
+package.json
+package-lock.json
+tsconfig.json
+drizzle.config.ts
+vite.config.ts
+vite.config.ts.*
+
+# Dependencies & Build
+node_modules
+dist
+.DS_Store
+*.tar.gz
+
+# Replit files
+.cache
+.upm
+.local
+replit.md
+design_guidelines.md
+.replit
+.config
+
+# Temporary files
+/tmp/
+*.log
