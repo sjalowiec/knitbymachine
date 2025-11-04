@@ -1,0 +1,25 @@
+{
+  "title": "Test ANA SEO r1Q2WZ",
+  "slug": "test-ana-seo-r1q2wz",
+  "category": "",
+  "tags": [],
+  "isMemberOnly": false,
+  "videoUrl": "",
+  "imageUrl": "",
+  "imageAlt": "ANA image alt for SEO testing",
+  "wizardUrl": "",
+  "metaTitle": "",
+  "metaDescription": "",
+  "schemaMarkup": {
+    "@context": "https://schema.org",
+    "@type": "QAPage",
+    "name": "Test ANA SEO r1Q2WZ",
+    "description": "ANA schema for testing"
+  },
+  "relatedAnas": [],
+  "relatedWorkshops": [],
+  "body": "This is the answer body for SEO test entry.",
+  "isDraft": true,
+  "publishedDate": "2025-11-04",
+  "pendingPublish": true
+}
