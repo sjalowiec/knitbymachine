@@ -1,0 +1,25 @@
+{
+  "title": "Test SEO Term qJc93o",
+  "slug": "test-seo-term-qjc93o",
+  "excerpt": "",
+  "definition": "Testing SEO fields implementation",
+  "example": "",
+  "category": "",
+  "letter": "T",
+  "image": "test-seo.webp",
+  "imageAlt": "Close-up showing test SEO pattern details",
+  "gifFilename": "",
+  "schemaMarkup": {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    "name": "Test SEO Term qJc93o"
+  },
+  "active": true,
+  "anaId": "",
+  "workshopId": "",
+  "promoText": "",
+  "tags": [],
+  "isDraft": true,
+  "publishedDate": "2025-11-04",
+  "pendingPublish": true
+}
