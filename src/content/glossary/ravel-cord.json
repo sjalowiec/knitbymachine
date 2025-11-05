@@ -1,0 +1,28 @@
+{
+  "title": "Ravel Cord",
+  "slug": "ravel-cord",
+  "excerpt": "",
+  "definition": "A smooth, strong cord used in machine knitting to separate sections of knitted fabric easily.",
+  "example": "Simillar to a provisional cast on in hand knitting, this can leave \"live\" stitches to work later.",
+  "category": "",
+  "letter": "R",
+  "image": "",
+  "imageAlt": "",
+  "gifFilename": "",
+  "schemaMarkup": {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    "name": "Ravel Cord",
+    "description": "A smooth, strong cord for use in many techniques to separate sections of knitted fabric or cast on and remove waste yarn cleanly.",
+    "inDefinedTermSet": "https://knitbymachine.com/glossary",
+    "url": "https://knitbymachine.com/glossary/ravel-cord"
+  },
+  "active": true,
+  "anaId": "",
+  "workshopId": "",
+  "promoText": "",
+  "tags": [],
+  "isDraft": true,
+  "publishedDate": "2025-11-05",
+  "pendingPublish": true
+}
