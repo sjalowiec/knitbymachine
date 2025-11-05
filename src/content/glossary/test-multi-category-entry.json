@@ -1,0 +1,25 @@
+{
+  "title": "Test Multi-Category Entry",
+  "slug": "test-multi-category-entry",
+  "excerpt": "TMCE",
+  "definition": "A test entry to verify multiple categories work correctly",
+  "example": "Example usage for TMCE",
+  "categories": [
+    "Techniques",
+    "Terms",
+    "Accessories"
+  ],
+  "letter": "T",
+  "image": "",
+  "imageAlt": "",
+  "gifFilename": "",
+  "schemaMarkup": null,
+  "active": true,
+  "anaId": "",
+  "workshopId": "",
+  "promoText": "",
+  "tags": [],
+  "isDraft": true,
+  "publishedDate": "2025-11-05",
+  "pendingPublish": true
+}
