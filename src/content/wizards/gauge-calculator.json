@@ -1,5 +1,6 @@
 {
   "title": "Gauge Calculator Wizard",
+  "slug": "gauge-calculator",
   "hero": "",
   "description": "Swatching is not optional, don't guess at your gauge. skip the math and let KBM calculate your gauge accurately",
   "category": "Tools",
@@ -16,6 +17,5 @@
   "schemaMarkup": null,
   "isDraft": false,
   "publishedDate": "2025-11-05",
-  "pendingPublish": false,
-  "slug": "gauge-calculator"
+  "pendingPublish": true
 }
