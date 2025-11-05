@@ -3,7 +3,7 @@
   "slug": "blanlet",
   "hero": "",
   "description": "Why search for blanket pattern - use any stitch pattern, yarn and macine and design your own",
-  "category": "blanket",
+  "category": "Pattern Adaptation",
   "tags": [],
   "videoUrl": "",
   "accessLevel": "free",
@@ -17,5 +17,5 @@
   "schemaMarkup": null,
   "isDraft": false,
   "publishedDate": "2025-11-05",
-  "pendingPublish": false
+  "pendingPublish": true
 }
