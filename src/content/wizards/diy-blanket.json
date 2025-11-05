@@ -1,8 +1,9 @@
 {
   "title": "DIY blanket",
+  "slug": "diy-blanket",
   "hero": "",
   "description": "Why search for blanket pattern - use any stitch pattern, yarn and machine and design your own",
-  "category": "Pattern Adaptation",
+  "category": "pattern",
   "tags": [],
   "videoUrl": "",
   "accessLevel": "free",
@@ -16,6 +17,5 @@
   "schemaMarkup": null,
   "isDraft": false,
   "publishedDate": "2025-11-05",
-  "pendingPublish": false,
-  "slug": "diy-blanket"
+  "pendingPublish": true
 }
