@@ -1,0 +1,22 @@
+{
+  "title": "Test Term Quick",
+  "slug": "test-term-quick",
+  "excerpt": "",
+  "definition": "This is a test description for the glossary entry",
+  "tooltip": "Short definition for tooltip display",
+  "example": "Example usage of this term",
+  "categories": [],
+  "letter": "T",
+  "image": "",
+  "imageAlt": "",
+  "gifFilename": "",
+  "schemaMarkup": null,
+  "active": true,
+  "anaId": "",
+  "workshopId": "",
+  "promoText": "",
+  "tags": [],
+  "isDraft": true,
+  "publishedDate": "",
+  "pendingPublish": true
+}
