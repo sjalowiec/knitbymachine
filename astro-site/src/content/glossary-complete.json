@@ -23,7 +23,7 @@
     "anaId": "",
     "workshopId": "",
     "promoText": "",
-    "isDraft": true,
+    "isDraft": false,
     "publishedDate": "2024-11-07"
   },
   {
@@ -50,7 +50,7 @@
     "anaId": "",
     "workshopId": "",
     "promoText": "",
-    "isDraft": true,
+    "isDraft": false,
     "publishedDate": "2024-11-07"
   },
   {
@@ -76,7 +76,7 @@
     "anaId": "",
     "workshopId": "",
     "promoText": "",
-    "isDraft": true,
+    "isDraft": false,
     "publishedDate": "2025-11-07"
   },
   {
@@ -101,7 +101,7 @@
     "anaId": "",
     "workshopId": "",
     "promoText": "",
-    "isDraft": true,
+    "isDraft": false,
     "publishedDate": "2025-11-08"
   }
 ]
