@@ -52,5 +52,30 @@
     "promoText": "",
     "isDraft": true,
     "publishedDate": "2024-11-07"
+  },
+  {
+    "term": "new entry",
+    "abbreviation": "lk; lsdfj l",
+    "description": ";a fj ;kj;l kfdj;",
+    "tooltip": "; lkajdf ;lkj; kj;",
+    "example": " ;laksdfjl;j l;j fd",
+    "categories": [
+      "Techniques",
+      "Stitches"
+    ],
+    "letter": "N",
+    "tags": [
+      "fdf"
+    ],
+    "imageFilename": "gauge-swatch.jpg",
+    "gifFilename": "",
+    "imageAlt": "",
+    "schemaMarkup": "{\"@context\":\"https://schema.org\",\"@type\":\"DefinedTerm\",\"name\":\"new entry\",\"description\":\";a fj ;kj;l kfdj;\"}",
+    "slug": "new-entry",
+    "anaId": "",
+    "workshopId": "",
+    "promoText": "",
+    "isDraft": true,
+    "publishedDate": "2025-11-08"
   }
 ]
