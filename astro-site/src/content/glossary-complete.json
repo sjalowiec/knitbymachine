@@ -23,7 +23,7 @@
     "anaIds": [],
     "workshopIds": [],
     "promoText": "",
-    "isDraft": true,
+    "isDraft": false,
     "publishedDate": "2024-11-07"
   },
   {
@@ -50,32 +50,58 @@
     "anaIds": [],
     "workshopIds": [],
     "promoText": "",
-    "isDraft": true,
+    "isDraft": false,
     "publishedDate": "2024-11-07"
   },
   {
-    "term": "new entry",
-    "abbreviation": "lk; lsdfj l",
-    "description": ";a fj ;kj;l kfdj;",
-    "tooltip": "; lkajdf ;lkj; kj;",
-    "example": " ;laksdfjl;j l;j fd",
+    "term": "new term",
+    "abbreviation": "new",
+    "description": "lkjlfk lkjl uaoi al fj;lkja; fi",
+    "tooltip": ";lkafj d;ja;iwue;oir;i",
+    "example": ";alkf j;i uewpiokl;lkj;",
     "categories": [
       "Techniques",
       "Stitches"
     ],
     "letter": "N",
     "tags": [
-      "fdf"
+      "cast on",
+      "maintenance"
     ],
     "imageFilename": "gauge-swatch.jpg",
     "gifFilename": "",
     "imageAlt": "",
-    "schemaMarkup": "{\"@context\":\"https://schema.org\",\"@type\":\"DefinedTerm\",\"name\":\"new entry\",\"description\":\";a fj ;kj;l kfdj;\"}",
-    "slug": "new-entry",
+    "schemaMarkup": "{\"@context\":\"https://schema.org\",\"@type\":\"DefinedTerm\",\"name\":\"new term\",\"description\":\"lkjlfk lkjl uaoi al fj;lkja; fi\"}",
+    "slug": "new-term",
     "anaId": "",
     "workshopId": "",
     "promoText": "",
-    "isDraft": true,
+    "isDraft": false,
+    "publishedDate": "2025-11-07"
+  },
+  {
+    "term": "antoher term",
+    "abbreviation": "akldf;j lkj ",
+    "description": " ;lakfj d;kj a;f",
+    "tooltip": ";k ajf;lkj; lkj;",
+    "example": " ;lakfj ;ljk;lk j",
+    "categories": [
+      "Measurements",
+      "Garment Parts"
+    ],
+    "letter": "A",
+    "tags": [
+      "df f"
+    ],
+    "imageFilename": "",
+    "gifFilename": "",
+    "imageAlt": "",
+    "schemaMarkup": "{\"@context\":\"https://schema.org\",\"@type\":\"DefinedTerm\",\"name\":\"antoher term\",\"description\":\" ;lakfj d;kj a;f\"}",
+    "slug": "antoher-term",
+    "anaId": "",
+    "workshopId": "",
+    "promoText": "",
+    "isDraft": false,
     "publishedDate": "2025-11-08"
   }
 ]
