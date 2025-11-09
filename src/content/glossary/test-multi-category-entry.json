@@ -19,7 +19,7 @@
   "workshopId": "",
   "promoText": "",
   "tags": [],
-  "isDraft": true,
+  "isDraft": false,
   "publishedDate": "2025-11-05",
-  "pendingPublish": true
+  "pendingPublish": false
 }
