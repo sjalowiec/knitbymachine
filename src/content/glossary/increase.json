@@ -1,5 +1,5 @@
 {
-  "term": "increase",
+  "term": "Increase",
   "slug": "increase",
   "abbreviation": "inc",
   "description": "In machine knitting, an increase (abbreviated inc) means adding stitches to the work to shape or widen the fabric. There are several ways to increase, and mastering multiple methods helps achieve smooth shaping and professional results.",
@@ -25,5 +25,5 @@
   ],
   "isDraft": false,
   "publishedDate": "2025-11-09",
-  "pendingPublish": false
+  "pendingPublish": true
 }
